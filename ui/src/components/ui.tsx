@@ -7,7 +7,7 @@
  * dotted for an assumption. One legend explains the three; after that the page
  * can be read without labels on every value.
  */
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Confidence } from "../engine";
 import * as fmt from "../format";
 
@@ -82,11 +82,18 @@ export function ProvenanceLegend() {
 export function Card({
   children,
   className = "",
+  style,
 }: {
   children: ReactNode;
   className?: string;
+  /** Carries the `animation-delay` that staggers a view's arrival. */
+  style?: CSSProperties;
 }) {
-  return <section className={`card ${className}`}>{children}</section>;
+  return (
+    <section className={`card ${className}`} style={style}>
+      {children}
+    </section>
+  );
 }
 
 /** A small capitalised label that names a region without shouting. */

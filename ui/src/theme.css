@@ -232,6 +232,91 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Motion.
+
+   Used in three places and no others. A measurement is a physical event and
+   should look like one while it happens; a figure that has just been replaced
+   by a better one should say so; and a view that has just arrived should
+   settle rather than appear. Everything else here is a control, and a control
+   that animates is a control that is slower to use.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@keyframes explain-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 3px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* The probe reading memory: a band travelling the width of the bar, at about
+   the rate the measurement itself takes. */
+@keyframes sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(200%);
+  }
+}
+
+/* A figure that has just been measured, settling into place. Brief, and once. */
+@keyframes settle {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .sweeping {
+    position: relative;
+    overflow: hidden;
+  }
+  .sweeping::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-brass) 55%, transparent),
+      transparent
+    );
+    animation: sweep 1.1s ease-in-out infinite;
+  }
+
+  .settling {
+    animation: settle 260ms ease-out;
+  }
+
+  /* Staggered by the caller through an inline `animation-delay`, so a view
+     arrives as a sequence rather than all at once. */
+  .rising {
+    animation: rise 320ms ease-out backwards;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

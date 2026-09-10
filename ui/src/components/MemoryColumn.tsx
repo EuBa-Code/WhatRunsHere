@@ -77,6 +77,8 @@ interface Props {
   legend?: boolean;
   /** A previous footprint to mark, so a change is visible as a change. */
   compareBytes?: number;
+  /** True while a probe is running, which the bar shows rather than states. */
+  busy?: boolean;
 }
 
 export function MemoryColumn({
@@ -85,6 +87,7 @@ export function MemoryColumn({
   height = 12,
   legend = false,
   compareBytes,
+  busy = false,
 }: Props) {
   const parts = bands(memory);
   // Drawn against the pool, not against the model: a bar that always filled
@@ -97,7 +100,9 @@ export function MemoryColumn({
   return (
     <div className="w-full">
       <div
-        className="relative flex w-full overflow-hidden rounded-full"
+        className={`relative flex w-full overflow-hidden rounded-full ${
+          busy ? "sweeping" : ""
+        }`}
         style={{ height, background: "var(--color-line-soft)" }}
         role="img"
         aria-label={`${fmt.bytes(memory.required)} of ${fmt.bytes(
