@@ -1,7 +1,16 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "The application window. Nothing beyond it: WhatLLM reads the machine it runs on and makes no network calls, so the webview needs no capability that could.",
-  "windows": ["main"],
-  "permissions": ["core:default"]
+  "description": "The application window, and the controls that draw its own title bar. Nothing beyond it: WhatLLM reads the machine it runs on and makes no network calls, so the webview needs no capability that could.",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-is-maximized",
+    "core:window:allow-close"
+  ]
 }
