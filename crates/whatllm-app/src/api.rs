@@ -30,6 +30,7 @@ use whatllm_core::cost::{
     self, ApiPricing, CostComparison, EnergyProfile, HardwareInvestment, Workload,
 };
 use whatllm_core::fit::{self, FitContext, FitNote, FitRequest, ModelFit, RunMode, Verdict};
+use whatllm_core::hardware::Accelerator;
 use whatllm_core::memory::{self, LoadConfig, RuntimeProfile};
 use whatllm_core::model::{Catalog, ModelEntry};
 use whatllm_core::perf::{self, Calibration, Confidence};
@@ -171,12 +172,29 @@ pub struct Machine {
     pub measurement: Option<CachedCalibration>,
     /// Every pool a model could be placed in, largest first.
     pub pools: Vec<whatllm_core::hardware::MemoryPool>,
+    /// The processor and each accelerator with trademark marks removed.
+    ///
+    /// Sent alongside the raw names rather than instead of them: the raw
+    /// string is the evidence a misdetection report needs, and the clean one
+    /// is what a person should be shown.
+    pub display: Names,
     /// Where the catalog came from.
     pub catalog_source: String,
     /// How many models it holds.
     pub catalog_size: usize,
     /// The date it was built.
     pub catalog_generated: String,
+}
+
+/// Names as a person should read them.
+#[derive(Debug, Serialize)]
+pub struct Names {
+    /// Processor.
+    pub cpu: String,
+    /// Each accelerator, in driver order.
+    pub accelerators: Vec<String>,
+    /// Each memory pool's label, in the same order as `pools`.
+    pub pools: Vec<String>,
 }
 
 /// Report the machine.
@@ -187,9 +205,25 @@ pub fn machine(engine: tauri::State<'_, Engine>) -> Machine {
 
 /// The body of [`machine`], reachable without a window.
 pub fn machine_of(engine: &Engine) -> Machine {
+    use whatllm_core::hardware::display_name;
+
     let state = read(engine);
+    let system = &state.detection.system;
     Machine {
-        pools: state.detection.system.pools(),
+        display: Names {
+            cpu: display_name(&system.cpu.brand),
+            accelerators: system
+                .accelerators
+                .iter()
+                .map(Accelerator::display_name)
+                .collect(),
+            pools: system
+                .pools()
+                .iter()
+                .map(|pool| display_name(&pool.label))
+                .collect(),
+        },
+        pools: system.pools(),
         detection: state.detection.clone(),
         calibration: state.calibration,
         measurement: state.cached.clone(),
@@ -336,6 +370,16 @@ pub struct FitView {
     pub degradation: f64,
     /// Fraction of the use case backed by real evaluations.
     pub quality_coverage: f64,
+    /// How many catalog models this one scores at least as well as, and out of
+    /// how many.
+    ///
+    /// A bare 53 out of 100 says nothing: the scale is a weighted average of
+    /// published benchmark accuracies, and nothing scores near 100 on those.
+    /// Rank inside the catalog is the anchor the engine can give honestly,
+    /// because it compares like with like under the same weighting. Filled in
+    /// by [`rank`], which is the only place the whole field is in view; `None`
+    /// wherever one model was solved alone.
+    pub quality_rank: Option<QualityRank>,
     /// The longest context reachable in this placement.
     pub max_context: Option<u32>,
     /// The composite score the solver ranked by.
@@ -365,8 +409,19 @@ impl From<ModelFit> for FitView {
             max_context: fit.max_context,
             score: fit.score,
             notes: fit.notes,
+            // Only meaningful against a field, so [`rank`] fills it in.
+            quality_rank: None,
         }
     }
+}
+
+/// Where a model's quality sits among the models it was ranked beside.
+#[derive(Debug, Clone, Copy, Serialize)]
+pub struct QualityRank {
+    /// Models scoring no higher than this one.
+    pub at_or_below: usize,
+    /// Models compared, this one included.
+    pub of: usize,
 }
 
 /// One point on either curve, paired so the window plots one series.
@@ -433,6 +488,17 @@ pub fn rank_of(engine: &Engine, sizing: Sizing) -> Vec<RankedModel> {
             })
         })
         .collect();
+
+    // Quality rank, before the list is reordered by fit score. The two are
+    // different questions — the best model here is rarely the best model —
+    // and reading rank off the fit order would answer the wrong one.
+    let mut scores: Vec<f64> = ranked.iter().map(|m| m.fit.quality).collect();
+    scores.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+    let of = scores.len();
+    for model in &mut ranked {
+        let at_or_below = scores.partition_point(|&s| s <= model.fit.quality);
+        model.fit.quality_rank = Some(QualityRank { at_or_below, of });
+    }
 
     ranked.sort_by(|a, b| {
         b.fit

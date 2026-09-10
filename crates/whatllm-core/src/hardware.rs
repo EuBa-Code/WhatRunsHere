@@ -193,6 +193,11 @@ pub struct Accelerator {
 }
 
 impl Accelerator {
+    /// The device name with trademark marks removed. See [`display_name`].
+    pub fn display_name(&self) -> String {
+        display_name(&self.name)
+    }
+
     /// Memory a model can actually claim on this device.
     pub const fn usable_bytes(&self) -> u64 {
         self.total_bytes.saturating_sub(self.reserved_bytes)
@@ -206,6 +211,29 @@ impl Accelerator {
             self.peak_tflops_fp16,
         ))
     }
+}
+
+/// A driver-reported name, as it should be shown to a person.
+///
+/// Drivers write trademark marks into the middle of product names — Windows
+/// reports `Intel(R) Core(TM) 7 150U` and `AMD Radeon(TM) 780M Graphics` — and
+/// they are noise in every context but a legal one. Nobody writes their own
+/// processor's name that way, so printing it back is the surest sign a tool is
+/// echoing a string it never looked at.
+///
+/// Only the marks and the resulting double spaces are removed. The name is not
+/// otherwise rewritten: an abbreviation table would eventually shorten a part
+/// it had never seen into something wrong, and the name is also the thing
+/// someone searches for when a detection looks off.
+///
+/// The raw string stays in [`Accelerator::name`] and in the detection's captured
+/// adapters, so nothing needed for a bug report is lost.
+pub fn display_name(raw: &str) -> String {
+    let mut folded = raw.to_owned();
+    for mark in ["(R)", "(r)", "(TM)", "(tm)", "(C)", "(c)", "®", "™", "©"] {
+        folded = folded.replace(mark, " ");
+    }
+    folded.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
 /// Which physical memory a pool refers to.
@@ -345,6 +373,41 @@ impl SystemProfile {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn trademark_marks_are_stripped_without_rewriting_the_name() {
+        use super::display_name;
+
+        // The strings Windows and Linux actually report.
+        assert_eq!(
+            display_name("Intel(R) Core(TM) 7 150U"),
+            "Intel Core 7 150U"
+        );
+        assert_eq!(
+            display_name("AMD Radeon(TM) 780M Graphics"),
+            "AMD Radeon 780M Graphics"
+        );
+        assert_eq!(
+            display_name("NVIDIA® GeForce RTX 4090"),
+            "NVIDIA GeForce RTX 4090"
+        );
+        assert_eq!(
+            display_name("Intel(R)  Arc(TM) A770 Graphics"),
+            "Intel Arc A770 Graphics"
+        );
+
+        // Names with nothing to strip are returned as they came, and a model
+        // number that happens to contain a letter is not a trademark mark.
+        assert_eq!(display_name("Apple M3 Max"), "Apple M3 Max");
+        assert_eq!(
+            display_name("NVIDIA A100-SXM4-80GB"),
+            "NVIDIA A100-SXM4-80GB"
+        );
+        assert_eq!(
+            display_name("AMD Ryzen AI MAX+ 395"),
+            "AMD Ryzen AI MAX+ 395"
+        );
+    }
+
     use super::*;
 
     const GIB: u64 = 1024 * 1024 * 1024;

@@ -57,6 +57,7 @@ fn the_machine_command_carries_the_fields_the_window_reads() {
             "calibration",
             "measurement",
             "pools",
+            "display",
             "catalog_source",
             "catalog_size",
             "catalog_generated",
@@ -83,6 +84,22 @@ fn the_machine_command_carries_the_fields_the_window_reads() {
         &json["calibration"]["host"],
         &["bandwidth_bytes_per_s"],
         "DeviceThroughput",
+    );
+
+    has_keys(&json["display"], &["cpu", "accelerators", "pools"], "Names");
+    // The clean names are what the window shows, so a trademark mark reaching
+    // one is a mark on the headline of the first screen anybody sees.
+    let cpu = json["display"]["cpu"].as_str().expect("a cpu name");
+    for mark in ["(R)", "(TM)", "(C)", "®", "™"] {
+        assert!(
+            !cpu.contains(mark),
+            "the displayed processor name still carries {mark}: {cpu}"
+        );
+    }
+    assert_eq!(
+        json["display"]["pools"].as_array().map(Vec::len),
+        json["pools"].as_array().map(Vec::len),
+        "every pool needs its display name, matched by position"
     );
 
     // Every machine has at least one pool: the memory it is made of.
@@ -140,6 +157,7 @@ fn a_ranked_model_carries_the_fields_the_list_reads() {
             "max_context",
             "score",
             "notes",
+            "quality_rank",
         ],
         "FitView",
     );
@@ -162,6 +180,55 @@ fn a_ranked_model_carries_the_fields_the_list_reads() {
     assert!(
         json["fit"]["run_mode"]["mode"].is_string(),
         "run_mode must carry its `mode` tag"
+    );
+}
+
+#[test]
+fn quality_rank_places_every_model_against_the_same_field() {
+    // The rank is the only anchor a bare score out of 100 has, so it must be
+    // computed against quality and not against the fit order the list is
+    // sorted by. Those are different questions: the best model for a machine
+    // is rarely the best model.
+    let engine = Engine::new();
+    let ranked = api::rank_of(&engine, sizing());
+    let total = ranked.len();
+
+    for model in &ranked {
+        let rank = model
+            .fit
+            .quality_rank
+            .unwrap_or_else(|| panic!("{} was ranked without a placing", model.name));
+        assert_eq!(
+            rank.of, total,
+            "{} was placed against a different field",
+            model.name
+        );
+        assert!(
+            rank.at_or_below >= 1 && rank.at_or_below <= total,
+            "{} placed {} of {}",
+            model.name,
+            rank.at_or_below,
+            total
+        );
+    }
+
+    // The highest-scoring model sits at or above every other.
+    let best = ranked
+        .iter()
+        .max_by(|a, b| a.fit.quality.total_cmp(&b.fit.quality))
+        .expect("a best model");
+    assert_eq!(
+        best.fit.quality_rank.expect("a placing").at_or_below,
+        total,
+        "the best-scoring model should sit at or above all {total}"
+    );
+
+    // Solved on its own there is no field to place it in, and the engine says
+    // so rather than inventing one.
+    let plan = api::plan_of(&engine, &ranked[0].id, sizing()).expect("a plan");
+    assert!(
+        plan.fit.quality_rank.is_none(),
+        "a model solved on its own cannot be ranked against a field"
     );
 }
 

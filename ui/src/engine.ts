@@ -79,6 +79,13 @@ export interface FitView {
   max_context: number | null;
   score: number;
   notes: FitNote[];
+  /**
+   * How many catalog models this one scores at least as well as. Present only
+   * from `rank`, where the whole field is in view; a bare score out of 100
+   * means nothing without it, because nothing scores near 100 on the
+   * benchmarks the scale averages.
+   */
+  quality_rank: { at_or_below: number; of: number } | null;
 }
 
 export interface Accelerator {
@@ -142,6 +149,13 @@ export interface Machine {
     measured_at: number;
   } | null;
   pools: MemoryPool[];
+  /** The same names with trademark marks removed, for showing to a person. */
+  display: {
+    cpu: string;
+    accelerators: string[];
+    /** In the same order as `pools`. */
+    pools: string[];
+  };
   catalog_source: string;
   catalog_size: number;
   catalog_generated: string;
