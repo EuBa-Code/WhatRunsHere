@@ -17,3 +17,6 @@ dist/
 
 .DS_Store
 Thumbs.db
+
+# Tauri regenerates these from tauri.conf.json and capabilities/ on every build.
+/crates/whatllm-app/gen/

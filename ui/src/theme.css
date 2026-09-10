@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Typefaces, carried in the binary.
+
+   WhatLLM makes no network calls. A font loaded from a CDN would be the one
+   request the whole engine was built to avoid, so all three are vendored as
+   latin-subset woff2 — 193 KB for the set.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-100-900.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: block;
+}
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/instrument-sans-400-700.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-stretch: 75% 100%;
+  font-display: block;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: block;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/ibm-plex-mono-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Palette.
+
+   Indigo-cast graphite rather than neutral grey, with brass as the accent.
+   Brass because the subject is instrumentation and because every other tool
+   in this space is blue or violet; warm against a cool ground is what makes
+   a measured figure read as a result rather than as chrome.
+
+   The four memory bands are one quantity divided, so they are ordered by
+   how well the engine knows them: weights are brass because they are the
+   part it knows best, and overhead is nearly the ground colour because it
+   is the part it estimates.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* `static` because several of these are reached as `var(--color-${tone})`,
+   built at runtime from a verdict or a signal name. Tailwind emits only the
+   theme variables it can see referenced in the source, and a name assembled
+   from a template literal is not one — the variable then resolves to nothing
+   and the element loses its colour with no error anywhere. */
+@theme static {
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --color-ground: #0e1017;
+  --color-surface: #161923;
+  --color-raised: #1d2130;
+  --color-line: #272c3c;
+  --color-line-soft: #1f2432;
+  --color-ink: #e9eaf0;
+  --color-ink-dim: #a2a8bb;
+  --color-ink-faint: #6d738a;
+
+  --color-brass: #e3a44c;
+  --color-brass-deep: #b87f2e;
+  --color-brass-wash: #2a2115;
+
+  --color-band-weights: #e3a44c;
+  --color-band-cache: #6fa8c7;
+  --color-band-activations: #9b8ac4;
+  --color-band-overhead: #4c5369;
+
+  --color-good: #5fbf8f;
+  --color-tight: #e3a44c;
+  --color-over: #d4685e;
+
+  --radius-card: 14px;
+}
+
+/* Light is not an afterthought: the same roles, re-pointed. Brass darkens so
+   it still carries contrast against paper, and the bands hold their hues so
+   a memory column is recognisably the same object in either theme. */
+:root[data-theme="light"] {
+  --color-ground: #f4f4f8;
+  --color-surface: #ffffff;
+  --color-raised: #fafaFD;
+  --color-line: #e2e3ec;
+  --color-line-soft: #edeef4;
+  --color-ink: #171922;
+  --color-ink-dim: #5a6076;
+  --color-ink-faint: #878da3;
+
+  --color-brass: #a8701c;
+  --color-brass-deep: #8a5c14;
+  --color-brass-wash: #fdf4e6;
+
+  --color-band-weights: #c2861f;
+  --color-band-cache: #3f7f9f;
+  --color-band-activations: #7663a8;
+  --color-band-overhead: #b3b8c8;
+
+  --color-good: #2f8f63;
+  --color-tight: #b5811f;
+  --color-over: #b8483d;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    /* A desktop app is not a document: nothing here should rubber-band or be
+       selectable unless it is content someone would want to copy. */
+    overscroll-behavior: none;
+    user-select: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-faint);
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* ───────────────────────────────────────────────────────────────────────
+     Provenance rules.
+
+     The engine's central claim is that it says which of its numbers were
+     measured and which were reasoned. A badge beside every figure would
+     drown a dense view, so the status is carried in a rule under the
+     numeral: solid means something measured it here, dashed means it came
+     from a specification, dotted means nothing measured it and the figure
+     is an assumption. One legend explains the three, once.
+     ─────────────────────────────────────────────────────────────────────── */
+  .prov {
+    padding-bottom: 2px;
+    background-repeat: repeat-x;
+    background-position: 0 100%;
+    background-size: 6px 1.5px;
+  }
+  /* Under a large numeral the rule would read as a link if it kept the weight
+     it needs at body size. It is a footnote about the figure, not emphasis. */
+  .prov-quiet {
+    opacity: 0.75;
+    background-size: 7px 1px;
+  }
+  .prov-measured {
+    background-image: linear-gradient(
+      to right,
+      var(--color-brass) 0 100%
+    );
+  }
+  .prov-spec {
+    background-image: linear-gradient(
+      to right,
+      var(--color-ink-faint) 0 60%,
+      transparent 60% 100%
+    );
+  }
+  .prov-assumed {
+    background-image: linear-gradient(
+      to right,
+      var(--color-ink-faint) 0 25%,
+      transparent 25% 100%
+    );
+  }
+
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  /* Numerals are the content here, so they are always tabular: a column of
+     figures that shifts as it updates is unreadable. */
+  .figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "zero" 1;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 600;
+    font-stretch: 108%;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
