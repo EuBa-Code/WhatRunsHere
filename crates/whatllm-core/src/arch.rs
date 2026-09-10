@@ -284,8 +284,9 @@ pub struct Architecture {
     /// gpt-oss is the case that forces this. Its experts are MXFP4 in the
     /// original weights, and every published build leaves them there: only the
     /// attention, router and vocabulary tensors — nine percent of the model —
-    /// change between builds. Its F16, Q8_0 and Q6_K files are 13.79, 12.11 and
-    /// 12.04 GB, differences a whole-model quantization cannot produce. Treating
+    /// change between builds. Its `F16`, `Q8_0` and `Q6_K` files are 13.79, 12.11
+    /// and 12.04 GB, differences a whole-model quantization cannot produce.
+    /// Treating
     /// its "F16" as sixteen bits throughout overstates the file threefold.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub native_expert_quant: Option<String>,

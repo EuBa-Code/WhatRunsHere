@@ -417,6 +417,9 @@ pub fn decode_curve(
 
 #[cfg(test)]
 mod tests {
+    // One assertion checks an exact zero the code produces by construction.
+    #![allow(clippy::float_cmp)]
+
     use super::*;
     use crate::arch::{AttentionKind, FfnKind, LayerLayout, LayerSpec};
     use crate::quant::weight_quant;
@@ -575,6 +578,37 @@ mod tests {
         );
         assert_eq!(result.prefill_tps, None);
         assert_eq!(result.ttft_ms(4096), None);
+    }
+
+    #[test]
+    fn a_device_with_no_bandwidth_reports_no_throughput_rather_than_dividing_by_zero() {
+        let arch = llama_3_1_8b();
+        let quant = q4_k_m();
+        let stalled = Calibration {
+            accelerator: Some(DeviceThroughput {
+                bandwidth_bytes_per_s: 0.0,
+                compute_flops: None,
+            }),
+            host: DeviceThroughput {
+                bandwidth_bytes_per_s: 0.0,
+                compute_flops: None,
+            },
+            overhead_ms_per_token: 0.0,
+            source: Confidence::Fallback,
+        };
+        let weights = weight_traffic_bytes(&arch, &quant);
+        let result = throughput(
+            &arch,
+            &quant,
+            &stalled,
+            &TrafficSplit::all_accelerator(weights, 0),
+            0,
+        );
+        assert_eq!(
+            result.decode_tps, 0.0,
+            "a device that moves no bytes generates no tokens"
+        );
+        assert!(result.decode_tps.is_finite());
     }
 
     #[test]

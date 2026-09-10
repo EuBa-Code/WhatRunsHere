@@ -739,6 +739,7 @@ mod tests {
                 available_bytes: ram_gib * GIB * 3 / 4,
                 channels: Some(2),
                 speed_mts: Some(5600),
+                uma_carveout_bytes: None,
             },
             accelerators: vec![Accelerator {
                 index: 0,

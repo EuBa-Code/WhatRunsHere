@@ -110,6 +110,22 @@ pub struct HostMemory {
     /// Rated transfer rate in MT/s, when known.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub speed_mts: Option<u32>,
+    /// Memory firmware handed to an integrated GPU before the kernel started,
+    /// and which the operating system therefore does not report at all.
+    ///
+    /// Present only where it was measured — the difference between the DIMM
+    /// capacity firmware enumerates and the total the operating system
+    /// manages. It is recorded rather than merely folded into the totals
+    /// because it is also the evidence that the adapter claiming that much
+    /// memory is an integrated part and not a card: see
+    /// [`crate::hardware`]'s classification counterpart in `whatllm-hw`.
+    ///
+    /// [`Self::total_bytes`] and [`Self::available_bytes`] already include it.
+    /// A model can use this memory — that is what it was carved out for — so
+    /// leaving it out of both would describe a machine that cannot run what it
+    /// plainly can.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub uma_carveout_bytes: Option<u64>,
 }
 
 impl HostMemory {
@@ -282,7 +298,16 @@ impl SystemProfile {
             pools.push(MemoryPool {
                 label: unified.name.clone(),
                 kind: PoolKind::Unified,
-                usable_bytes: unified.usable_bytes().max(self.memory.claimable_bytes()),
+                // Two ceilings, and the lower one binds. `total_bytes` is what
+                // the platform will let a compute job hold, which on macOS is
+                // well under the machine's memory and everywhere else is the
+                // machine's memory. `claimable_bytes` is what is left after a
+                // reserve for the operating system.
+                //
+                // Deliberately not `usable_bytes()`: that subtracts whatever
+                // is committed this second, and an answer to "what can this
+                // machine run" should not change because a browser opened.
+                usable_bytes: unified.total_bytes.min(self.memory.claimable_bytes()),
                 devices: vec![unified.index],
             });
             return pools;
@@ -357,6 +382,7 @@ mod tests {
                 available_bytes: 48 * GIB,
                 channels: Some(2),
                 speed_mts: Some(5600),
+                uma_carveout_bytes: None,
             },
             accelerators,
             os: "Windows 11".to_owned(),
@@ -377,6 +403,7 @@ mod tests {
             available_bytes: 48 * GIB,
             channels: Some(2),
             speed_mts: Some(5600),
+            uma_carveout_bytes: None,
         };
         // Two channels at 5600 MT/s carry 89.6 GB/s at peak.
         let bandwidth = memory.peak_bandwidth_gbps().expect("both fields present");
@@ -454,6 +481,7 @@ mod tests {
             available_bytes: 28 * GIB,
             channels: None,
             speed_mts: None,
+            uma_carveout_bytes: None,
         };
         let busy = HostMemory {
             available_bytes: 6 * GIB,
@@ -489,6 +517,7 @@ mod tests {
                 available_bytes: 110 * GIB,
                 channels: None,
                 speed_mts: None,
+                uma_carveout_bytes: None,
             },
             accelerators: vec![Accelerator {
                 index: 0,
