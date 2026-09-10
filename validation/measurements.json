@@ -1,0 +1,5767 @@
+{
+ "generated": "2026-09-10",
+ "source": "llmfit community benchmarks, MIT licensed",
+ "source_url": "https://github.com/AlexsJones/llmfit",
+ "architectures": {
+  "unsloth/Llama-3.2-1B-Instruct": {
+   "hidden_size": 2048,
+   "heads": 32,
+   "intermediate_size": 8192,
+   "vocab_size": 128256,
+   "layers": {
+    "n_layers": 16,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "HuggingFaceTB/SmolLM2-1.7B-Instruct": {
+   "hidden_size": 2048,
+   "heads": 32,
+   "intermediate_size": 8192,
+   "vocab_size": 49152,
+   "layers": {
+    "n_layers": 24,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 32,
+       "head_dim": 64
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 8192
+  },
+  "Qwen/Qwen3-1.7B": {
+   "hidden_size": 2048,
+   "heads": 16,
+   "intermediate_size": 6144,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 40960
+  },
+  "unsloth/Llama-3.2-3B-Instruct": {
+   "hidden_size": 3072,
+   "heads": 24,
+   "intermediate_size": 8192,
+   "vocab_size": 128256,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "unsloth/gemma-2-2b-it": {
+   "hidden_size": 2304,
+   "heads": 8,
+   "intermediate_size": 9216,
+   "vocab_size": 256000,
+   "layers": {
+    "n_layers": 26,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      },
+      "window": 4096
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": true,
+   "max_context": 8192
+  },
+  "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct": {
+   "hidden_size": 2048,
+   "heads": 16,
+   "intermediate_size": 10944,
+   "vocab_size": 102400,
+   "layers": {
+    "n_layers": 27,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "latent",
+       "q_lora_rank": null,
+       "kv_lora_rank": 512,
+       "qk_nope_head_dim": 128,
+       "qk_rope_head_dim": 64,
+       "v_head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 163840,
+   "moe": {
+    "experts": 64,
+    "experts_per_token": 6,
+    "expert_intermediate": 1408,
+    "shared_experts": 2,
+    "shared_intermediate": 1408,
+    "dense_layers": 1
+   }
+  },
+  "microsoft/Phi-3.5-mini-instruct": {
+   "hidden_size": 3072,
+   "heads": 32,
+   "intermediate_size": 8192,
+   "vocab_size": 32064,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 32,
+       "head_dim": 96
+      },
+      "window": 262144
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "Qwen/Qwen2.5-Coder-3B-Instruct": {
+   "hidden_size": 2048,
+   "heads": 16,
+   "intermediate_size": 11008,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "Qwen/Qwen3-4B": {
+   "hidden_size": 2560,
+   "heads": 32,
+   "intermediate_size": 9728,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 40960
+  },
+  "openai/gpt-oss-20b": {
+   "hidden_size": 2880,
+   "heads": 64,
+   "intermediate_size": 2880,
+   "vocab_size": 201088,
+   "layers": {
+    "n_layers": 24,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      },
+      "window": 128
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072,
+   "moe": {
+    "experts": 32,
+    "experts_per_token": 4,
+    "expert_intermediate": 2880,
+    "shared_experts": 0,
+    "shared_intermediate": 0,
+    "dense_layers": 0
+   }
+  },
+  "Qwen/Qwen3-30B-A3B-Instruct-2507": {
+   "hidden_size": 2048,
+   "heads": 32,
+   "intermediate_size": 6144,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144,
+   "moe": {
+    "experts": 128,
+    "experts_per_token": 8,
+    "expert_intermediate": 768,
+    "shared_experts": 0,
+    "shared_intermediate": 0,
+    "dense_layers": 0
+   }
+  },
+  "unsloth/gemma-3-4b-it": {
+   "hidden_size": 2560,
+   "heads": 8,
+   "intermediate_size": 10240,
+   "vocab_size": 262208,
+   "layers": {
+    "n_layers": 34,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "mistralai/Mistral-7B-Instruct-v0.3": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 14336,
+   "vocab_size": 32768,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B": {
+   "hidden_size": 3584,
+   "heads": 28,
+   "intermediate_size": 18944,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "tiiuae/Falcon3-7B-Instruct": {
+   "hidden_size": 3072,
+   "heads": 12,
+   "intermediate_size": 23040,
+   "vocab_size": 131072,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "Qwen/Qwen2.5-Coder-7B-Instruct": {
+   "hidden_size": 3584,
+   "heads": 28,
+   "intermediate_size": 18944,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "Qwen/Qwen2.5-7B-Instruct": {
+   "hidden_size": 3584,
+   "heads": 28,
+   "intermediate_size": 18944,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "deepseek-ai/DeepSeek-R1-Distill-Llama-8B": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 14336,
+   "vocab_size": 128256,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "unsloth/Meta-Llama-3.1-8B-Instruct": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 14336,
+   "vocab_size": 128256,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "Qwen/Qwen3-8B": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 12288,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 40960
+  },
+  "mistralai/Ministral-8B-Instruct-2410": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 12288,
+   "vocab_size": 131072,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 32768
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "ibm-granite/granite-3.1-8b-instruct": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 12800,
+   "vocab_size": 49155,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "internlm/internlm3-8b-instruct": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 10240,
+   "vocab_size": 128512,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "01-ai/Yi-1.5-9B-Chat": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 11008,
+   "vocab_size": 64000,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 4096
+  },
+  "mistralai/Mistral-Nemo-Instruct-2407": {
+   "hidden_size": 5120,
+   "heads": 32,
+   "intermediate_size": 14336,
+   "vocab_size": 131072,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "unsloth/gemma-2-9b-it": {
+   "hidden_size": 3584,
+   "heads": 16,
+   "intermediate_size": 14336,
+   "vocab_size": 256000,
+   "layers": {
+    "n_layers": 42,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 4096
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": true,
+   "max_context": 8192
+  },
+  "microsoft/Phi-3-medium-4k-instruct": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 17920,
+   "vocab_size": 32064,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 10,
+       "head_dim": 128
+      },
+      "window": 2047
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 4096
+  },
+  "allenai/OLMo-2-1124-13B-Instruct": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 13824,
+   "vocab_size": 100352,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 40,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 4096
+  },
+  "Qwen/Qwen3-14B": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 17408,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 40960
+  },
+  "microsoft/phi-4": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 17920,
+   "vocab_size": 100352,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 10,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 16384
+  },
+  "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 13824,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "unsloth/gemma-3-12b-it": {
+   "hidden_size": 3840,
+   "heads": 16,
+   "intermediate_size": 15360,
+   "vocab_size": 262208,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "Qwen/Qwen2.5-14B-Instruct": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 13824,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "Qwen/Qwen2.5-Coder-14B-Instruct": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 13824,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "mistralai/Mistral-Small-24B-Instruct-2501": {
+   "hidden_size": 5120,
+   "heads": 32,
+   "intermediate_size": 32768,
+   "vocab_size": 131072,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "mistralai/Codestral-22B-v0.1": {
+   "hidden_size": 6144,
+   "heads": 48,
+   "intermediate_size": 16384,
+   "vocab_size": 32768,
+   "layers": {
+    "n_layers": 56,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "unsloth/gemma-2-27b-it": {
+   "hidden_size": 4608,
+   "heads": 32,
+   "intermediate_size": 36864,
+   "vocab_size": 256000,
+   "layers": {
+    "n_layers": 46,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      },
+      "window": 4096
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": true,
+   "max_context": 8192
+  },
+  "unsloth/gemma-3-27b-it": {
+   "hidden_size": 5376,
+   "heads": 32,
+   "intermediate_size": 21504,
+   "vocab_size": 262208,
+   "layers": {
+    "n_layers": 62,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "Qwen/Qwen3-32B": {
+   "hidden_size": 5120,
+   "heads": 64,
+   "intermediate_size": 25600,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 64,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 40960
+  },
+  "Qwen/Qwen2.5-Coder-32B-Instruct": {
+   "hidden_size": 5120,
+   "heads": 40,
+   "intermediate_size": 27648,
+   "vocab_size": 152064,
+   "layers": {
+    "n_layers": 64,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "LiquidAI/LFM2-8B-A1B": {
+   "hidden_size": 2048,
+   "heads": 32,
+   "intermediate_size": 7168,
+   "vocab_size": 65536,
+   "layers": {
+    "n_layers": 24,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 128000,
+   "moe": {
+    "experts": 32,
+    "experts_per_token": 4,
+    "expert_intermediate": 1792,
+    "shared_experts": 0,
+    "shared_intermediate": 0,
+    "dense_layers": 0
+   }
+  },
+  "HuggingFaceTB/SmolLM3-3B": {
+   "hidden_size": 2048,
+   "heads": 16,
+   "intermediate_size": 11008,
+   "vocab_size": 128256,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 65536
+  },
+  "Qwen/Qwen3-4B-Instruct-2507": {
+   "hidden_size": 2560,
+   "heads": 32,
+   "intermediate_size": 9728,
+   "vocab_size": 151936,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144
+  },
+  "arcee-ai/AFM-4.5B": {
+   "hidden_size": 2560,
+   "heads": 20,
+   "intermediate_size": 18432,
+   "vocab_size": 128005,
+   "layers": {
+    "n_layers": 36,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 65536
+  },
+  "microsoft/Phi-4-mini-instruct": {
+   "hidden_size": 3072,
+   "heads": 24,
+   "intermediate_size": 8192,
+   "vocab_size": 200064,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 262144
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "poolside/Laguna-XS-2.1": {
+   "hidden_size": 2048,
+   "heads": 48,
+   "intermediate_size": 8192,
+   "vocab_size": 100352,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      },
+      "window": 512
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144,
+   "moe": {
+    "experts": 256,
+    "experts_per_token": 8,
+    "expert_intermediate": 512,
+    "shared_experts": 1,
+    "shared_intermediate": 512,
+    "dense_layers": 0
+   }
+  },
+  "baidu/ERNIE-4.5-21B-A3B-PT": {
+   "hidden_size": 2560,
+   "heads": 20,
+   "intermediate_size": 12288,
+   "vocab_size": 103424,
+   "layers": {
+    "n_layers": 28,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "Qwen/Qwen3.5-4B": {
+   "hidden_size": 2560,
+   "heads": 16,
+   "intermediate_size": 9216,
+   "vocab_size": 248320,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144
+  },
+  "nvidia/Llama-3.1-Nemotron-Nano-8B-v1": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 14336,
+   "vocab_size": 128256,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "google/gemma-4-26B-A4B-it": {
+   "hidden_size": 2816,
+   "heads": 16,
+   "intermediate_size": 2112,
+   "vocab_size": 262144,
+   "layers": {
+    "n_layers": 30,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 262144,
+   "moe": {
+    "experts": 128,
+    "experts_per_token": 2,
+    "expert_intermediate": 704,
+    "shared_experts": 0,
+    "shared_intermediate": 0,
+    "dense_layers": 0
+   }
+  },
+  "google/gemma-4-E4B-it": {
+   "hidden_size": 2560,
+   "heads": 8,
+   "intermediate_size": 10240,
+   "vocab_size": 262144,
+   "layers": {
+    "n_layers": 42,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "swiss-ai/Apertus-8B-Instruct-2509": {
+   "hidden_size": 4096,
+   "heads": 32,
+   "intermediate_size": 21504,
+   "vocab_size": 131072,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 65536
+  },
+  "Qwen/Qwen3.5-9B": {
+   "hidden_size": 4096,
+   "heads": 16,
+   "intermediate_size": 12288,
+   "vocab_size": 248320,
+   "layers": {
+    "n_layers": 32,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144
+  },
+  "google/gemma-4-12B-it": {
+   "hidden_size": 3840,
+   "heads": 16,
+   "intermediate_size": 15360,
+   "vocab_size": 262144,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 262144
+  },
+  "internlm/internlm2_5-20b-chat": {
+   "hidden_size": 6144,
+   "heads": 48,
+   "intermediate_size": 16384,
+   "vocab_size": 92544,
+   "layers": {
+    "n_layers": 48,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 32768
+  },
+  "mistralai/Mistral-Small-3.2-24B-Instruct-2506": {
+   "hidden_size": 5120,
+   "heads": 32,
+   "intermediate_size": 32768,
+   "vocab_size": 131072,
+   "layers": {
+    "n_layers": 40,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 128
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "Qwen/Qwen3.6-27B": {
+   "hidden_size": 5120,
+   "heads": 24,
+   "intermediate_size": 17408,
+   "vocab_size": 248320,
+   "layers": {
+    "n_layers": 64,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 4,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144
+  },
+  "google/gemma-4-31B-it": {
+   "hidden_size": 5376,
+   "heads": 32,
+   "intermediate_size": 21504,
+   "vocab_size": 262144,
+   "layers": {
+    "n_layers": 60,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      },
+      "window": 1024
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 16,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 262144
+  },
+  "google/gemma-4-E2B-it": {
+   "hidden_size": 1536,
+   "heads": 8,
+   "intermediate_size": 6144,
+   "vocab_size": 262144,
+   "layers": {
+    "n_layers": 35,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      },
+      "window": 512
+     },
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 1,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 4,
+   "softcapped_attention": false,
+   "max_context": 131072
+  },
+  "LiquidAI/LFM2.5-1.2B-Thinking": {
+   "hidden_size": 2048,
+   "heads": 32,
+   "intermediate_size": 12288,
+   "vocab_size": 65536,
+   "layers": {
+    "n_layers": 16,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 8,
+       "head_dim": 64
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": false,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 128000
+  },
+  "Qwen/Qwen3.5-2B": {
+   "hidden_size": 2048,
+   "heads": 8,
+   "intermediate_size": 6144,
+   "vocab_size": 248320,
+   "layers": {
+    "n_layers": 24,
+    "cycle": [
+     {
+      "attention": {
+       "kind": "grouped",
+       "kv_heads": 2,
+       "head_dim": 256
+      }
+     }
+    ]
+   },
+   "ffn": "gated",
+   "tied_embeddings": true,
+   "norms_per_layer": 2,
+   "softcapped_attention": false,
+   "max_context": 262144
+  }
+ },
+ "machines": [
+  {
+   "id": 12,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "AMD Radeon RX 7900 XT",
+    "memTierGb": 20,
+    "vramGb": 19.98,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "Intel(R) Core(TM) i9-10900X CPU @ 3.70GHz",
+    "cpuCores": 20,
+    "ramGb": 62.49,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "unsloth/Llama-3.2-1B-Instruct",
+     "name": "Llama-3.2-1B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 375.97,
+     "output_tokens": 185.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+     "name": "SmolLM2-1.7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 325.08,
+     "output_tokens": 194.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-1.7B",
+     "name": "Qwen3-1.7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 282.06,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Llama-3.2-3B-Instruct",
+     "name": "Llama-3.2-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 200.39,
+     "output_tokens": 169.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-2b-it",
+     "name": "gemma-2-2b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 192.06,
+     "output_tokens": 207.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+     "name": "DeepSeek-Coder-V2-Lite-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 187.82,
+     "output_tokens": 201.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3.5-mini-instruct",
+     "name": "Phi-3.5-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 187.18,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-3B-Instruct",
+     "name": "Qwen2.5-Coder-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 183.78,
+     "output_tokens": 206.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-4B",
+     "name": "Qwen3-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 169.03,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "openai/gpt-oss-20b",
+     "name": "gpt-oss-20b",
+     "quant": "MXFP4",
+     "provider": "llamacpp",
+     "tokens_per_second": 162.61,
+     "output_tokens": 251.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+     "name": "Qwen3-30B-A3B-Instruct-2507",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 151.77,
+     "output_tokens": 144.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-4b-it",
+     "name": "gemma-3-4b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 144.35,
+     "output_tokens": 222.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-7B-Instruct-v0.3",
+     "name": "Mistral-7B-Instruct-v0.3",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 124.71,
+     "output_tokens": 210.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+     "name": "DeepSeek-R1-Distill-Qwen-7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 122.51,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "tiiuae/Falcon3-7B-Instruct",
+     "name": "Falcon3-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 119.99,
+     "output_tokens": 207.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+     "name": "Qwen2.5-Coder-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 118.38,
+     "output_tokens": 147.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-7B-Instruct",
+     "name": "Qwen2.5-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 117.97,
+     "output_tokens": 198.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+     "name": "DeepSeek-R1-Distill-Llama-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 116.99,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Meta-Llama-3.1-8B-Instruct",
+     "name": "Meta-Llama-3.1-8B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 114.33,
+     "output_tokens": 145.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-8B",
+     "name": "Qwen3-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 111.46,
+     "output_tokens": 299.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Ministral-8B-Instruct-2410",
+     "name": "Ministral-8B-Instruct-2410",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 110.35,
+     "output_tokens": 172.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "ibm-granite/granite-3.1-8b-instruct",
+     "name": "granite-3.1-8b-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 101.95,
+     "output_tokens": 225.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "internlm/internlm3-8b-instruct",
+     "name": "internlm3-8b-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 97.72,
+     "output_tokens": 220.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "01-ai/Yi-1.5-9B-Chat",
+     "name": "Yi-1.5-9B-Chat",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 96.97,
+     "output_tokens": 181.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-Nemo-Instruct-2407",
+     "name": "Mistral-Nemo-Instruct-2407",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 78.74,
+     "output_tokens": 188.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-9b-it",
+     "name": "gemma-2-9b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 71.81,
+     "output_tokens": 175.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3-medium-4k-instruct",
+     "name": "Phi-3-medium-4k-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 68.85,
+     "output_tokens": 210.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "allenai/OLMo-2-1124-13B-Instruct",
+     "name": "OLMo-2-1124-13B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 67.76,
+     "output_tokens": 160.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-14B",
+     "name": "Qwen3-14B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 67.26,
+     "output_tokens": 271.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/phi-4",
+     "name": "phi-4",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 66.04,
+     "output_tokens": 210.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+     "name": "DeepSeek-R1-Distill-Qwen-14B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 65.73,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-12b-it",
+     "name": "gemma-3-12b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 64.9,
+     "output_tokens": 218.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-14B-Instruct",
+     "name": "Qwen2.5-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 64.41,
+     "output_tokens": 210.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-14B-Instruct",
+     "name": "Qwen2.5-Coder-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 64.03,
+     "output_tokens": 216.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-Small-24B-Instruct-2501",
+     "name": "Mistral-Small-24B-Instruct-2501",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 43.69,
+     "output_tokens": 217.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Codestral-22B-v0.1",
+     "name": "Codestral-22B-v0.1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 43.41,
+     "output_tokens": 151.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-27b-it",
+     "name": "gemma-2-27b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 34.19,
+     "output_tokens": 182.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-27b-it",
+     "name": "gemma-3-27b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 32.65,
+     "output_tokens": 221.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-32B",
+     "name": "Qwen3-32B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 31.58,
+     "output_tokens": 286.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-32B-Instruct",
+     "name": "Qwen2.5-Coder-32B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 31.13,
+     "output_tokens": 207.33,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "AMD Radeon RX 7900 XT",
+    "memTierGb": 20,
+    "vramGb": 19.98,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "Intel(R) Core(TM) i9-10900X CPU @ 3.70GHz",
+    "cpuCores": 20,
+    "ramGb": 62.49,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "LiquidAI/LFM2-8B-A1B",
+     "name": "LFM2-8B-A1B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 290.45,
+     "output_tokens": 125.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM3-3B",
+     "name": "HuggingFaceTB_SmolLM3-3B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 200.85,
+     "output_tokens": 291.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-4B-Instruct-2507",
+     "name": "Qwen3-4B-Instruct-2507",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 160.36,
+     "output_tokens": 144.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "arcee-ai/AFM-4.5B",
+     "name": "arcee-ai_AFM-4.5B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 158.45,
+     "output_tokens": 207.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-4-mini-instruct",
+     "name": "microsoft_Phi-4-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 158.45,
+     "output_tokens": 106.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "poolside/Laguna-XS-2.1",
+     "name": "Laguna-XS-2.1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 155.17,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "baidu/ERNIE-4.5-21B-A3B-PT",
+     "name": "baidu_ERNIE-4.5-21B-A3B-PT",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 150.33,
+     "output_tokens": 194.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.5-4B",
+     "name": "Qwen3.5-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 126.68,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+     "name": "nvidia_Llama-3.1-Nemotron-Nano-8B-v1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 113.46,
+     "output_tokens": 178.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-26B-A4B-it",
+     "name": "gemma-4-26B-A4B-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 111.84,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-E4B-it",
+     "name": "gemma-4-E4B-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 111.74,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "swiss-ai/Apertus-8B-Instruct-2509",
+     "name": "Apertus-8B-Instruct-2509",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 106.69,
+     "output_tokens": 115.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.5-9B",
+     "name": "Qwen3.5-9B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 87.8,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-12B-it",
+     "name": "gemma-4-12B-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 63.35,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "internlm/internlm2_5-20b-chat",
+     "name": "internlm2_5-20b-chat",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 49.2,
+     "output_tokens": 147.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+     "name": "mistralai_Mistral-Small-3.2-24B-Instruct-2506",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 43.1,
+     "output_tokens": 188.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.6-27B",
+     "name": "Qwen3.6-27B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 31.59,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-31B-it",
+     "name": "gemma-4-31B-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 29.52,
+     "output_tokens": 298.0,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "hardware": {
+    "hwClass": "UNIFIED",
+    "hardwareName": "Apple M4 Pro",
+    "memTierGb": 24,
+    "vramGb": 24.0,
+    "gpuCount": 1,
+    "unifiedMemory": true,
+    "cpu": "Apple M4 Pro",
+    "cpuCores": 14,
+    "ramGb": 24.0,
+    "os": "macos"
+   },
+   "measurements": [
+    {
+     "repo": "unsloth/Llama-3.2-1B-Instruct",
+     "name": "Llama-3.2-1B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 216.53,
+     "output_tokens": 175.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-1.7B",
+     "name": "Qwen3-1.7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 149.0,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+     "name": "SmolLM2-1.7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 153.72,
+     "output_tokens": 153.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-2b-it",
+     "name": "gemma-2-2b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 101.48,
+     "output_tokens": 218.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM3-3B",
+     "name": "HuggingFaceTB_SmolLM3-3B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 96.21,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-3B-Instruct",
+     "name": "Qwen2.5-Coder-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 91.22,
+     "output_tokens": 187.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Llama-3.2-3B-Instruct",
+     "name": "Llama-3.2-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 95.27,
+     "output_tokens": 179.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3.5-mini-instruct",
+     "name": "Phi-3.5-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 78.78,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-4b-it",
+     "name": "gemma-3-4b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 74.41,
+     "output_tokens": 220.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.5-4B",
+     "name": "Qwen3.5-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 55.56,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "arcee-ai/AFM-4.5B",
+     "name": "arcee-ai_AFM-4.5B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 69.36,
+     "output_tokens": 187.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-7B-Instruct-v0.3",
+     "name": "Mistral-7B-Instruct-v0.3",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 50.61,
+     "output_tokens": 255.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "tiiuae/Falcon3-7B-Instruct",
+     "name": "Falcon3-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 49.57,
+     "output_tokens": 189.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-7B-Instruct",
+     "name": "Qwen2.5-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 49.62,
+     "output_tokens": 211.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Meta-Llama-3.1-8B-Instruct",
+     "name": "Meta-Llama-3.1-8B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 47.25,
+     "output_tokens": 159.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "ibm-granite/granite-3.1-8b-instruct",
+     "name": "granite-3.1-8b-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 42.62,
+     "output_tokens": 206.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Ministral-8B-Instruct-2410",
+     "name": "Ministral-8B-Instruct-2410",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 45.78,
+     "output_tokens": 173.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+     "name": "nvidia_Llama-3.1-Nemotron-Nano-8B-v1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 46.61,
+     "output_tokens": 179.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "swiss-ai/Apertus-8B-Instruct-2509",
+     "name": "Apertus-8B-Instruct-2509",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 43.88,
+     "output_tokens": 144.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-8B",
+     "name": "Qwen3-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 46.16,
+     "output_tokens": 293.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "LiquidAI/LFM2-8B-A1B",
+     "name": "LFM2-8B-A1B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 144.92,
+     "output_tokens": 126.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-E4B-it",
+     "name": "gemma-4-E4B-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 58.42,
+     "output_tokens": 286.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "01-ai/Yi-1.5-9B-Chat",
+     "name": "Yi-1.5-9B-Chat",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 40.04,
+     "output_tokens": 168.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.5-9B",
+     "name": "Qwen3.5-9B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 36.95,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3-medium-4k-instruct",
+     "name": "Phi-3-medium-4k-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 26.07,
+     "output_tokens": 185.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/phi-4",
+     "name": "phi-4",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 25.81,
+     "output_tokens": 229.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-14B",
+     "name": "Qwen3-14B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 26.64,
+     "output_tokens": 282.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-14B-Instruct",
+     "name": "Qwen2.5-Coder-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 25.68,
+     "output_tokens": 207.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+     "name": "DeepSeek-Coder-V2-Lite-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 90.59,
+     "output_tokens": 218.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "internlm/internlm2_5-20b-chat",
+     "name": "internlm2_5-20b-chat",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 19.48,
+     "output_tokens": 157.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "openai/gpt-oss-20b",
+     "name": "gpt-oss-20b",
+     "quant": "MXFP4",
+     "provider": "llamacpp",
+     "tokens_per_second": 66.51,
+     "output_tokens": 229.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Codestral-22B-v0.1",
+     "name": "Codestral-22B-v0.1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 16.47,
+     "output_tokens": 81.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "baidu/ERNIE-4.5-21B-A3B-PT",
+     "name": "baidu_ERNIE-4.5-21B-A3B-PT",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 74.68,
+     "output_tokens": 177.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+     "name": "mistralai_Mistral-Small-3.2-24B-Instruct-2506",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 16.54,
+     "output_tokens": 176.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+     "name": "Qwen3-30B-A3B-Instruct-2507",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 70.55,
+     "output_tokens": 160.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-27b-it",
+     "name": "gemma-3-27b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 13.24,
+     "output_tokens": 220.0,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 131,
+   "hardware": {
+    "hwClass": "UNIFIED",
+    "hardwareName": "NVIDIA GB10",
+    "memTierGb": 128,
+    "vramGb": 121.63,
+    "gpuCount": 1,
+    "unifiedMemory": true,
+    "cpu": "Cortex-A725",
+    "cpuCores": 20,
+    "ramGb": 121.63,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "google/gemma-4-12B-it",
+     "name": "gemma-4-12B-it",
+     "quant": "Q4_0",
+     "provider": "llamacpp",
+     "tokens_per_second": 29.01,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-26B-A4B-it",
+     "name": "gemma-4-26B-A4B-it",
+     "quant": "Q4_0",
+     "provider": "llamacpp",
+     "tokens_per_second": 70.64,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-31B-it",
+     "name": "gemma-4-31B-it",
+     "quant": "Q4_0",
+     "provider": "llamacpp",
+     "tokens_per_second": 11.55,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-E2B-it",
+     "name": "gemma-4-E2B-it",
+     "quant": "Q4_0",
+     "provider": "llamacpp",
+     "tokens_per_second": 115.71,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-E4B-it",
+     "name": "gemma-4-E4B-it",
+     "quant": "Q4_0",
+     "provider": "llamacpp",
+     "tokens_per_second": 64.36,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "poolside/Laguna-XS-2.1",
+     "name": "Laguna-XS-2.1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 77.05,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "LiquidAI/LFM2.5-1.2B-Thinking",
+     "name": "LFM2.5-1.2B-Thinking",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 241.25,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 137,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "NVIDIA GeForce GTX 1050 Ti",
+    "memTierGb": 4,
+    "vramGb": 4.0,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz",
+    "cpuCores": 28,
+    "ramGb": 31.19,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "LiquidAI/LFM2.5-1.2B-Thinking",
+     "name": "LFM2.5-1.2B-Thinking",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 53.83,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Llama-3.2-1B-Instruct",
+     "name": "Llama-3.2-1B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 48.41,
+     "output_tokens": 171.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+     "name": "SmolLM2-1.7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 39.8,
+     "output_tokens": 189.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-1.7B",
+     "name": "Qwen3-1.7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 35.47,
+     "output_tokens": 277.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.5-2B",
+     "name": "Qwen_Qwen3.5-2B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 26.85,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "google/gemma-4-E2B-it",
+     "name": "gemma-4-E2B-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 24.95,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-2b-it",
+     "name": "gemma-2-2b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 22.47,
+     "output_tokens": 201.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM3-3B",
+     "name": "HuggingFaceTB_SmolLM3-3B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 21.54,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Llama-3.2-3B-Instruct",
+     "name": "Llama-3.2-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 20.76,
+     "output_tokens": 173.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-3B-Instruct",
+     "name": "Qwen2.5-Coder-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 20.53,
+     "output_tokens": 208.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-4B",
+     "name": "Qwen3-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 17.32,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3.5-mini-instruct",
+     "name": "Phi-3.5-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 17.03,
+     "output_tokens": 253.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-4B-Instruct-2507",
+     "name": "Qwen3-4B-Instruct-2507",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 16.81,
+     "output_tokens": 160.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-4-mini-instruct",
+     "name": "microsoft_Phi-4-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 16.42,
+     "output_tokens": 164.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-4b-it",
+     "name": "gemma-3-4b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 16.11,
+     "output_tokens": 220.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "arcee-ai/AFM-4.5B",
+     "name": "arcee-ai_AFM-4.5B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 15.12,
+     "output_tokens": 194.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3.5-4B",
+     "name": "Qwen3.5-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 13.61,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 147,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "NVIDIA GeForce RTX 2080",
+    "memTierGb": 8,
+    "vramGb": 8.0,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "Intel(R) Core(TM) i9-10900X CPU @ 3.70GHz",
+    "cpuCores": 20,
+    "ramGb": 62.49,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "Qwen/Qwen3-4B",
+     "name": "Qwen3-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 110.6,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-8B",
+     "name": "Qwen3-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 69.34,
+     "output_tokens": 294.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Meta-Llama-3.1-8B-Instruct",
+     "name": "Meta-Llama-3.1-8B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 71.87,
+     "output_tokens": 190.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Ministral-8B-Instruct-2410",
+     "name": "Ministral-8B-Instruct-2410",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 70.45,
+     "output_tokens": 188.67,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 150,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "NVIDIA GeForce RTX 2080",
+    "memTierGb": 8,
+    "vramGb": 8.0,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "Intel(R) Core(TM) i9-10900X CPU @ 3.70GHz",
+    "cpuCores": 20,
+    "ramGb": 62.49,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "mistralai/Mistral-7B-Instruct-v0.3",
+     "name": "Mistral-7B-Instruct-v0.3",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 77.76,
+     "output_tokens": 218.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-7B-Instruct",
+     "name": "Qwen2.5-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 76.96,
+     "output_tokens": 209.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+     "name": "Qwen2.5-Coder-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 76.5,
+     "output_tokens": 167.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+     "name": "DeepSeek-R1-Distill-Qwen-7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 77.18,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Llama-3.2-3B-Instruct",
+     "name": "Llama-3.2-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 140.33,
+     "output_tokens": 170.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+     "name": "DeepSeek-Coder-V2-Lite-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 49.57,
+     "output_tokens": 219.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-9b-it",
+     "name": "gemma-2-9b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 23.69,
+     "output_tokens": 176.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-14B-Instruct",
+     "name": "Qwen2.5-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 20.77,
+     "output_tokens": 179.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-14B-Instruct",
+     "name": "Qwen2.5-Coder-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 20.7,
+     "output_tokens": 164.33,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 151,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "NVIDIA GeForce RTX 2080",
+    "memTierGb": 8,
+    "vramGb": 8.0,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "Intel(R) Core(TM) i9-10900X CPU @ 3.70GHz",
+    "cpuCores": 20,
+    "ramGb": 62.49,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "unsloth/Llama-3.2-1B-Instruct",
+     "name": "Llama-3.2-1B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 304.27,
+     "output_tokens": 181.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-2b-it",
+     "name": "gemma-2-2b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 140.27,
+     "output_tokens": 209.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-3B-Instruct",
+     "name": "Qwen2.5-Coder-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 136.51,
+     "output_tokens": 194.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3.5-mini-instruct",
+     "name": "Phi-3.5-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 121.46,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "ibm-granite/granite-3.1-8b-instruct",
+     "name": "granite-3.1-8b-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 65.63,
+     "output_tokens": 215.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+     "name": "DeepSeek-R1-Distill-Llama-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 71.74,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "tiiuae/Falcon3-7B-Instruct",
+     "name": "Falcon3-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 75.78,
+     "output_tokens": 182.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+     "name": "DeepSeek-R1-Distill-Qwen-14B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 17.87,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Codestral-22B-v0.1",
+     "name": "Codestral-22B-v0.1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 5.05,
+     "output_tokens": 140.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-27b-it",
+     "name": "gemma-2-27b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 3.89,
+     "output_tokens": 172.0,
+     "ttft_ms": null
+    }
+   ]
+  },
+  {
+   "id": 159,
+   "hardware": {
+    "hwClass": "DISCRETE_GPU",
+    "hardwareName": "NVIDIA GeForce RTX 5070",
+    "memTierGb": 12,
+    "vramGb": 11.94,
+    "gpuCount": 1,
+    "unifiedMemory": false,
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900HK",
+    "cpuCores": 20,
+    "ramGb": 31.11,
+    "os": "linux"
+   },
+   "measurements": [
+    {
+     "repo": "unsloth/Llama-3.2-1B-Instruct",
+     "name": "Llama-3.2-1B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 465.98,
+     "output_tokens": 175.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+     "name": "SmolLM2-1.7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 361.96,
+     "output_tokens": 180.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-1.7B",
+     "name": "Qwen3-1.7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 321.91,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-3B-Instruct",
+     "name": "Qwen2.5-Coder-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 208.99,
+     "output_tokens": 208.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Llama-3.2-3B-Instruct",
+     "name": "Llama-3.2-3B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 204.79,
+     "output_tokens": 168.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-2b-it",
+     "name": "gemma-2-2b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 199.45,
+     "output_tokens": 215.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3.5-mini-instruct",
+     "name": "Phi-3.5-mini-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 176.1,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-4B",
+     "name": "Qwen3-4B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 155.99,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-4b-it",
+     "name": "gemma-3-4b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 152.87,
+     "output_tokens": 220.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-7B-Instruct-v0.3",
+     "name": "Mistral-7B-Instruct-v0.3",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 111.54,
+     "output_tokens": 202.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-7B-Instruct",
+     "name": "Qwen2.5-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 110.96,
+     "output_tokens": 214.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+     "name": "DeepSeek-R1-Distill-Qwen-7B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 110.93,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+     "name": "Qwen2.5-Coder-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 110.13,
+     "output_tokens": 107.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "tiiuae/Falcon3-7B-Instruct",
+     "name": "Falcon3-7B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 108.74,
+     "output_tokens": 159.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/Meta-Llama-3.1-8B-Instruct",
+     "name": "Meta-Llama-3.1-8B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 105.32,
+     "output_tokens": 181.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+     "name": "DeepSeek-R1-Distill-Llama-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 105.23,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Ministral-8B-Instruct-2410",
+     "name": "Ministral-8B-Instruct-2410",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 104.44,
+     "output_tokens": 180.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-8B",
+     "name": "Qwen3-8B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 102.95,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+     "name": "DeepSeek-Coder-V2-Lite-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 97.4,
+     "output_tokens": 223.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "ibm-granite/granite-3.1-8b-instruct",
+     "name": "granite-3.1-8b-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 97.38,
+     "output_tokens": 225.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "internlm/internlm3-8b-instruct",
+     "name": "internlm3-8b-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 95.65,
+     "output_tokens": 221.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "01-ai/Yi-1.5-9B-Chat",
+     "name": "Yi-1.5-9B-Chat",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 95.56,
+     "output_tokens": 155.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-Nemo-Instruct-2407",
+     "name": "Mistral-Nemo-Instruct-2407",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 72.42,
+     "output_tokens": 193.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-9b-it",
+     "name": "gemma-2-9b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 69.19,
+     "output_tokens": 173.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/Phi-3-medium-4k-instruct",
+     "name": "Phi-3-medium-4k-instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 63.41,
+     "output_tokens": 134.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-12b-it",
+     "name": "gemma-3-12b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 63.22,
+     "output_tokens": 209.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-14B",
+     "name": "Qwen3-14B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 59.01,
+     "output_tokens": 291.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "microsoft/phi-4",
+     "name": "phi-4",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 58.44,
+     "output_tokens": 222.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-14B-Instruct",
+     "name": "Qwen2.5-Coder-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 58.12,
+     "output_tokens": 116.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "openai/gpt-oss-20b",
+     "name": "gpt-oss-20b",
+     "quant": "MXFP4",
+     "provider": "llamacpp",
+     "tokens_per_second": 57.74,
+     "output_tokens": 242.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-14B-Instruct",
+     "name": "Qwen2.5-14B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 56.69,
+     "output_tokens": 217.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+     "name": "DeepSeek-R1-Distill-Qwen-14B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 56.44,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "allenai/OLMo-2-1124-13B-Instruct",
+     "name": "OLMo-2-1124-13B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 38.98,
+     "output_tokens": 130.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+     "name": "Qwen3-30B-A3B-Instruct-2507",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 25.69,
+     "output_tokens": 156.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Mistral-Small-24B-Instruct-2501",
+     "name": "Mistral-Small-24B-Instruct-2501",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 7.61,
+     "output_tokens": 206.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "mistralai/Codestral-22B-v0.1",
+     "name": "Codestral-22B-v0.1",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 7.13,
+     "output_tokens": 150.67,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-3-27b-it",
+     "name": "gemma-3-27b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 4.82,
+     "output_tokens": 221.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen3-32B",
+     "name": "Qwen3-32B",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 4.42,
+     "output_tokens": 300.0,
+     "ttft_ms": null
+    },
+    {
+     "repo": "Qwen/Qwen2.5-Coder-32B-Instruct",
+     "name": "Qwen2.5-Coder-32B-Instruct",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 4.09,
+     "output_tokens": 216.33,
+     "ttft_ms": null
+    },
+    {
+     "repo": "unsloth/gemma-2-27b-it",
+     "name": "gemma-2-27b-it",
+     "quant": "Q4_K_M",
+     "provider": "llamacpp",
+     "tokens_per_second": 3.5,
+     "output_tokens": 166.67,
+     "ttft_ms": null
+    }
+   ]
+  }
+ ]
+}
