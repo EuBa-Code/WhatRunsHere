@@ -1,0 +1,19 @@
+/target
+**/*.rs.bk
+*.pdb
+
+# Node / Tauri front-end
+node_modules/
+dist/
+.vite/
+
+# Catalog build artefacts and caches
+/catalog/.cache/
+/tools/__pycache__/
+*.pyc
+
+# Local calibration results, which are machine-specific
+/.whatllm/
+
+.DS_Store
+Thumbs.db

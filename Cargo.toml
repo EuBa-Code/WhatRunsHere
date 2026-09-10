@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/whatllm-core",
+    "crates/whatllm-hw",
+    "crates/whatllm-probe",
+    "crates/whatllm-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/eugeniobarberini/whatllm"
+authors = ["WhatLLM contributors"]
+
+[workspace.dependencies]
+whatllm-core = { path = "crates/whatllm-core", version = "0.1.0" }
+whatllm-hw = { path = "crates/whatllm-hw", version = "0.1.0" }
+whatllm-probe = { path = "crates/whatllm-probe", version = "0.1.0" }
+serde = { version = "1", features = ["derive"] }
+thiserror = "1"
+
+# A benchmark compiled without optimisation measures the compiler, not the
+# machine: the unoptimised streaming loop reports around 0.3 GB/s on hardware
+# that sustains 40. The probe is therefore optimised in every profile, so that
+# `cargo run` and `cargo test` measure the same thing a release build does.
+[profile.dev.package.whatllm-probe]
+opt-level = 3
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = "symbols"
+
+[profile.bench]
+inherits = "release"
+debug = true
