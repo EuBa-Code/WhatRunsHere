@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "WhatLLM",
+  "version": "0.1.0",
+  "identifier": "dev.whatllm.app",
+  "build": {
+    "frontendDist": "../../ui/dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm --prefix ../../ui run dev",
+    "beforeBuildCommand": "npm --prefix ../../ui run build"
+  },
+  "app": {
+    "withGlobalTauri": false,
+    "windows": [
+      {
+        "label": "main",
+        "title": "WhatLLM",
+        "width": 1180,
+        "height": 800,
+        "minWidth": 880,
+        "minHeight": 620,
+        "resizable": true,
+        "center": true,
+        "theme": null,
+        "dragDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis", "app", "dmg", "deb", "appimage"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/icon.png"
+    ],
+    "shortDescription": "Which language models will actually run well on your machine",
+    "longDescription": "WhatLLM measures the machine it runs on and works out, from each model's real architecture, which ones will fit and how fast they will be. It makes no network calls."
+  }
+}
