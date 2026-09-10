@@ -33,6 +33,28 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
 
+      # Tauri draws through the system webview, which on Linux is a package
+      # rather than part of the OS.
+      - name: Linux webview dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev \
+            librsvg2-dev patchelf libgtk-3-dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+
+      # `tauri::generate_context!` reads the built front end at compile time,
+      # so the window will not build until this has run. It is also the only
+      # thing that type-checks the TypeScript.
+      - name: Build the front end
+        run: npm ci && npm run build
+        working-directory: ui
+
       - name: Formatting
         run: cargo fmt --all --check
 
