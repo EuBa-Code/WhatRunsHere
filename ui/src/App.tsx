@@ -11,6 +11,7 @@ import * as engine from "./engine";
 import type { Machine, RankedModel, Sizing } from "./engine";
 import * as fmt from "./format";
 import { ProvenanceLegend } from "./components/ui";
+import { TitleBar } from "./components/TitleBar";
 import { MachineView } from "./views/MachineView";
 import { ModelsView } from "./views/ModelsView";
 import { PlanView } from "./views/PlanView";
@@ -194,7 +195,7 @@ function TopBar({
 }) {
   const measured = machine?.measurement;
   return (
-    <header className="flex shrink-0 items-center gap-6 border-b border-[var(--color-line)] bg-[var(--color-surface)] px-5 py-2.5">
+    <TitleBar>
       <div className="flex items-center gap-2.5">
         <Mark />
         <span className="font-display text-[14px] font-semibold tracking-tight">
@@ -244,12 +245,12 @@ function TopBar({
           type="button"
           onClick={onTheme}
           aria-label={theme === "dark" ? "Use the light theme" : "Use the dark theme"}
-          className="rounded-lg px-1.5 py-1 text-[13px] text-[var(--color-ink-faint)] hover:text-[var(--color-ink)]"
+          className="rounded-lg px-1.5 py-1 text-[13px] text-[var(--color-ink-faint)] transition-colors hover:text-[var(--color-ink)]"
         >
           {theme === "dark" ? "◐" : "◑"}
         </button>
       </div>
-    </header>
+    </TitleBar>
   );
 }
 

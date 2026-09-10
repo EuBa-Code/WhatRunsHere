@@ -12,6 +12,12 @@ import type { View } from "../App";
 import * as fmt from "../format";
 import { MemoryColumn } from "../components/MemoryColumn";
 import { Empty, Figure, Meter, VerdictPill } from "../components/ui";
+import {
+  Explain,
+  qualityExplanation,
+  quantExplanation,
+  speedExplanation,
+} from "../components/Explain";
 
 type Filter = "all" | "runs" | "sparse";
 
@@ -123,15 +129,27 @@ function Row({
   const { fit } = model;
   const runs = fit.verdict !== "does_not_fit";
 
+  // The row opens a plan, and it also carries explanations that can be
+  // hovered and focused. One cannot be nested inside the other — a button
+  // inside a button is invalid, and a screen reader reads the outer label over
+  // the inner one — so the row's own action is a button stretched behind the
+  // content, and only the explanations take pointer events in front of it.
   return (
-    <li>
+    <li
+      className={`card group relative px-4 py-3 transition-colors focus-within:border-[var(--color-ink-faint)] hover:border-[var(--color-ink-faint)] ${
+        selected ? "border-[var(--color-brass)]" : ""
+      } ${runs ? "" : "opacity-55"}`}
+    >
       <button
         type="button"
         onClick={() => onOpen(model.id)}
-        className={`card w-full px-4 py-3 text-left transition-colors hover:border-[var(--color-ink-faint)] ${
-          selected ? "border-[var(--color-brass)]" : ""
-        } ${runs ? "" : "opacity-55"}`}
+        className="absolute inset-0 z-0 rounded-[inherit]"
       >
+        <span className="sr-only">
+          Open the full plan for {model.name}
+        </span>
+      </button>
+      <div className="pointer-events-none relative z-10">
         <div className="flex items-baseline gap-3">
           <span className="figure w-6 shrink-0 text-[11px] text-[var(--color-ink-faint)]">
             {rank}
@@ -142,10 +160,19 @@ function Row({
           <span className="figure text-[12px] text-[var(--color-ink-faint)]">
             {fmt.params(model.parameters)}
             {model.sparse && (
-              <span title="Mixture of experts: only some parameters are read per token">
-                {" "}
-                · {fmt.params(model.active_parameters)} active
-              </span>
+              <>
+                {" · "}
+                <Explain
+                  title="A mixture of experts"
+                  body={`This model holds ${fmt.params(
+                    model.parameters,
+                  )} of weights but reads only ${fmt.params(
+                    model.active_parameters,
+                  )} of them for each token. It needs the memory of a large model and runs at close to the speed of a small one.`}
+                >
+                  {fmt.params(model.active_parameters)} active
+                </Explain>
+              </>
             )}
           </span>
           <span className="ml-auto shrink-0">
@@ -167,13 +194,22 @@ function Row({
         </div>
 
         <div className="mt-2.5 flex items-baseline gap-5 text-[12px] text-[var(--color-ink-faint)]">
-          <span className="figure">{fit.quant}</span>
-          <span title="Attention cache format">
+          <Explain
+            className="figure"
+            {...quantExplanation(fit.quant, fit.bits_per_weight)}
+          >
+            {fit.quant}
+          </Explain>
+          <Explain
+            title="Attention cache format"
+            body="The conversation is kept in memory in this format. Compressing it costs almost no quality and can halve what a long context needs, which is why it is chosen separately from the weights."
+          >
             cache <span className="figure">{fit.kv_quant.toUpperCase()}</span>
-          </span>
+          </Explain>
           <span>{runModeLabel(fit.run_mode)}</span>
-          <span className="ml-auto flex items-baseline gap-4">
-            <span className="flex w-20 items-baseline gap-1.5" title="Quality, 0–100">
+          <span className="ml-auto flex items-baseline gap-4 whitespace-nowrap">
+            <span className="flex items-baseline gap-1.5">
+              <Explain {...qualityExplanation(fit.quality_rank)}>quality</Explain>
               <span className="figure text-[13px] text-[var(--color-ink)]">
                 {Math.round(fit.quality)}
               </span>
@@ -181,14 +217,16 @@ function Row({
                 <Meter value={fit.quality} />
               </span>
             </span>
-            <Figure
-              value={fmt.tps(fit.decode_tps)}
-              unit="tok/s"
-              confidence={fit.confidence}
-            />
+            <Explain underline={false} {...speedExplanation(fit.decode_tps)}>
+              <Figure
+                value={fmt.tps(fit.decode_tps)}
+                unit="tok/s"
+                confidence={fit.confidence}
+              />
+            </Explain>
           </span>
         </div>
-      </button>
+      </div>
     </li>
   );
 }

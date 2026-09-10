@@ -13,6 +13,11 @@ import type { View } from "../App";
 import * as fmt from "../format";
 import { MemoryColumn } from "../components/MemoryColumn";
 import { Card, Empty, Eyebrow, Figure, Spec, VerdictPill } from "../components/ui";
+import {
+  Explain,
+  quantExplanation,
+  speedExplanation,
+} from "../components/Explain";
 import { runModeLabel } from "./ModelsView";
 
 export function PlanView({
@@ -136,30 +141,31 @@ export function PlanView({
                 <span className="text-[13px]">{runModeLabel(fit.run_mode)}</span>
               </Spec>
               <Spec label="Weight format">
-                <span className="figure text-[13px]">
+                <Explain
+                  className="figure text-[13px]"
+                  {...quantExplanation(fit.quant, fit.bits_per_weight)}
+                >
                   {fit.quant} · {fit.bits_per_weight.toFixed(2)} bpw
-                </span>
-              </Spec>
-              <Spec label="Cache format">
-                <span className="figure text-[13px]">
-                  {fit.kv_quant.toUpperCase()}
-                </span>
+                </Explain>
               </Spec>
               <Spec label="Generation">
-                <Figure
-                  value={fmt.tps(fit.decode_tps)}
-                  unit="tok/s"
-                  confidence={fit.confidence}
-                />
+                <Explain underline={false} {...speedExplanation(fit.decode_tps)}>
+                  <Figure
+                    value={fmt.tps(fit.decode_tps)}
+                    unit="tok/s"
+                    confidence={fit.confidence}
+                  />
+                </Explain>
               </Spec>
               <Spec label="Prompt processing">
                 {fit.prefill_tps === null ? (
-                  <span
+                  <Explain
                     className="text-[13px] text-[var(--color-ink-faint)]"
-                    title="Nothing has measured this machine's compute throughput. Reported as unknown rather than as zero."
+                    title="Not counted, rather than zero"
+                    body="How fast this machine reads a prompt depends on its compute throughput, and nothing has measured that yet. Charging it at zero would flatter every estimate, so the time is left out and said to be left out."
                   >
                     not counted
-                  </span>
+                  </Explain>
                 ) : (
                   <Figure
                     value={fmt.tps(fit.prefill_tps)}
@@ -167,6 +173,15 @@ export function PlanView({
                     confidence={fit.confidence}
                   />
                 )}
+              </Spec>
+              <Spec label="Cache format">
+                <Explain
+                  className="figure text-[13px]"
+                  title="Attention cache format"
+                  body="The conversation is kept in memory in this format. Compressing it costs almost no quality and can halve what a long context needs, which is why it is chosen separately from the weights."
+                >
+                  {fit.kv_quant.toUpperCase()}
+                </Explain>
               </Spec>
               <Spec label="Longest context here">
                 <span className="figure text-[13px]">
