@@ -51,13 +51,14 @@ fn load_catalog() -> Catalog {
 
 #[test]
 fn computed_sizes_match_the_files_they_predict() {
-    let catalog = load_catalog();
-
     struct Sample {
         label: String,
         error: f64,
         bits_per_weight: f64,
     }
+
+    let catalog = load_catalog();
+
     let mut samples = Vec::new();
     let mut by_quant: BTreeMap<&str, Vec<f64>> = BTreeMap::new();
     let mut by_model: BTreeMap<&str, Vec<f64>> = BTreeMap::new();

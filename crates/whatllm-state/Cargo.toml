@@ -1,0 +1,33 @@
+[package]
+name = "whatllm-state"
+description = "Where the catalog and the calibration live on disk, shared by every front end."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lints.rust]
+missing_docs = "warn"
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+cast_precision_loss = "allow"
+cast_possible_truncation = "allow"
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+
+[dependencies]
+anyhow = "1"
+serde = { workspace = true, features = ["derive"] }
+serde_json = "1"
+whatllm-core = { workspace = true }
+
+# Only the fingerprint test needs a real machine to fingerprint. Detection is
+# not a dependency of storing things on disk, and making it one would point
+# this crate at the platform it exists to stay clear of.
+[dev-dependencies]
+whatllm-hw = { workspace = true }

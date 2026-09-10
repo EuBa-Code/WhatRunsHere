@@ -7,7 +7,8 @@
 #![forbid(unsafe_code)]
 
 mod render;
-mod state;
+
+use whatllm_state as state;
 
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand, ValueEnum};
@@ -466,10 +467,35 @@ fn describe_detection(note: &whatllm_hw::DetectionNote) -> String {
             ),
             None => format!("{name} is integrated; its pool is system RAM"),
         },
+        N::LegacyIntegratedGraphics { name } => format!(
+            "{name} is older than any usable compute back end; the model will run              on the CPU. It would read the same memory either way, so nothing is              lost by that."
+        ),
         N::NvidiaUnavailable { .. } => "no NVIDIA driver found".to_owned(),
+        N::MemorySizeUnreadable { device } => format!(
+            "{device}'s memory is only reported through a 32-bit field, which              cannot hold the size of any card worth asking about. It has been              left out rather than sized against a ceiling value."
+        ),
         N::BandwidthUnknown { device } => {
             format!("{device}'s bandwidth is unknown until something measures it")
         }
+        N::FirmwareMemoryCarveout {
+            bytes,
+            os_reported_bytes,
+        } => format!(
+            "firmware reserved {} for graphics before the operating system \
+             started, so it reports only {}. That memory is installed and a \
+             model can use it, and it has been counted back in.",
+            render::bytes(*bytes),
+            render::bytes(*os_reported_bytes)
+        ),
+        N::ComputeMemoryCapped {
+            device,
+            bytes,
+            pool_bytes,
+        } => format!(
+            "{device} shares the machine's {}, but the platform will not let a              compute job hold more than {} of it. Plans are sized against the              smaller figure, which is the one a load actually meets.",
+            render::bytes(*pool_bytes),
+            render::bytes(*bytes)
+        ),
         N::PlatformUnsupported { target } => {
             format!("no adapter enumeration for {target} yet")
         }
@@ -845,9 +871,9 @@ fn plan(session: &Session, query: &str, sizing: &SizingArgs) -> Result<()> {
         );
         if let Some(ceiling) = fit.max_context {
             println!(
-                "  {:<12} {}",
+                "  {:<12} {} tokens in this placement",
                 style.dim("Ceiling"),
-                format!("{} tokens in this placement", render::tokens(ceiling))
+                render::tokens(ceiling)
             );
         }
     }

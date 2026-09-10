@@ -35,4 +35,5 @@ serde = { workspace = true, features = ["derive"] }
 serde_json = "1.0.151"
 whatllm-core = { version = "0.1.0", path = "../whatllm-core" }
 whatllm-hw = { version = "0.1.0", path = "../whatllm-hw" }
+whatllm-state = { workspace = true }
 whatllm-probe = { version = "0.1.0", path = "../whatllm-probe" }

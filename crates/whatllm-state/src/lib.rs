@@ -1,5 +1,11 @@
 //! Where the catalog and the calibration come from.
 //!
+//! Shared rather than duplicated per front end, and deliberately so: the
+//! calibration cache is one file that `whatllm probe` writes and the desktop
+//! application reads. Two copies of this that drifted apart would leave a
+//! machine measured by one and unmeasured by the other, with nothing to say
+//! why.
+//!
 //! The catalog is looked for on disk before the copy compiled into the binary.
 //! That ordering is deliberate: a tool whose model list only updates when you
 //! reinstall it is out of date the week after it ships, and the models people
