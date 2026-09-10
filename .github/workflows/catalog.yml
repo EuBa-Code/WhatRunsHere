@@ -1,0 +1,76 @@
+name: Refresh catalog
+
+# Daily. Model releases and new quantized builds do not wait a week, and a
+# catalog that lags by seven days is missing exactly the models people are
+# asking about. The run is cheap — a couple of hundred HuggingFace requests —
+# and it commits nothing on a day when nothing changed.
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: catalog-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      # Fails, and writes nothing, if the rebuild would lose models or builds.
+      # A bad afternoon on HuggingFace must not be able to shrink the catalog.
+      - name: Rebuild from HuggingFace
+        run: python tools/build_catalog.py
+
+      - name: Catalog safety guard
+        run: python tools/test_catalog_safety.py
+
+      # The gate that matters. `size_validation` recomputes every model's size
+      # from its architecture and compares against the real file the rebuild
+      # just recorded, so an architecture derived wrongly — a new family whose
+      # config is shaped differently, a scraper change with an unforeseen
+      # effect — fails here rather than shipping. `throughput_validation` holds
+      # the speed model to measurements from real machines at the same time.
+      - name: Validate against reality
+        run: cargo test --all-features
+
+      - name: Commit if anything actually changed
+        run: |
+          set -euo pipefail
+          # The generated date changes every run; on its own it is not a change
+          # worth a commit, and committing it daily would bury the real ones.
+          substantive=$(git diff -U0 -- catalog/catalog.json \
+            | grep -E '^[+-]' \
+            | grep -Ev '^(\+\+\+|---)' \
+            | grep -v '"generated"' \
+            | wc -l)
+          if [ "$substantive" -eq 0 ]; then
+            echo "Nothing changed but the timestamp; leaving the catalog alone."
+            git checkout -- catalog/catalog.json
+            exit 0
+          fi
+
+          models=$(python -c "import json;print(len(json.load(open('catalog/catalog.json'))['models']))")
+          builds=$(python -c "import json;print(sum(len(m['builds']) for m in json.load(open('catalog/catalog.json'))['models']))")
+
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add catalog/catalog.json
+          git commit -m "catalog: refresh ($models models, $builds measured builds)
+
+          Rebuilt from HuggingFace and validated: every measured build was
+          checked against the size computed from its architecture, and the
+          throughput model against community benchmarks."
+          git push
