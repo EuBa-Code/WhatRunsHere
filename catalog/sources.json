@@ -1,0 +1,754 @@
+[
+ {
+  "id": "Qwen/Qwen3-0.6B",
+  "display_name": "Qwen3 0.6B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-0.6B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 26.0,
+   "ifeval": 62.2
+  }
+ },
+ {
+  "id": "Qwen/Qwen3-1.7B",
+  "display_name": "Qwen3 1.7B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-1.7B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 37.8,
+   "ifeval": 72.5
+  }
+ },
+ {
+  "id": "Qwen/Qwen3-4B",
+  "display_name": "Qwen3 4B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-4B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 54.0,
+   "gpqa_diamond": 40.4,
+   "livecodebench": 21.3,
+   "ifeval": 81.2
+  }
+ },
+ {
+  "id": "Qwen/Qwen3-8B",
+  "display_name": "Qwen3 8B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-8B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 56.7,
+   "gpqa_diamond": 44.1,
+   "livecodebench": 23.0,
+   "ifeval": 83.0
+  }
+ },
+ {
+  "id": "Qwen/Qwen3-14B",
+  "display_name": "Qwen3 14B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-14B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 61.0,
+   "gpqa_diamond": 49.0,
+   "livecodebench": 26.5,
+   "ifeval": 84.8
+  }
+ },
+ {
+  "id": "Qwen/Qwen3-32B",
+  "display_name": "Qwen3 32B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-32B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 65.5,
+   "gpqa_diamond": 49.4,
+   "livecodebench": 29.1,
+   "ifeval": 85.4,
+   "arena_elo": 1252.0
+  }
+ },
+ {
+  "id": "Qwen/Qwen3-30B-A3B",
+  "display_name": "Qwen3 30B-A3B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-30B-A3B-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 62.7,
+   "gpqa_diamond": 44.4,
+   "livecodebench": 26.0,
+   "ifeval": 84.3
+  }
+ },
+ {
+  "id": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "display_name": "Qwen2.5-Coder 7B",
+  "family": "Qwen2.5-Coder",
+  "license": "apache-2.0",
+  "released": "2024-11-12",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-Coder-7B-Instruct-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 40.1,
+   "livecodebench": 18.2,
+   "ifeval": 68.0
+  }
+ },
+ {
+  "id": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "display_name": "Qwen2.5-Coder 32B",
+  "family": "Qwen2.5-Coder",
+  "license": "apache-2.0",
+  "released": "2024-11-12",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-Coder-32B-Instruct-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 50.4,
+   "livecodebench": 31.4,
+   "ifeval": 79.6,
+   "arena_elo": 1194.0
+  }
+ },
+ {
+  "id": "unsloth/Meta-Llama-3.1-8B-Instruct",
+  "display_name": "Llama 3.1 8B Instruct",
+  "family": "Llama 3",
+  "license": "llama3.1",
+  "released": "2024-07-23",
+  "gguf_repos": [
+   "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 37.1,
+   "gpqa_diamond": 30.4,
+   "livecodebench": 12.3,
+   "ifeval": 80.4,
+   "arena_elo": 1176.0
+  }
+ },
+ {
+  "id": "unsloth/Llama-3.3-70B-Instruct",
+  "display_name": "Llama 3.3 70B Instruct",
+  "family": "Llama 3",
+  "license": "llama3.3",
+  "released": "2024-12-06",
+  "gguf_repos": [
+   "bartowski/Llama-3.3-70B-Instruct-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 58.4,
+   "gpqa_diamond": 45.9,
+   "livecodebench": 24.6,
+   "ifeval": 92.1,
+   "arena_elo": 1257.0
+  }
+ },
+ {
+  "id": "unsloth/gemma-3-4b-it",
+  "display_name": "Gemma 3 4B",
+  "family": "Gemma 3",
+  "license": "gemma",
+  "released": "2025-03-12",
+  "gguf_repos": [
+   "bartowski/google_gemma-3-4b-it-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 43.6,
+   "gpqa_diamond": 30.8,
+   "livecodebench": 12.6,
+   "arena_elo": 1160.0
+  }
+ },
+ {
+  "id": "unsloth/gemma-3-12b-it",
+  "display_name": "Gemma 3 12B",
+  "family": "Gemma 3",
+  "license": "gemma",
+  "released": "2025-03-12",
+  "gguf_repos": [
+   "bartowski/google_gemma-3-12b-it-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 60.6,
+   "gpqa_diamond": 40.9,
+   "livecodebench": 24.6,
+   "arena_elo": 1220.0
+  }
+ },
+ {
+  "id": "unsloth/gemma-3-27b-it",
+  "display_name": "Gemma 3 27B",
+  "family": "Gemma 3",
+  "license": "gemma",
+  "released": "2025-03-12",
+  "gguf_repos": [
+   "bartowski/google_gemma-3-27b-it-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 67.5,
+   "gpqa_diamond": 42.4,
+   "livecodebench": 29.7,
+   "arena_elo": 1341.0
+  }
+ },
+ {
+  "id": "mistralai/Mistral-Small-24B-Instruct-2501",
+  "display_name": "Mistral Small 24B",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-01-30",
+  "gguf_repos": [
+   "bartowski/Mistral-Small-24B-Instruct-2501-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 66.3,
+   "gpqa_diamond": 45.3,
+   "ifeval": 82.0,
+   "arena_elo": 1210.0
+  }
+ },
+ {
+  "id": "microsoft/phi-4",
+  "display_name": "Phi-4 14B",
+  "family": "Phi",
+  "license": "mit",
+  "released": "2024-12-12",
+  "gguf_repos": [
+   "bartowski/phi-4-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 70.4,
+   "gpqa_diamond": 56.1,
+   "math": 80.4,
+   "ifeval": 63.0
+  }
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+  "display_name": "DeepSeek-R1 Distill Qwen 32B",
+  "family": "DeepSeek-R1 Distill",
+  "license": "mit",
+  "released": "2025-01-20",
+  "gguf_repos": [
+   "bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF"
+  ],
+  "benchmarks": {
+   "gpqa_diamond": 62.1,
+   "livecodebench": 57.2,
+   "math": 94.3,
+   "mmlu_pro": 62.0
+  }
+ },
+ {
+  "id": "openai/gpt-oss-20b",
+  "display_name": "gpt-oss 20B",
+  "family": "gpt-oss",
+  "license": "apache-2.0",
+  "released": "2025-08-05",
+  "gguf_repos": [
+   "ggml-org/gpt-oss-20b-GGUF",
+   "unsloth/gpt-oss-20b-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 68.0,
+   "gpqa_diamond": 55.3,
+   "livecodebench": 45.0
+  }
+ },
+ {
+  "id": "01-ai/Yi-1.5-9B-Chat",
+  "display_name": "Yi-1.5-9B",
+  "family": "Yi",
+  "gguf_repos": [
+   "bartowski/Yi-1.5-9B-Chat-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "CohereForAI/aya-expanse-8b",
+  "display_name": "aya-expanse-8b",
+  "family": "Aya",
+  "gguf_repos": [
+   "bartowski/aya-expanse-8b-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "gated repository; config.json is not readable"
+ },
+ {
+  "id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+  "display_name": "SmolLM2-1.7B",
+  "family": "SmolLM",
+  "gguf_repos": [
+   "bartowski/SmolLM2-1.7B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "HuggingFaceTB/SmolLM3-3B",
+  "display_name": "SmolLM3-3B",
+  "family": "SmolLM",
+  "gguf_repos": [
+   "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct",
+  "display_name": "EXAONE-3.5-7.8B",
+  "family": "EXAONE",
+  "gguf_repos": [
+   "bartowski/EXAONE-3.5-7.8B-Instruct-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "config.json omits num_hidden_layers"
+ },
+ {
+  "id": "LiquidAI/LFM2-8B-A1B",
+  "display_name": "LFM2-8B-A1B",
+  "family": "LFM",
+  "gguf_repos": [
+   "bartowski/LiquidAI_LFM2-8B-A1B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "LiquidAI/LFM2.5-1.2B-Thinking",
+  "display_name": "LFM2.5-1.2B-Thinking",
+  "family": "LFM",
+  "gguf_repos": [
+   "unsloth/LFM2.5-1.2B-Thinking-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-14B-Instruct",
+  "display_name": "Qwen2.5-14B",
+  "family": "Qwen2.5",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-14B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-7B-Instruct",
+  "display_name": "Qwen2.5-7B",
+  "family": "Qwen2.5",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-7B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-Coder-14B-Instruct",
+  "display_name": "Qwen2.5-Coder-14B",
+  "family": "Qwen2.5-Coder",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-Coder-3B-Instruct",
+  "display_name": "Qwen2.5-Coder-3B",
+  "family": "Qwen2.5-Coder",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-Coder-3B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+  "display_name": "Qwen3-30B-A3B-Instruct",
+  "family": "Qwen3",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-30B-A3B-Instruct-2507-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-4B-Instruct-2507",
+  "display_name": "Qwen3-4B-Instruct",
+  "family": "Qwen3",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-4B-Instruct-2507-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3.5-2B",
+  "display_name": "Qwen3.5-2B",
+  "family": "Qwen3.5",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3.5-2B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3.5-4B",
+  "display_name": "Qwen3.5-4B",
+  "family": "Qwen3.5",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3.5-4B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3.5-9B",
+  "display_name": "Qwen3.5-9B",
+  "family": "Qwen3.5",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3.5-9B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3.6-27B",
+  "display_name": "Qwen3.6-27B",
+  "family": "Qwen3.6",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3.6-27B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "allenai/OLMo-2-1124-13B-Instruct",
+  "display_name": "OLMo-2-1124-13B",
+  "family": "OLMo",
+  "gguf_repos": [
+   "bartowski/OLMo-2-1124-13B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "arcee-ai/AFM-4.5B",
+  "display_name": "AFM-4.5B",
+  "family": "Arcee",
+  "gguf_repos": [
+   "bartowski/arcee-ai_AFM-4.5B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "baidu/ERNIE-4.5-21B-A3B-PT",
+  "display_name": "ERNIE-4.5-21B-A3B",
+  "family": "ERNIE",
+  "gguf_repos": [
+   "bartowski/baidu_ERNIE-4.5-21B-A3B-PT-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "mixture-of-experts layout not read correctly from its config"
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
+  "display_name": "DeepSeek-Coder-V2-Lite",
+  "family": "DeepSeek",
+  "gguf_repos": [
+   "bartowski/DeepSeek-Coder-V2-Lite-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+  "display_name": "DeepSeek-R1-Distill-Llama-8B",
+  "family": "DeepSeek-R1 Distill",
+  "gguf_repos": [
+   "bartowski/DeepSeek-R1-Distill-Llama-8B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+  "display_name": "DeepSeek-R1-Distill-Qwen-14B",
+  "family": "DeepSeek-R1 Distill",
+  "gguf_repos": [
+   "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+  "display_name": "DeepSeek-R1-Distill-Qwen-7B",
+  "family": "DeepSeek-R1 Distill",
+  "gguf_repos": [
+   "bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "google/gemma-4-12B-it",
+  "display_name": "gemma-4-12B",
+  "family": "Gemma 4",
+  "gguf_repos": [
+   "bartowski/gemma-4-12B-it-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "google/gemma-4-26B-A4B-it",
+  "display_name": "gemma-4-26B-A4B",
+  "family": "Gemma 4",
+  "gguf_repos": [
+   "bartowski/google_gemma-4-26B-A4B-it-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "google/gemma-4-31B-it",
+  "display_name": "gemma-4-31B",
+  "family": "Gemma 4",
+  "gguf_repos": [
+   "bartowski/google_gemma-4-31B-it-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "google/gemma-4-E2B-it",
+  "display_name": "gemma-4-E2B",
+  "family": "Gemma 4",
+  "gguf_repos": [
+   "bartowski/google_gemma-4-E2B-it-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "MatFormer: per-layer widths the architecture model does not carry"
+ },
+ {
+  "id": "google/gemma-4-E4B-it",
+  "display_name": "gemma-4-E4B",
+  "family": "Gemma 4",
+  "gguf_repos": [
+   "bartowski/google_gemma-4-E4B-it-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "MatFormer: per-layer widths the architecture model does not carry"
+ },
+ {
+  "id": "ibm-granite/granite-3.1-8b-instruct",
+  "display_name": "granite-3.1-8b",
+  "family": "Granite",
+  "gguf_repos": [
+   "bartowski/granite-3.1-8b-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "internlm/internlm2_5-20b-chat",
+  "display_name": "internlm2 5-20b",
+  "family": "InternLM",
+  "gguf_repos": [
+   "bartowski/internlm2_5-20b-chat-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "internlm/internlm3-8b-instruct",
+  "display_name": "internlm3-8b",
+  "family": "InternLM",
+  "gguf_repos": [
+   "bartowski/internlm3-8b-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "microsoft/Phi-3-medium-4k-instruct",
+  "display_name": "Phi-3-medium-4k",
+  "family": "Phi",
+  "gguf_repos": [
+   "bartowski/Phi-3-medium-4k-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "microsoft/Phi-3.5-mini-instruct",
+  "display_name": "Phi-3.5-mini",
+  "family": "Phi",
+  "gguf_repos": [
+   "bartowski/Phi-3.5-mini-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "microsoft/Phi-4-mini-instruct",
+  "display_name": "Phi-4-mini",
+  "family": "Phi",
+  "gguf_repos": [
+   "bartowski/microsoft_Phi-4-mini-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Codestral-22B-v0.1",
+  "display_name": "Codestral-22B-v0.1",
+  "family": "Mistral",
+  "gguf_repos": [
+   "bartowski/Codestral-22B-v0.1-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Ministral-8B-Instruct-2410",
+  "display_name": "Ministral-8B-Instruct",
+  "family": "Mistral",
+  "gguf_repos": [
+   "bartowski/Ministral-8B-Instruct-2410-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Mistral-7B-Instruct-v0.3",
+  "display_name": "Mistral-7B-Instruct-v0.3",
+  "family": "Mistral",
+  "gguf_repos": [
+   "bartowski/Mistral-7B-Instruct-v0.3-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Mistral-Nemo-Instruct-2407",
+  "display_name": "Mistral-Nemo-Instruct",
+  "family": "Mistral",
+  "gguf_repos": [
+   "bartowski/Mistral-Nemo-Instruct-2407-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+  "display_name": "Mistral-Small-3.2-24B-Instruct",
+  "family": "Mistral",
+  "gguf_repos": [
+   "bartowski/mistralai_Mistral-Small-3.2-24B-Instruct-2506-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+  "display_name": "Llama-3.1-Nemotron-Nano-8B-v1",
+  "family": "Llama 3",
+  "gguf_repos": [
+   "bartowski/nvidia_Llama-3.1-Nemotron-Nano-8B-v1-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "poolside/Laguna-XS-2.1",
+  "display_name": "Laguna-XS-2.1",
+  "family": "Laguna",
+  "gguf_repos": [
+   "bartowski/Laguna-XS-2.1-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "swiss-ai/Apertus-8B-Instruct-2509",
+  "display_name": "Apertus-8B-Instruct",
+  "family": "Apertus",
+  "gguf_repos": [
+   "bartowski/swiss-ai_Apertus-8B-Instruct-2509-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "tiiuae/Falcon3-7B-Instruct",
+  "display_name": "Falcon3-7B",
+  "family": "Falcon",
+  "gguf_repos": [
+   "bartowski/Falcon3-7B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/Llama-3.2-1B-Instruct",
+  "display_name": "Llama-3.2-1B",
+  "family": "Llama 3",
+  "gguf_repos": [
+   "bartowski/Llama-3.2-1B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/Llama-3.2-3B-Instruct",
+  "display_name": "Llama-3.2-3B",
+  "family": "Llama 3",
+  "gguf_repos": [
+   "bartowski/Llama-3.2-3B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/gemma-2-27b-it",
+  "display_name": "gemma-2-27b",
+  "family": "Gemma 2",
+  "gguf_repos": [
+   "bartowski/gemma-2-27b-it-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/gemma-2-2b-it",
+  "display_name": "gemma-2-2b",
+  "family": "Gemma 2",
+  "gguf_repos": [
+   "bartowski/gemma-2-2b-it-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/gemma-2-9b-it",
+  "display_name": "gemma-2-9b",
+  "family": "Gemma 2",
+  "gguf_repos": [
+   "bartowski/gemma-2-9b-it-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/gemma-3n-E4B-it",
+  "display_name": "gemma-3n-E4B",
+  "family": "Gemma 3",
+  "gguf_repos": [
+   "unsloth/gemma-3n-E4B-it-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "MatFormer: intermediate_size varies per layer"
+ },
+ {
+  "id": "zai-org/glm-4-9b-chat",
+  "display_name": "glm-4-9b",
+  "family": "GLM",
+  "gguf_repos": [
+   "bartowski/glm-4-9b-chat-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "config.json omits vocab_size"
+ }
+]
