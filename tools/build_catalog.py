@@ -398,7 +398,20 @@ def observe_shape(arch: dict, builds: list) -> tuple[bool, str] | None:
 
 def _param_terms(arch: dict) -> tuple[int, int, int]:
     """Parameters outside the feed-forward, one feed-forward matrix, one
-    vocabulary tensor."""
+    vocabulary tensor.
+
+    This counts parameters, which the Rust model also does, exactly and in more
+    detail. Two implementations of one thing is how a project ends up applying
+    a fix in one of them: llmfit carries a comment about a duplicate throughput
+    estimator that silently missed three consecutive mixture-of-experts fixes
+    and underestimated sparse models fourfold.
+
+    What makes it acceptable here is that this one cannot be believed on its
+    own. Everything it decides is checked afterwards by `size_validation`,
+    which uses the exact Rust count against the real file sizes: if this
+    approximation drifts, the choice it makes stops matching reality and the
+    test fails. It is a proposal, not an authority.
+    """
     hidden = arch["hidden_size"]
     layers = arch["layers"]["n_layers"]
     heads = arch["heads"]
@@ -546,6 +559,39 @@ def rescue_failures(models: list, previous: dict, failed: list) -> list:
     return rescued
 
 
+#: Token shapes that must never reach the committed catalog.
+#:
+#: Repository names, file names and metadata are written by strangers, and a
+#: publisher who once pasted a token where a name belonged has put it in the
+#: upstream metadata for good. Two things then go wrong at once: the entry is
+#: garbage, and GitHub's secret scanning rejects the push that carries it — so
+#: a catalog rebuild that swallowed one would break the daily commit rather
+#: than merely be wrong. llmfit had exactly that push blocked on 2026-08-03.
+SECRET_SHAPES = re.compile(
+    r"hf_[A-Za-z0-9]{28,}"                      # HuggingFace access token
+    r"|ghp_[A-Za-z0-9]{30,}"                    # GitHub personal access token
+    r"|gho_[A-Za-z0-9]{30,}"                    # GitHub OAuth token
+    r"|github_pat_[A-Za-z0-9_]{22,}"            # GitHub fine-grained token
+    r"|(?<![A-Za-z0-9])sk-[A-Za-z0-9_-]{32,}"   # OpenAI-style API key
+)
+
+
+def drop_secret_bearing(models: list) -> tuple[list, list]:
+    """Split out entries whose serialised form contains a token shape.
+
+    Returns ``(kept, dropped)``, where the dropped ids have the match itself
+    replaced — so a caller can name what it dropped in a log that anyone may
+    read without publishing the secret a second time.
+    """
+    kept, dropped = [], []
+    for entry in models:
+        if SECRET_SHAPES.search(json.dumps(entry)):
+            dropped.append(SECRET_SHAPES.sub("<redacted>", entry["id"]))
+        else:
+            kept.append(entry)
+    return kept, dropped
+
+
 def assess_loss(models: list, previous: dict, rescued: list) -> list:
     """Reasons this rebuild should not be written.
 
@@ -626,6 +672,15 @@ def main() -> int:
     # one is the whole point of the guard.
     for model_id in rejected + excluded:
         previous.pop(model_id, None)
+
+    models, leaked = drop_secret_bearing(models)
+    for model_id in leaked:
+        print(
+            f"dropped an entry carrying a credential-shaped string: {model_id}",
+            file=sys.stderr,
+        )
+        previous.pop(model_id, None)
+
     models.sort(key=lambda entry: entry["id"])
 
     catalog = {

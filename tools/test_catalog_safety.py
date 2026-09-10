@@ -17,6 +17,7 @@ from build_catalog import (  # noqa: E402
     BUILD_LOSS_LIMIT,
     RESCUE_LIMIT,
     assess_loss,
+    drop_secret_bearing,
     rescue_failures,
 )
 
@@ -88,6 +89,47 @@ def test_a_vanished_model_refuses_to_write():
 def test_the_first_ever_build_is_never_refused():
     models = [entry("a")]
     assert assess_loss(models, {}, []) == []
+
+
+def test_a_credential_shaped_string_never_reaches_the_catalog():
+    """Upstream metadata is written by strangers, and a token pasted where a
+    name belongs stays in it. GitHub's secret scanning rejects the push that
+    would carry one, so an entry like this does not merely make the catalog
+    wrong — it stops the daily rebuild from committing at all."""
+    clean = entry("qwen/qwen3-8b")
+    leaked = entry("someone/hf_" + "a" * 34)
+    kept, dropped = drop_secret_bearing([clean, leaked])
+
+    assert kept == [clean]
+    assert len(dropped) == 1
+    # The report names what was dropped without publishing the token again.
+    assert "hf_" + "a" * 34 not in dropped[0], dropped
+    assert "<redacted>" in dropped[0], dropped
+
+
+def test_a_token_anywhere_in_an_entry_drops_it_not_just_in_the_id():
+    """The match is against the whole serialised entry: a build's file name or
+    a repository field carries a token just as easily as an id does."""
+    hidden = entry("vendor/model")
+    hidden["repo"] = "vendor/ghp_" + "b" * 36
+    kept, dropped = drop_secret_bearing([hidden])
+    assert kept == []
+    assert len(dropped) == 1
+
+
+def test_ordinary_model_ids_are_not_mistaken_for_credentials():
+    """Real ids carry hyphens, digits and long runs of letters. A pattern that
+    fired on those would empty the catalog, which is the worse failure."""
+    ordinary = [
+        entry("meta-llama/llama-3.3-70b-instruct"),
+        entry("mistralai/mistral-small-3.2-24b-instruct-2506"),
+        entry("deepseek-ai/deepseek-v3.1-terminus"),
+        entry("unsloth/qwen3-30b-a3b-instruct-2507-gguf"),
+        entry("google/gemma-3-27b-it"),
+    ]
+    kept, dropped = drop_secret_bearing(ordinary)
+    assert dropped == [], dropped
+    assert kept == ordinary
 
 
 def main():
