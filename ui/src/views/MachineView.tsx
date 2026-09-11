@@ -17,6 +17,7 @@ import type { View } from "../App";
 import * as fmt from "../format";
 import { MemoryColumn } from "../components/MemoryColumn";
 import { Explain, speedExplanation } from "../components/Explain";
+import { ShareButton } from "../components/ShareButton";
 import { Card, Empty, Eyebrow, Figure, Spec, VerdictPill } from "../components/ui";
 
 export function MachineView({
@@ -24,12 +25,15 @@ export function MachineView({
   measuring,
   onMeasure,
   best,
+  ranked,
   onOpen,
 }: {
   machine: Machine | null;
   measuring: boolean;
   onMeasure: () => void;
   best: RankedModel | null;
+  /** The whole ranking, so a shared result can carry more than one row. */
+  ranked: RankedModel[] | null;
   onOpen: (id: string, view?: View) => void;
 }) {
   if (!machine) {
@@ -131,6 +135,12 @@ export function MachineView({
                     See the rest
                   </button>
                 </p>
+
+                {ranked && ranked.length > 0 && (
+                  <div className="mt-4 border-t border-[var(--color-line-soft)] pt-4">
+                    <ShareButton machine={machine} models={ranked} />
+                  </div>
+                )}
               </>
             ) : (
               <p className="text-[13px] text-[var(--color-ink-faint)]">

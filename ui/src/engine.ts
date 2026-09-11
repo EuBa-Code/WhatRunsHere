@@ -312,3 +312,5 @@ export const cancelDownload = (key: string) =>
   invoke<void>("cancel_download", { key });
 export const downloads = () => invoke<Progress[]>("downloads");
 export const reveal = (path: string) => invoke<void>("reveal", { path });
+export const saveImage = (data: string, name: string) =>
+  invoke<string>("save_image", { data, name });

@@ -157,6 +157,7 @@ export default function App() {
               measuring={measuring}
               onMeasure={runProbe}
               best={ranked?.[0] ?? null}
+              ranked={ranked}
               onOpen={open}
             />
           )}
