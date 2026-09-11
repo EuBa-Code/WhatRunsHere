@@ -424,6 +424,37 @@ pub fn calibration(system: &SystemProfile, measured_host_bytes_per_s: Option<f64
     }
 }
 
+/// The operating system this process runs on, as the launch commands need it.
+///
+/// It decides how a path is quoted and whether a host runs here at all. Read
+/// from the build rather than from the OS string detection reports, because a
+/// command is typed into the shell of the machine the binary was built for.
+pub const fn platform() -> whatllm_core::launch::Platform {
+    use whatllm_core::launch::Platform;
+    if cfg!(windows) {
+        Platform::Windows
+    } else if cfg!(target_os = "macos") {
+        Platform::MacOs
+    } else if cfg!(target_os = "linux") {
+        Platform::Linux
+    } else {
+        Platform::Other
+    }
+}
+
+/// Whether this machine is Apple Silicon, the one place MLX runs.
+///
+/// A binary built for it is running on it. One built for x86 and running
+/// under Rosetta still sees the Apple accelerator detection found, so either
+/// answer counts.
+pub fn apple_silicon(system: &SystemProfile) -> bool {
+    cfg!(all(target_os = "macos", target_arch = "aarch64"))
+        || system
+            .accelerators
+            .iter()
+            .any(|a| a.vendor == whatllm_core::hardware::Vendor::Apple)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
