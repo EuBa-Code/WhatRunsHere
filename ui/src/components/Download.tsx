@@ -14,7 +14,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { listen } from "@tauri-apps/api/event";
 import * as engine from "../engine";
-import type { Build, Progress } from "../engine";
+import type { Build, Progress, RuntimeName } from "../engine";
 import * as fmt from "../format";
 import { Destination } from "./Destination";
 
@@ -50,6 +50,11 @@ export const buildKey = (id: string, quant: string) => `${id}@${quant}`;
  *
  * Five states, and each says what it is rather than showing a spinner: not
  * started, running, paused, already on disk, or failed with the reason.
+ *
+ * Shown only for a runtime that runs the file. The runtime also decides
+ * where the file goes, which is why it is passed through to every call: LM
+ * Studio reads its own folder and nothing else, so for it the destination is
+ * a fact rather than a choice.
  */
 export function Download({
   id,
@@ -57,6 +62,8 @@ export function Download({
   bytes,
   progress,
   builds,
+  runtime,
+  onDestinationChanged,
 }: {
   id: string;
   quant: string;
@@ -64,6 +71,9 @@ export function Download({
   progress: Progress | undefined;
   /** Every published build, so a smaller one can be offered when it fails. */
   builds: Build[];
+  runtime: RuntimeName;
+  /** The directory was changed, so anything naming the path is stale. */
+  onDestinationChanged: () => void;
 }) {
   const key = buildKey(id, quant);
   const [where, setWhere] = useState<engine.Destination | null>(null);
@@ -71,10 +81,10 @@ export function Download({
 
   const look = useCallback(() => {
     void engine
-      .destination(id, quant)
+      .destination(id, quant, runtime)
       .then(setWhere)
       .catch(() => setWhere(null));
-  }, [id, quant]);
+  }, [id, quant, runtime]);
 
   // Re-checked whenever a transfer settles, because what is on disk changed.
   useEffect(look, [look]);
@@ -82,10 +92,15 @@ export function Download({
     if (progress?.state === "done" || progress?.state === "cancelled") look();
   }, [progress?.state, look]);
 
+  const changed = () => {
+    look();
+    onDestinationChanged();
+  };
+
   const start = async () => {
     setBusy(true);
     try {
-      await engine.downloadBuild(id, quant);
+      await engine.downloadBuild(id, quant, runtime);
     } finally {
       setBusy(false);
     }
@@ -111,7 +126,7 @@ export function Download({
             Show in folder
           </button>
         </div>
-        <Path where={where} needsBytes={bytes} onChanged={look} />
+        <Path where={where} needsBytes={bytes} onChanged={changed} />
       </Shell>
     );
   }
@@ -149,7 +164,7 @@ export function Download({
               <Minor onClick={() => void engine.cancelDownload(key)}>Cancel</Minor>
             </span>
           </div>
-          <Path where={where} needsBytes={bytes} onChanged={look} />
+          <Path where={where} needsBytes={bytes} onChanged={changed} />
         </Shell>
       );
 
@@ -216,7 +231,7 @@ export function Download({
               </Primary>
             </span>
           </div>
-          <Path where={where} needsBytes={bytes} onChanged={look} />
+          <Path where={where} needsBytes={bytes} onChanged={changed} />
         </Shell>
       );
   }
@@ -290,11 +305,12 @@ function Path({
       freeBytes={where.free_bytes}
       needsBytes={needsBytes}
       onChanged={onChanged}
+      fixedBy={where.host_tree ? "LM Studio's own folder" : undefined}
     />
   );
 }
 
-function Primary({
+export function Primary({
   children,
   onClick,
   busy,
@@ -315,7 +331,7 @@ function Primary({
   );
 }
 
-function Minor({
+export function Minor({
   children,
   onClick,
 }: {

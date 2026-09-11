@@ -5,13 +5,13 @@
  * model at 7.9 GiB and one at 8.1 GiB are different answers on an 8 GiB card,
  * so sizes near a boundary keep a decimal that a tidier format would drop.
  */
-import type { Confidence, Verdict } from "./engine";
+import type { Confidence, Host, LaunchNote, Verdict } from "./engine";
 
 const KIB = 1024;
 
 /** Bytes in the binary units every runtime and driver reports. */
 export function bytes(value: number): string {
-  if (!Number.isFinite(value) || value < 0) return "—";
+  if (!Number.isFinite(value) || value < 0) return "n/a";
   if (value < KIB) return `${Math.round(value)} B`;
   const units = ["KiB", "MiB", "GiB", "TiB"];
   let scaled = value / KIB;
@@ -189,6 +189,75 @@ export function fitNote(note: Record<string, unknown> & { note: string }): strin
       )} points of quality.`;
     case "running_close":
       return `${percent(n("utilisation"))} of the pool. It will load, but little else can.`;
+    default:
+      return note.note.replace(/_/g, " ");
+  }
+}
+
+/** The name a person knows a host by. */
+export function hostLabel(host: Host): string {
+  switch (host) {
+    case "llama_cpp":
+      return "llama.cpp";
+    case "lm_studio":
+      return "LM Studio";
+    case "ollama":
+      return "Ollama";
+    case "vllm":
+      return "vLLM";
+    case "mlx":
+      return "MLX";
+  }
+}
+
+/**
+ * The engine's own phrasing for what it says about starting a model. The
+ * same facts the command line prints, in the same words.
+ */
+export function launchNote(note: LaunchNote, host: string): string {
+  const n = (key: string) => Number(note[key]);
+  const s = (key: string) => String(note[key]);
+  switch (note.note) {
+    case "not_this_format":
+      return `GGUF is not ${host}'s format (${s(
+        "host_format",
+      )}). The sizing above describes the same model in a different container.`;
+    case "full_precision_weights":
+      return `The original weights are 16-bit: about ${bytes(
+        n("bytes"),
+      )}, not the build sized above.`;
+    case "host_needs":
+      return `${host} needs ${s("platform")}, which this machine is not.`;
+    case "host_not_installed":
+      return `${host} does not seem to be installed: ${s(
+        "looked_in",
+      )} is not there. The file goes to the usual folder instead.`;
+    case "appears_in_host":
+      return `Once it has landed it appears in ${host} under ${s("name")}.`;
+    case "second_copy":
+      return `${host} copies the file into its own store, so the disk ends up holding two: ${bytes(
+        n("bytes"),
+      )} more.`;
+    case "host_environment": {
+      const variables = (note.variables as { name: string; value: string }[])
+        .map((v) => `${v.name}=${v.value}`)
+        .join(" ");
+      return `Before starting ${host}, set ${variables}. The sizing assumed them.`;
+    }
+    case "cache_format_unavailable":
+      return `The cache was sized as ${s(
+        "sized",
+      )}, which ${host} does not offer. It has ${(note.offers as string[]).join(
+        ", ",
+      )}; a wider one needs more memory than sized, a narrower one less.`;
+    case "v_cache_uncompressed":
+      return `Without flash attention the value half of the cache stays at 16 bits: about ${bytes(
+        n("extra_bytes"),
+      )} more than sized.`;
+    case "set_context_in_host":
+      return `${host} sets the context length in its own window. Set it to ${tokens(
+        n("tokens"),
+      )}, which is what was sized; its default is not.`;
     default:
       return note.note.replace(/_/g, " ");
   }

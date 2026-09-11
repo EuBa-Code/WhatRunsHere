@@ -240,7 +240,73 @@ export type UseCase =
 
 export type Preference = "quality" | "speed" | "balanced";
 
-export type RuntimeName = "llama-cpp" | "llama-cpp-no-flash" | "vllm" | "mlx";
+export type RuntimeName =
+  | "llama-cpp"
+  | "llama-cpp-no-flash"
+  | "lm-studio"
+  | "ollama"
+  | "vllm"
+  | "mlx";
+
+/** The program that will host the model. */
+export type Host = "llama_cpp" | "lm_studio" | "ollama" | "vllm" | "mlx";
+
+/** What happens to the weights. Internally tagged; switch on `action`. */
+export type LaunchWeights =
+  | {
+      action: "download";
+      quant: string;
+      path: string;
+      bytes: number;
+      /** A command that fetches it, for somebody who would rather. */
+      command: string;
+    }
+  | {
+      action: "download_into_tree";
+      quant: string;
+      path: string;
+      bytes: number;
+      command: string;
+      /** The host's own folder, which the path is inside. */
+      tree: string;
+    }
+  | { action: "host_fetches"; format: string; repo: string }
+  | {
+      action: "search";
+      format: string;
+      url: string;
+      /** Not a command: the repository in it is for the reader to fill in. */
+      command_shape: string;
+    }
+  | { action: "no_build"; quant: string };
+
+/** A file the host reads, written beside the weights. */
+export interface LaunchFile {
+  name: string;
+  directory: string;
+  content: string;
+}
+
+/** Worth knowing before pressing anything. Tagged `note`; shapes vary. */
+export type LaunchNote = { note: string } & Record<string, unknown>;
+
+/**
+ * How to get the model running on the runtime that was asked for.
+ *
+ * The Plan view used to end with a file. It ends with this, because two of
+ * the runtimes on offer do not run the file, and the action has to change
+ * with the runtime rather than hand over something that would not load.
+ */
+export interface Launch {
+  host: Host;
+  /** False for a runtime that does not run the catalog's GGUF builds. */
+  runs_gguf: boolean;
+  weights: LaunchWeights;
+  file: LaunchFile | null;
+  /** In order. Empty for a host driven from its own window. */
+  commands: string[];
+  notes: LaunchNote[];
+}
 
 export interface Sizing {
   context: number;
@@ -291,6 +357,12 @@ export interface Destination {
   partial_bytes: number | null;
   /** Room left on the disk the directory sits on. */
   free_bytes: number | null;
+  /**
+   * The host's own model folder, when the directory sits inside it. Set for
+   * LM Studio when it is installed: the directory is then a fact about LM
+   * Studio rather than a setting, and cannot be changed from here.
+   */
+  host_tree: string | null;
 }
 
 /** A disk a model could be written to. */
@@ -316,10 +388,17 @@ export const cost = (id: string, sizing: Sizing, query: CostQuery) =>
   invoke<CostComparison | null>("cost", { id, sizing, query });
 export const measure = (quick: boolean) =>
   invoke<Measurement>("measure", { quick });
-export const destination = (id: string, quant: string) =>
-  invoke<Destination>("destination", { id, quant });
-export const downloadBuild = (id: string, quant: string) =>
-  invoke<string>("download_build", { id, quant });
+/** The runtime decides the directory: LM Studio reads only its own folder. */
+export const destination = (id: string, quant: string, runtime: RuntimeName) =>
+  invoke<Destination>("destination", { id, quant, runtime });
+/** Refused for a runtime that does not run GGUF, rather than fetched anyway. */
+export const downloadBuild = (id: string, quant: string, runtime: RuntimeName) =>
+  invoke<string>("download_build", { id, quant, runtime });
+export const launch = (id: string, sizing: Sizing) =>
+  invoke<Launch | null>("launch", { id, sizing });
+/** Writes the launch's file beside the weights and returns where it went. */
+export const saveLaunchFile = (id: string, sizing: Sizing) =>
+  invoke<string>("save_launch_file", { id, sizing });
 export const pauseDownload = (key: string) =>
   invoke<void>("pause_download", { key });
 export const cancelDownload = (key: string) =>

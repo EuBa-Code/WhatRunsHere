@@ -29,9 +29,17 @@ const PREFERENCES: { value: Preference; label: string }[] = [
   { value: "speed", label: "Speed" },
 ];
 
+/**
+ * Every program the engine can size for and say how to start. LM Studio and
+ * Ollama are llama.cpp underneath and are sized as it, but each wants the
+ * file in a different place and starts it a different way, so they are
+ * offered by name.
+ */
 const RUNTIMES: { value: RuntimeName; label: string }[] = [
   { value: "llama-cpp", label: "llama.cpp" },
-  { value: "llama-cpp-no-flash", label: "no flash attn" },
+  { value: "llama-cpp-no-flash", label: "llama.cpp, no flash attention" },
+  { value: "lm-studio", label: "LM Studio" },
+  { value: "ollama", label: "Ollama" },
   { value: "vllm", label: "vLLM" },
   { value: "mlx", label: "MLX" },
 ];

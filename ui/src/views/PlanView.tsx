@@ -8,7 +8,7 @@
  */
 import { useEffect, useState } from "react";
 import * as engine from "../engine";
-import type { Plan, RankedModel, Sizing } from "../engine";
+import type { Launch, Plan, RankedModel, Sizing } from "../engine";
 import type { View } from "../App";
 import * as fmt from "../format";
 import { MemoryColumn } from "../components/MemoryColumn";
@@ -19,6 +19,7 @@ import {
   speedExplanation,
 } from "../components/Explain";
 import { Download, buildKey, useDownloads } from "../components/Download";
+import { LaunchCard } from "../components/Launch";
 import { runModeLabel } from "./ModelsView";
 
 export function PlanView({
@@ -34,6 +35,10 @@ export function PlanView({
 }) {
   const [plan, setPlan] = useState<Plan | null>(null);
   const [missing, setMissing] = useState(false);
+  const [launch, setLaunch] = useState<Launch | null>(null);
+  // Bumped when the download directory changes, because the launch names
+  // the path and a command naming the old one would not run.
+  const [destinationVersion, setDestinationVersion] = useState(0);
   const downloads = useDownloads();
 
   useEffect(() => {
@@ -49,6 +54,20 @@ export function PlanView({
       current = false;
     };
   }, [id, sizing]);
+
+  useEffect(() => {
+    if (!id) return;
+    let current = true;
+    engine
+      .launch(id, sizing)
+      .then((result) => {
+        if (current) setLaunch(result);
+      })
+      .catch(() => current && setLaunch(null));
+    return () => {
+      current = false;
+    };
+  }, [id, sizing, destinationVersion]);
 
   if (!id) {
     return (
@@ -69,6 +88,10 @@ export function PlanView({
   const { fit } = plan;
   const spare = Math.max(0, plan.pool_bytes - fit.memory.required);
   const chosen = plan.builds.find((build) => build.chosen);
+  // Until the engine has said, the runtime is assumed to run the file: the
+  // download control appears a moment before the launch card rather than the
+  // whole section flickering in.
+  const runsGguf = launch?.runs_gguf ?? true;
 
   return (
     <div className="flex flex-col gap-6">
@@ -131,16 +154,21 @@ export function PlanView({
       </Card>
 
       {/* Directly under the accounting that justified this build, because
-          the decision and the action are the same moment. */}
-      {chosen && (
+          the decision and the action are the same moment. The action changes
+          with the runtime: a download for the three that run the file, and
+          for the two that do not, no download and the command that works. */}
+      {chosen && runsGguf && (
         <Download
           id={plan.id}
           quant={chosen.quant}
           bytes={chosen.bytes}
           progress={downloads[buildKey(plan.id, chosen.quant)]}
           builds={plan.builds}
+          runtime={sizing.runtime}
+          onDestinationChanged={() => setDestinationVersion((v) => v + 1)}
         />
       )}
+      {launch && <LaunchCard launch={launch} id={plan.id} sizing={sizing} />}
 
       <div className="grid gap-6 lg:grid-cols-[1.35fr_1fr]">
         <Card className="px-6 pb-6 pt-5">
@@ -250,8 +278,11 @@ export function PlanView({
       <Card className="px-6 py-5">
         <Eyebrow>Every published build</Eyebrow>
         <p className="mt-2 text-[12px] text-[var(--color-ink-faint)]">
-          The solver chose one. Any of them can be fetched instead — a smaller
-          format if the machine is shared, a larger one if there is room.
+          {runsGguf
+            ? "The solver chose one. Any of them can be fetched instead: a smaller format if the machine is shared, a larger one if there is room."
+            : `Published as GGUF, which ${
+                launch ? fmt.hostLabel(launch.host) : "this runtime"
+              } does not run. Listed for their sizes, not offered for download.`}
         </p>
         <ul className="mt-3">
           {plan.builds.map((build) => {
@@ -279,10 +310,12 @@ export function PlanView({
                 <span className="ml-auto shrink-0 text-[12px] text-[var(--color-ink-faint)]">
                   {buildStatus(state)}
                 </span>
-                {!build.chosen && !state && (
+                {!build.chosen && !state && runsGguf && (
                   <button
                     type="button"
-                    onClick={() => void engine.downloadBuild(plan.id, build.quant)}
+                    onClick={() =>
+                      void engine.downloadBuild(plan.id, build.quant, sizing.runtime)
+                    }
                     className="shrink-0 rounded-lg border border-[var(--color-line)] px-2.5 py-1 text-[12px] transition-colors hover:bg-[var(--color-raised)]"
                   >
                     Download

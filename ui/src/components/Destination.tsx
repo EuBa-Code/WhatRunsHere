@@ -22,12 +22,19 @@ export function Destination({
   freeBytes,
   needsBytes,
   onChanged,
+  fixedBy,
 }: {
   directory: string;
   freeBytes: number | null;
   /** The build about to be fetched, so the room left can be judged. */
   needsBytes: number;
   onChanged: () => void;
+  /**
+   * Who decided the directory, when it was not the user: LM Studio reads
+   * only its own folder, so the file goes there and the choice is not
+   * offered. Shown as a fact rather than hidden as a missing control.
+   */
+  fixedBy?: string;
 }) {
   const [open_, setOpen] = useState(false);
   const [volumes, setVolumes] = useState<Volume[] | null>(null);
@@ -66,6 +73,30 @@ export function Destination({
   };
 
   const tight = freeBytes !== null && freeBytes < needsBytes;
+
+  if (fixedBy) {
+    return (
+      <div className="mt-2.5">
+        <p className="flex items-baseline gap-2 text-[11px] text-[var(--color-ink-faint)]">
+          <span className="truncate">{directory}</span>
+          {freeBytes !== null && (
+            <span
+              className="figure shrink-0"
+              style={tight ? { color: "var(--color-over)" } : undefined}
+            >
+              {fmt.bytes(freeBytes)} free
+            </span>
+          )}
+          <span className="shrink-0">{fixedBy}</span>
+        </p>
+        {tight && (
+          <p className="mt-1 text-[11px]" style={{ color: "var(--color-over)" }}>
+            This disk has less room than the file needs.
+          </p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="mt-2.5">
