@@ -271,9 +271,17 @@ impl MemoryPlan {
 }
 
 /// Bytes of attention cache for one sequence at the given context.
+///
+/// Two parts, priced differently. The key/value cache of the attention layers
+/// is stored in the format the runtime was asked for, and that is where a
+/// compressed cache saves its memory. The recurrent state of a hybrid model's
+/// linear-attention layers is rewritten every token and kept at full
+/// precision whatever the cache format: llama.cpp holds it as f32, and
+/// nothing quantizes it.
 pub fn kv_cache_bytes(arch: &Architecture, context: u32, kv_quant: KvQuant) -> u64 {
-    let elems = arch.cache_elems(context);
-    ((elems as f64) * kv_quant.bytes_per_elem()).round() as u64
+    let state = arch.constant_state_elems();
+    let cached = arch.cache_elems(context).saturating_sub(state);
+    ((cached as f64) * kv_quant.bytes_per_elem()).round() as u64 + state * 4
 }
 
 /// Bytes of attention cache added by one more token, at the given context.
@@ -478,6 +486,27 @@ mod tests {
 
     fn q4_k_m() -> WeightQuant {
         *weight_quant("Q4_K_M").expect("scheme exists")
+    }
+
+    #[test]
+    fn recurrent_state_is_priced_at_full_precision_whatever_the_cache_format() {
+        // A stack of nothing but recurrent layers has no per-token cache at
+        // all: what it holds is the same at any context and in any format.
+        let mut arch = llama_3_1_8b();
+        let state = 32 * 128 * 128;
+        arch.layers = LayerLayout::uniform(
+            32,
+            LayerSpec::global(AttentionKind::Recurrent {
+                state_elems: state,
+                params: 40_000_000,
+            }),
+        );
+        let f16 = kv_cache_bytes(&arch, 65_536, KvQuant::F16);
+        let q4 = kv_cache_bytes(&arch, 65_536, KvQuant::Q4_0);
+        assert_eq!(f16, 32 * state * 4);
+        assert_eq!(q4, f16, "a compressed cache format cannot touch the state");
+        assert_eq!(kv_cache_bytes(&arch, 1, KvQuant::F16), f16);
+        assert_eq!(marginal_kv_bytes(&arch, 65_536, KvQuant::F16), 0);
     }
 
     #[test]

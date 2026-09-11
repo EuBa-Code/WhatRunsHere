@@ -100,6 +100,15 @@ pub struct LayerSpec {
     /// long the conversation gets.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub window: Option<u32>,
+    /// Whether the attention output is gated by a second projection of the
+    /// input, as in Qwen3-Next and Qwen3.5.
+    ///
+    /// The query projection is then twice as wide, and that extra width is
+    /// stored and read like any other weight: an eighth of a full-attention
+    /// block, which on a stack where those blocks are a quarter of the layers
+    /// is still a percent of the file.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub output_gate: bool,
 }
 
 impl LayerSpec {
@@ -108,6 +117,7 @@ impl LayerSpec {
         Self {
             attention,
             window: None,
+            output_gate: false,
         }
     }
 
@@ -116,6 +126,16 @@ impl LayerSpec {
         Self {
             attention,
             window: Some(window),
+            output_gate: false,
+        }
+    }
+
+    /// The same layer with its attention output gated.
+    #[must_use]
+    pub const fn gated(self) -> Self {
+        Self {
+            output_gate: true,
+            ..self
         }
     }
 
@@ -444,8 +464,10 @@ impl Architecture {
                 let head_dim = u64::from(head_dim);
                 let q_dim = heads * head_dim;
                 let kv_dim = u64::from(kv_heads) * head_dim;
-                // q, k, v and the output projection.
-                hidden * q_dim + 2 * hidden * kv_dim + q_dim * hidden
+                // q, k, v and the output projection, plus the gate when the
+                // query projection carries one beside the query.
+                let gate = if spec.output_gate { hidden * q_dim } else { 0 };
+                hidden * q_dim + 2 * hidden * kv_dim + q_dim * hidden + gate
             }
             AttentionKind::Latent {
                 q_lora_rank,
@@ -573,6 +595,19 @@ impl Architecture {
         self.layers.cache_elems(context)
     }
 
+    /// Scalar elements of state the stack holds whatever the context length:
+    /// the recurrent state of its linear-attention or state-space layers.
+    ///
+    /// Reported apart from the cache because it is priced differently. A
+    /// recurrent state is rewritten every token and kept at full precision,
+    /// whatever format the key/value cache is stored in.
+    pub fn constant_state_elems(&self) -> u64 {
+        self.layers
+            .iter()
+            .map(|layer| layer.attention.constant_state_elems())
+            .sum()
+    }
+
     /// Scalar elements added to the cache by one more token, at the point where
     /// the context already holds `context` tokens.
     ///
@@ -593,6 +628,94 @@ impl Architecture {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Qwen3.5 4B: three Gated `DeltaNet` layers to one gated full-attention
+    /// layer, as its configuration lays them out. The recurrent block's
+    /// figures are the ones `tools/build_catalog.py` derives from
+    /// `linear_num_value_heads` and its siblings.
+    fn qwen3_5_4b() -> Architecture {
+        // key_dim 16 x 128 = 2048, value_dim 32 x 128 = 4096, kernel 4.
+        let linear = AttentionKind::Recurrent {
+            // 32 heads of a 128 x 128 state, plus three columns of conv state
+            // across the 8192 channels.
+            state_elems: 32 * 128 * 128 + 8192 * 3,
+            // in_proj_qkvz, in_proj_ba, conv1d, A_log and dt_bias, the gated
+            // norm, out_proj.
+            params: 2560 * 12288 + 2560 * 64 + 8192 * 4 + 64 + 128 + 4096 * 2560,
+        };
+        let full = AttentionKind::Grouped {
+            kv_heads: 4,
+            head_dim: 256,
+        };
+        Architecture {
+            hidden_size: 2560,
+            heads: 16,
+            intermediate_size: 9216,
+            vocab_size: 248_320,
+            layers: LayerLayout::cycling(
+                32,
+                vec![
+                    LayerSpec::global(linear),
+                    LayerSpec::global(linear),
+                    LayerSpec::global(linear),
+                    LayerSpec::global(full).gated(),
+                ],
+            ),
+            ffn: FfnKind::Gated,
+            tied_embeddings: true,
+            moe: None,
+            norms_per_layer: 2,
+            softcapped_attention: false,
+            native_expert_quant: None,
+            max_context: 262_144,
+        }
+    }
+
+    #[test]
+    fn a_hybrid_stack_caches_only_its_full_attention_layers() {
+        let arch = qwen3_5_4b();
+        // Eight full-attention layers of 2 x 4 x 256 elements per token.
+        let per_token = 8 * 2 * 4 * 256;
+        let state = arch.constant_state_elems();
+        assert_eq!(state, 24 * (32 * 128 * 128 + 8192 * 3));
+        assert_eq!(arch.cache_elems(1), per_token + state);
+        assert_eq!(arch.cache_elems(32_768), 32_768 * per_token + state);
+        // The marginal cost never includes the recurrent layers.
+        assert_eq!(arch.marginal_cache_elems(100_000), per_token);
+        assert!(arch.layers.has_bounded_layers());
+    }
+
+    #[test]
+    fn an_output_gate_is_stored_beside_the_query() {
+        let gated = qwen3_5_4b();
+        let mut plain = gated.clone();
+        for spec in &mut plain.layers.cycle {
+            spec.output_gate = false;
+        }
+        let full_layers = 8;
+        let q_dim = 16 * 256;
+        assert_eq!(
+            gated.total_params() - plain.total_params(),
+            full_layers * 2560 * q_dim
+        );
+        // In the round, the whole thing is the 4B it is sold as.
+        let total = gated.total_params();
+        assert!((4.0e9..4.6e9).contains(&(total as f64)), "{total}");
+    }
+
+    #[test]
+    fn a_layer_written_before_output_gates_existed_still_reads() {
+        let json = r#"{"attention":{"kind":"grouped","kv_heads":8,"head_dim":128}}"#;
+        let spec: LayerSpec = serde_json::from_str(json).expect("older catalogs parse");
+        assert!(!spec.output_gate);
+        // And a gate is written only when it is there.
+        assert!(!serde_json::to_string(&spec)
+            .unwrap()
+            .contains("output_gate"));
+        assert!(serde_json::to_string(&spec.gated())
+            .unwrap()
+            .contains("\"output_gate\":true"));
+    }
 
     /// Llama 3.1 8B: plain GQA, untied embeddings. The reference case.
     fn llama_3_1_8b() -> Architecture {
