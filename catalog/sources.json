@@ -750,5 +750,562 @@
   ],
   "benchmarks": {},
   "excluded": "config.json omits vocab_size"
+ },
+ {
+  "id": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+  "display_name": "Qwen3-Coder 30B-A3B",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-07-31",
+  "gguf_repos": [
+   "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-30B-A3B-Thinking-2507",
+  "display_name": "Qwen3 30B-A3B Thinking 2507",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-07-29",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-4B-Thinking-2507",
+  "display_name": "Qwen3 4B Thinking 2507",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-08-05",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+  "display_name": "Qwen3 235B-A22B Instruct 2507",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-07-21",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-235B-A22B-Instruct-2507-GGUF",
+   "unsloth/Qwen3-235B-A22B-Instruct-2507-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-32B-Instruct",
+  "display_name": "Qwen2.5 32B",
+  "family": "Qwen2.5",
+  "license": "apache-2.0",
+  "released": "2024-09-17",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-32B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-72B-Instruct",
+  "display_name": "Qwen2.5 72B",
+  "family": "Qwen2.5",
+  "license": "qwen",
+  "released": "2024-09-16",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-72B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-3B-Instruct",
+  "display_name": "Qwen2.5 3B",
+  "family": "Qwen2.5",
+  "license": "qwen-research",
+  "released": "2024-09-17",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-3B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "display_name": "Qwen2.5 1.5B",
+  "family": "Qwen2.5",
+  "license": "apache-2.0",
+  "released": "2024-09-17",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-1.5B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/QwQ-32B",
+  "display_name": "QwQ 32B",
+  "family": "QwQ",
+  "license": "apache-2.0",
+  "released": "2025-03-05",
+  "gguf_repos": [
+   "bartowski/Qwen_QwQ-32B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/gemma-3-1b-it",
+  "display_name": "Gemma 3 1B",
+  "family": "Gemma 3",
+  "license": "gemma",
+  "released": "2025-03-12",
+  "gguf_repos": [
+   "bartowski/google_gemma-3-1b-it-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: computed weights are wrong by 11% across every build, and neither vocabulary write count reproduces the files (F16 is 52% over when written twice); the embedding is a third to two thirds of these files and its quantization is not the one the derivation assumes"
+ },
+ {
+  "id": "unsloth/gemma-3-270m-it",
+  "display_name": "Gemma 3 270M",
+  "family": "Gemma 3",
+  "license": "gemma",
+  "released": "2025-08-13",
+  "gguf_repos": [
+   "bartowski/google_gemma-3-270m-it-GGUF",
+   "unsloth/gemma-3-270m-it-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: computed weights are wrong by 11% across every build, and neither vocabulary write count reproduces the files (F16 is 52% over when written twice); the embedding is a third to two thirds of these files and its quantization is not the one the derivation assumes"
+ },
+ {
+  "id": "microsoft/Phi-4-reasoning-plus",
+  "display_name": "Phi-4 reasoning plus",
+  "family": "Phi",
+  "license": "mit",
+  "released": "2025-04-17",
+  "gguf_repos": [
+   "bartowski/microsoft_Phi-4-reasoning-plus-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "microsoft/Phi-4-mini-reasoning",
+  "display_name": "Phi-4 mini reasoning",
+  "family": "Phi",
+  "license": "mit",
+  "released": "2025-04-29",
+  "gguf_repos": [
+   "bartowski/microsoft_Phi-4-mini-reasoning-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Devstral-Small-2507",
+  "display_name": "Devstral Small 2507",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-07-04",
+  "gguf_repos": [
+   "bartowski/mistralai_Devstral-Small-2507-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Magistral-Small-2509",
+  "display_name": "Magistral Small 2509",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-09-12",
+  "gguf_repos": [
+   "bartowski/mistralai_Magistral-Small-2509-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "openai/gpt-oss-120b",
+  "display_name": "gpt-oss 120B",
+  "family": "gpt-oss",
+  "license": "apache-2.0",
+  "released": "2025-08-04",
+  "gguf_repos": [
+   "ggml-org/gpt-oss-120b-GGUF",
+   "unsloth/gpt-oss-120b-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+  "display_name": "DeepSeek-R1-0528 Qwen3 8B",
+  "family": "DeepSeek-R1 Distill",
+  "license": "mit",
+  "released": "2025-05-29",
+  "gguf_repos": [
+   "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "ibm-granite/granite-3.3-8b-instruct",
+  "display_name": "Granite 3.3 8B",
+  "family": "Granite",
+  "license": "apache-2.0",
+  "released": "2025-04-09",
+  "gguf_repos": [
+   "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "allenai/OLMo-2-1124-7B-Instruct",
+  "display_name": "OLMo 2 7B",
+  "family": "OLMo",
+  "license": "apache-2.0",
+  "released": "2024-12-18",
+  "gguf_repos": [
+   "bartowski/OLMo-2-1124-7B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "unsloth/Meta-Llama-3.1-70B-Instruct",
+  "display_name": "Llama 3.1 70B Instruct",
+  "family": "Llama 3",
+  "license": "llama3.1",
+  "released": "2024-07-23",
+  "gguf_repos": [
+   "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "nvidia/Llama-3.1-Nemotron-70B-Instruct-HF",
+  "display_name": "Llama 3.1 Nemotron 70B",
+  "family": "Llama 3",
+  "license": "llama3.1",
+  "released": "2024-10-12",
+  "gguf_repos": [
+   "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "NousResearch/Hermes-4-70B",
+  "display_name": "Hermes 4 70B",
+  "family": "Hermes",
+  "license": "llama3",
+  "released": "2025-08-18",
+  "gguf_repos": [
+   "bartowski/NousResearch_Hermes-4-70B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+  "display_name": "DeepSeek-R1 Distill Llama 70B",
+  "family": "DeepSeek-R1 Distill",
+  "license": "mit",
+  "released": "2025-01-20",
+  "gguf_repos": [
+   "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+  "display_name": "DeepSeek-R1 Distill Qwen 1.5B",
+  "family": "DeepSeek-R1 Distill",
+  "license": "mit",
+  "released": "2025-01-20",
+  "gguf_repos": [
+   "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "display_name": "Qwen2.5 0.5B",
+  "family": "Qwen2.5",
+  "license": "apache-2.0",
+  "released": "2024-09-16",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-0.5B-Instruct-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: F16 and Q8_0 are 26% over; the vocabulary is a quarter of this file and neither write count reproduces every build, the same defect as the smallest Gemma 3 models"
+ },
+ {
+  "id": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+  "display_name": "Qwen2.5-Coder 1.5B",
+  "family": "Qwen2.5-Coder",
+  "license": "apache-2.0",
+  "released": "2024-09-18",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+  "display_name": "Qwen2.5-Coder 0.5B",
+  "family": "Qwen2.5-Coder",
+  "license": "apache-2.0",
+  "released": "2024-11-06",
+  "gguf_repos": [
+   "bartowski/Qwen2.5-Coder-0.5B-Instruct-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: F16 and Q8_0 are 26% over; the vocabulary is a quarter of this file and neither write count reproduces every build, the same defect as the smallest Gemma 3 models"
+ },
+ {
+  "id": "zai-org/GLM-4-32B-0414",
+  "display_name": "GLM-4 32B",
+  "family": "GLM",
+  "license": "mit",
+  "released": "2025-04-07",
+  "gguf_repos": [
+   "bartowski/THUDM_GLM-4-32B-0414-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "zai-org/GLM-Z1-32B-0414",
+  "display_name": "GLM-Z1 32B",
+  "family": "GLM",
+  "license": "mit",
+  "released": "2025-04-08",
+  "gguf_repos": [
+   "bartowski/THUDM_GLM-Z1-32B-0414-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "zai-org/GLM-4-9B-0414",
+  "display_name": "GLM-4 9B",
+  "family": "GLM",
+  "license": "mit",
+  "released": "2025-04-07",
+  "gguf_repos": [
+   "bartowski/THUDM_GLM-4-9B-0414-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "zai-org/GLM-4.5-Air",
+  "display_name": "GLM-4.5 Air",
+  "family": "GLM",
+  "license": "mit",
+  "released": "2025-07-20",
+  "gguf_repos": [
+   "bartowski/zai-org_GLM-4.5-Air-GGUF",
+   "unsloth/GLM-4.5-Air-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: the derived architecture is 26% off on every single-file build; the glm4_moe layout (shared expert, dense first layer, partial rotary) is not read correctly from its config"
+ },
+ {
+  "id": "tiiuae/Falcon3-10B-Instruct",
+  "display_name": "Falcon3 10B",
+  "family": "Falcon",
+  "license": "falcon-llm-license",
+  "released": "2024-12-14",
+  "gguf_repos": [
+   "bartowski/Falcon3-10B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "tiiuae/Falcon3-3B-Instruct",
+  "display_name": "Falcon3 3B",
+  "family": "Falcon",
+  "license": "falcon-llm-license",
+  "released": "2024-12-14",
+  "gguf_repos": [
+   "bartowski/Falcon3-3B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "tiiuae/Falcon3-1B-Instruct",
+  "display_name": "Falcon3 1B",
+  "family": "Falcon",
+  "license": "falcon-llm-license",
+  "released": "2024-12-14",
+  "gguf_repos": [
+   "bartowski/Falcon3-1B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "ibm-granite/granite-3.3-2b-instruct",
+  "display_name": "Granite 3.3 2B",
+  "family": "Granite",
+  "license": "apache-2.0",
+  "released": "2025-04-09",
+  "gguf_repos": [
+   "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "01-ai/Yi-1.5-34B-Chat",
+  "display_name": "Yi-1.5 34B",
+  "family": "Yi",
+  "license": "apache-2.0",
+  "released": "2024-05-10",
+  "gguf_repos": [
+   "bartowski/Yi-1.5-34B-Chat-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "swiss-ai/Apertus-70B-Instruct-2509",
+  "display_name": "Apertus 70B",
+  "family": "Apertus",
+  "license": "apache-2.0",
+  "released": "2025-09-01",
+  "gguf_repos": [
+   "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "display_name": "SmolLM2 360M",
+  "family": "SmolLM",
+  "license": "apache-2.0",
+  "released": "2024-10-31",
+  "gguf_repos": [
+   "bartowski/SmolLM2-360M-Instruct-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: F16 is 13% over; the vocabulary is a large share of this file and its write count and quantization are not reproduced, the same defect as every tied model under a billion parameters"
+ },
+ {
+  "id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+  "display_name": "SmolLM2 135M",
+  "family": "SmolLM",
+  "license": "apache-2.0",
+  "released": "2024-10-31",
+  "gguf_repos": [
+   "bartowski/SmolLM2-135M-Instruct-GGUF"
+  ],
+  "benchmarks": {},
+  "excluded": "size validation: F16 is 20% over; the vocabulary is a fifth of this file and its write count and quantization are not reproduced, the same defect as every tied model under a billion parameters"
+ },
+ {
+  "id": "microsoft/Phi-3.5-MoE-instruct",
+  "display_name": "Phi-3.5 MoE",
+  "family": "Phi",
+  "license": "mit",
+  "released": "2024-08-17",
+  "gguf_repos": [
+   "bartowski/Phi-3.5-MoE-instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "ByteDance-Seed/Seed-OSS-36B-Instruct",
+  "display_name": "Seed-OSS 36B",
+  "family": "Seed-OSS",
+  "license": "apache-2.0",
+  "released": "2025-08-20",
+  "gguf_repos": [
+   "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Ministral-3-8B-Instruct-2512",
+  "display_name": "Ministral 3 8B",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-10-31",
+  "gguf_repos": [
+   "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+   "unsloth/Ministral-3-8B-Instruct-2512-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Ministral-3-3B-Instruct-2512",
+  "display_name": "Ministral 3 3B",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-10-31",
+  "gguf_repos": [
+   "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+   "unsloth/Ministral-3-3B-Instruct-2512-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Ministral-3-14B-Instruct-2512",
+  "display_name": "Ministral 3 14B",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-10-31",
+  "gguf_repos": [
+   "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+   "unsloth/Ministral-3-14B-Instruct-2512-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+  "display_name": "Devstral Small 2 24B",
+  "family": "Mistral",
+  "license": "apache-2.0",
+  "released": "2025-11-28",
+  "gguf_repos": [
+   "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+   "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "allenai/Olmo-3-7B-Instruct",
+  "display_name": "OLMo 3 7B",
+  "family": "OLMo",
+  "license": "apache-2.0",
+  "released": "2025-11-19",
+  "gguf_repos": [
+   "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+   "unsloth/Olmo-3-7B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "allenai/Olmo-3-32B-Think",
+  "display_name": "OLMo 3 32B Think",
+  "family": "OLMo",
+  "license": "apache-2.0",
+  "released": "2025-11-19",
+  "gguf_repos": [
+   "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+   "unsloth/Olmo-3-32B-Think-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "microsoft/Phi-4-reasoning",
+  "display_name": "Phi-4 reasoning",
+  "family": "Phi",
+  "license": "mit",
+  "released": "2025-04-09",
+  "gguf_repos": [
+   "bartowski/microsoft_Phi-4-reasoning-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-235B-A22B-Thinking-2507",
+  "display_name": "Qwen3 235B-A22B Thinking 2507",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-07-25",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-235B-A22B-Thinking-2507-GGUF",
+   "unsloth/Qwen3-235B-A22B-Thinking-2507-GGUF"
+  ],
+  "benchmarks": {}
  }
 ]
