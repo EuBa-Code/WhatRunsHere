@@ -16,6 +16,7 @@ import { listen } from "@tauri-apps/api/event";
 import * as engine from "../engine";
 import type { Build, Progress } from "../engine";
 import * as fmt from "../format";
+import { Destination } from "./Destination";
 
 /** Every transfer this session has started, by build key. */
 export function useDownloads() {
@@ -110,7 +111,7 @@ export function Download({
             Show in folder
           </button>
         </div>
-        <Path where={where} />
+        <Path where={where} needsBytes={bytes} onChanged={look} />
       </Shell>
     );
   }
@@ -148,7 +149,7 @@ export function Download({
               <Minor onClick={() => void engine.cancelDownload(key)}>Cancel</Minor>
             </span>
           </div>
-          <Path where={where} />
+          <Path where={where} needsBytes={bytes} onChanged={look} />
         </Shell>
       );
 
@@ -215,7 +216,7 @@ export function Download({
               </Primary>
             </span>
           </div>
-          <Path where={where} />
+          <Path where={where} needsBytes={bytes} onChanged={look} />
         </Shell>
       );
   }
@@ -273,12 +274,23 @@ function Bar({
 }
 
 /** Where it is going, stated before it goes rather than after. */
-function Path({ where }: { where: engine.Destination | null }) {
+function Path({
+  where,
+  needsBytes,
+  onChanged,
+}: {
+  where: engine.Destination | null;
+  needsBytes: number;
+  onChanged: () => void;
+}) {
   if (!where) return null;
   return (
-    <p className="mt-2.5 truncate text-[11px] text-[var(--color-ink-faint)]">
-      {where.path}
-    </p>
+    <Destination
+      directory={where.path}
+      freeBytes={where.free_bytes}
+      needsBytes={needsBytes}
+      onChanged={onChanged}
+    />
   );
 }
 

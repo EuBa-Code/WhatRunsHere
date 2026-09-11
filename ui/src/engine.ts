@@ -289,6 +289,20 @@ export interface Destination {
   present_bytes: number | null;
   /** Set when an interrupted transfer is waiting to be continued. */
   partial_bytes: number | null;
+  /** Room left on the disk the directory sits on. */
+  free_bytes: number | null;
+}
+
+/** A disk a model could be written to. */
+export interface Volume {
+  name: string;
+  mount: string;
+  free_bytes: number;
+  total_bytes: number;
+  /** True when the current destination is on this disk. */
+  selected: boolean;
+  /** Where a model would go if this disk were chosen. */
+  suggested: string;
 }
 
 /** The event every running transfer reports itself on. */
@@ -314,3 +328,7 @@ export const downloads = () => invoke<Progress[]>("downloads");
 export const reveal = (path: string) => invoke<void>("reveal", { path });
 export const saveImage = (data: string, name: string) =>
   invoke<string>("save_image", { data, name });
+export const volumes = () => invoke<Volume[]>("volumes");
+/** Pass null to go back to the platform default. */
+export const setDownloadDir = (path: string | null) =>
+  invoke<string>("set_download_dir", { path });
