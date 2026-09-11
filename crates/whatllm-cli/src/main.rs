@@ -1,8 +1,8 @@
 //! `WhatLLM` on the command line.
 //!
-//! Five questions, five commands: what is this machine, how fast is it really,
-//! what will run on it, what happens when one of them does, and whether any of
-//! it beats paying for an API.
+//! Six questions, six commands: what is this machine, how fast is it really,
+//! what will run on it, what happens when one of them does, what is already
+//! here, and whether any of it beats paying for an API.
 
 #![forbid(unsafe_code)]
 
@@ -15,7 +15,9 @@ use clap::{Parser, Subcommand, ValueEnum};
 use render::Style;
 use std::path::PathBuf;
 use whatllm_core::cost::{self, ApiPricing, EnergyProfile, HardwareInvestment, Workload};
-use whatllm_core::fit::{self, FitContext, FitNote, FitRequest, ModelFit, Preference, RunMode};
+use whatllm_core::fit::{
+    self, FitContext, FitNote, FitRequest, ModelFit, Preference, RunMode, Verdict,
+};
 use whatllm_core::launch::{self, Host, Launch, LaunchNote, LaunchRequest, Target, Weights};
 use whatllm_core::memory::{self, LoadConfig, RuntimeProfile};
 use whatllm_core::model::{Catalog, ModelEntry};
@@ -199,6 +201,12 @@ enum Command {
     Plan {
         /// Model id or a fragment of its name.
         model: String,
+        #[command(flatten)]
+        sizing: SizingArgs,
+    },
+
+    /// What is already on this machine, and how each of it would run here.
+    Installed {
         #[command(flatten)]
         sizing: SizingArgs,
     },
@@ -389,6 +397,7 @@ fn main() -> Result<()> {
             limit,
         } => show_fit(&session, query.as_deref(), &sizing, limit),
         Command::Plan { model, sizing } => plan(&session, &model, &sizing),
+        Command::Installed { sizing } => show_installed(&session, &sizing),
         Command::Cost {
             model,
             sizing,
@@ -988,6 +997,143 @@ fn plan(session: &Session, query: &str, sizing: &SizingArgs) -> Result<()> {
     // Then what: the file, and the command that starts it as it was sized.
     // The runtime decides both, and for two of them there is no file at all.
     print_launch(&session.launch(model, &fit, sizing), style);
+    println!();
+    Ok(())
+}
+
+/// What is already on this machine, and how each of it would run here.
+///
+/// The disk is read, nothing is asked of any program, and each file the
+/// catalog recognises is solved for exactly the build it is: the question is
+/// how the file that is there would run, not which format the solver would
+/// have picked.
+fn show_installed(session: &Session, sizing: &SizingArgs) -> Result<()> {
+    use whatllm_providers::Identity;
+
+    /// One file with its fit, for the JSON form.
+    #[derive(serde::Serialize)]
+    struct Row<'a> {
+        #[serde(flatten)]
+        file: &'a whatllm_providers::InstalledFile,
+        fit: Option<ModelFit>,
+    }
+
+    let style = session.style;
+    let scan = whatllm_providers::scan(&session.catalog);
+    let request = sizing.request();
+    let rows: Vec<Row<'_>> = scan
+        .files
+        .iter()
+        .map(|file| {
+            let fit = match &file.identity {
+                Identity::Catalog { id, quant, .. } => session.catalog.find(id).and_then(|model| {
+                    let build = model.build(quant)?;
+                    let ctx = FitContext::new(
+                        &model.architecture,
+                        &model.benchmarks,
+                        &session.detection.system,
+                        &session.calibration,
+                    )
+                    .with_builds(std::slice::from_ref(build));
+                    fit::solve(&ctx, &request)
+                }),
+                _ => None,
+            };
+            Row { file, fit }
+        })
+        .collect();
+
+    if session.json {
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&serde_json::json!({
+                "looked_in": scan.looked_in,
+                "files": rows,
+            }))?
+        );
+        return Ok(());
+    }
+
+    println!("{}", render::heading(style, "On this machine"));
+    if rows.is_empty() {
+        println!(
+            "  {}",
+            style.dim("No model files found anywhere this looks.")
+        );
+    }
+    for row in &rows {
+        let file = row.file;
+        let what = match &file.identity {
+            Identity::Catalog {
+                display_name,
+                quant,
+                ..
+            } => format!("{} {}", style.bold(display_name), quant),
+            Identity::Header(header) => {
+                let parts: Vec<&str> = [
+                    header.name.as_deref(),
+                    header.architecture.as_deref(),
+                    header.format.as_deref(),
+                ]
+                .into_iter()
+                .flatten()
+                .collect();
+                let shard = header
+                    .shard
+                    .map(|(n, of)| format!(", part {n} of {of}"))
+                    .unwrap_or_default();
+                format!(
+                    "{}   {}",
+                    style.bold(&file.name),
+                    style.dim(&format!("not in the catalog: {}{shard}", parts.join(", ")))
+                )
+            }
+            Identity::Unknown { reason } => {
+                format!("{}   {}", style.bold(&file.name), style.dim(reason))
+            }
+        };
+        let how = match (&file.identity, &row.fit) {
+            (Identity::Catalog { .. }, Some(fit)) => format!(
+                "{:>9}  {}  {:.1} tok/s",
+                render::bytes(fit.memory.required()),
+                match fit.verdict {
+                    Verdict::Comfortable => style.good("comfortable"),
+                    Verdict::Fits => style.good("fits"),
+                    Verdict::Tight => style.warn("tight"),
+                    Verdict::DoesNotFit => style.bad("does not fit"),
+                },
+                fit.throughput.decode_tps
+            ),
+            (Identity::Catalog { .. }, None) => style.dim(&format!(
+                "does not fit at {} of context",
+                render::tokens(request.context)
+            )),
+            _ => style.dim("cannot be sized"),
+        };
+        println!("  {what}");
+        println!(
+            "      {}  {}",
+            style.dim(&format!("{:>9}", render::bytes(file.bytes))),
+            how
+        );
+        println!(
+            "      {}",
+            style.dim(&format!("{} · {}", file.provider.label(), file.path))
+        );
+    }
+
+    let absent: Vec<&whatllm_providers::Location> =
+        scan.looked_in.iter().filter(|l| !l.found).collect();
+    if !absent.is_empty() {
+        println!("{}", render::heading(style, "Looked for and not there"));
+        for location in absent {
+            println!(
+                "  {:<18} {}",
+                location.provider.label(),
+                style.dim(&location.path)
+            );
+        }
+    }
     println!();
     Ok(())
 }
