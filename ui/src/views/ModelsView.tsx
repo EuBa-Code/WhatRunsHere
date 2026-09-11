@@ -7,11 +7,11 @@
  * do not fit at all. That comparison is the reason to have a list.
  */
 import { useMemo, useState } from "react";
-import type { RankedModel, Sizing } from "../engine";
+import type { Installed, InstalledModel, RankedModel, Sizing } from "../engine";
 import type { View } from "../App";
 import * as fmt from "../format";
 import { MemoryColumn } from "../components/MemoryColumn";
-import { Empty, Figure, Meter, VerdictPill } from "../components/ui";
+import { Empty, Eyebrow, Figure, Meter, VerdictPill } from "../components/ui";
 import {
   Explain,
   qualityExplanation,
@@ -25,15 +25,28 @@ export function ModelsView({
   ranked,
   sizing,
   selectedId,
+  installed,
   onOpen,
 }: {
   ranked: RankedModel[] | null;
   sizing: Sizing;
   selectedId: string | null;
+  /** What is already on the disk, or null until the engine has looked. */
+  installed: Installed | null;
   onOpen: (id: string, view?: View) => void;
 }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+
+  // Catalog ids with a build somewhere on this machine, for the tag on the
+  // ranked rows.
+  const onDisk = useMemo(() => {
+    const ids = new Set<string>();
+    for (const file of installed?.files ?? []) {
+      if (file.identity.kind === "catalog") ids.add(file.identity.id);
+    }
+    return ids;
+  }, [installed]);
 
   const shown = useMemo(() => {
     if (!ranked) return [];
@@ -58,6 +71,8 @@ export function ModelsView({
 
   return (
     <div className="flex flex-col gap-5">
+      {installed && <OnThisMachine installed={installed} onOpen={onOpen} />}
+
       <div className="flex flex-wrap items-center gap-4">
         <input
           type="search"
@@ -106,6 +121,7 @@ export function ModelsView({
               model={model}
               rank={index + 1}
               selected={model.id === selectedId}
+              onDisk={onDisk.has(model.id)}
               onOpen={onOpen}
             />
           ))}
@@ -115,15 +131,163 @@ export function ModelsView({
   );
 }
 
+/**
+ * What is already here, before the catalog.
+ *
+ * A person who has used two runtimes has weights in two places and no list.
+ * This is the list, with each file the catalog recognises solved for exactly
+ * the build it is, so "which models do I have" comes with "and how would
+ * each of them run here". A file the catalog does not know is named from its
+ * own header and said to be unsizeable, not sized from a guess.
+ */
+function OnThisMachine({
+  installed,
+  onOpen,
+}: {
+  installed: Installed;
+  onOpen: (id: string, view?: View) => void;
+}) {
+  const total = installed.files.reduce((sum, file) => sum + file.bytes, 0);
+  // WhatLLM's own directory not existing yet says nothing about the person.
+  const absent = installed.looked_in.filter(
+    (place) => !place.found && place.provider !== "what_llm",
+  );
+
+  // Nothing found is said in one line, with where it was looked for, so an
+  // empty machine reads as empty rather than as a feature that is not there.
+  if (installed.files.length === 0) {
+    return (
+      <p className="text-[12px] text-[var(--color-ink-faint)]">
+        Nothing on this machine yet. Looked in{" "}
+        {installed.looked_in.map((place) => fmt.providerLabel(place.provider)).join(", ")}
+        ; a model downloaded from Plan appears here, sized for this machine.
+      </p>
+    );
+  }
+
+  return (
+    <section className="card px-5 pb-4 pt-4">
+      <div className="flex items-baseline justify-between gap-4">
+        <Eyebrow>Already on this machine</Eyebrow>
+        <span className="figure text-[12px] text-[var(--color-ink-faint)]">
+          {installed.files.length} {installed.files.length === 1 ? "file" : "files"} ·{" "}
+          {fmt.bytes(total)}
+        </span>
+      </div>
+      <ul className="mt-2 flex flex-col">
+        {installed.files.map((file) => (
+          <InstalledRow key={file.path} file={file} onOpen={onOpen} />
+        ))}
+      </ul>
+      {absent.length > 0 && (
+        <p className="mt-3 text-[11px] text-[var(--color-ink-faint)]">
+          Not found: {absent.map((place) => fmt.providerLabel(place.provider)).join(", ")}.
+          Looked in the folder each keeps by default.
+        </p>
+      )}
+    </section>
+  );
+}
+
+function InstalledRow({
+  file,
+  onOpen,
+}: {
+  file: InstalledModel;
+  onOpen: (id: string, view?: View) => void;
+}) {
+  const { identity, fit } = file;
+  const where = (
+    <span
+      className="block truncate text-[11px] text-[var(--color-ink-faint)]"
+      title={file.path}
+    >
+      {fmt.providerLabel(file.provider)}
+      {file.provider === "ollama" && ` · ${file.name}`}
+      {" · "}
+      {file.path}
+    </span>
+  );
+
+  if (identity.kind === "catalog") {
+    return (
+      <li className="border-b border-[var(--color-line-soft)] py-2.5 last:border-0">
+        <button
+          type="button"
+          onClick={() => onOpen(identity.id)}
+          className="flex w-full items-center gap-4 text-left"
+        >
+          <span className="min-w-0 flex-1">
+            <span className="flex items-baseline gap-2">
+              <span className="font-display text-[14px] font-semibold tracking-tight">
+                {identity.display_name}
+              </span>
+              <span className="figure text-[12px] text-[var(--color-ink-faint)]">
+                {identity.quant} · {fmt.bytes(file.bytes)}
+              </span>
+            </span>
+            {where}
+          </span>
+          {fit ? (
+            <span className="flex shrink-0 items-center gap-4">
+              <span className="figure text-[12px] text-[var(--color-ink-dim)]">
+                {fmt.bytes(fit.memory.required)}
+              </span>
+              <Figure value={fmt.tps(fit.decode_tps)} unit="tok/s" confidence={fit.confidence} />
+              <VerdictPill {...fmt.verdict(fit.verdict)} />
+            </span>
+          ) : (
+            <span className="shrink-0 text-[12px] text-[var(--color-ink-faint)]">
+              does not fit at this context
+            </span>
+          )}
+        </button>
+      </li>
+    );
+  }
+
+  const described =
+    identity.kind === "header"
+      ? [identity.name, identity.architecture, identity.format]
+          .filter((part): part is string => Boolean(part))
+          .join(", ") +
+        (identity.shard ? `, part ${identity.shard[0]} of ${identity.shard[1]}` : "")
+      : identity.reason;
+
+  return (
+    <li className="flex items-center gap-4 border-b border-[var(--color-line-soft)] py-2.5 last:border-0">
+      <span className="min-w-0 flex-1">
+        <span className="flex items-baseline gap-2">
+          <span className="font-display text-[14px] font-semibold tracking-tight">
+            {file.name}
+          </span>
+          <span className="figure text-[12px] text-[var(--color-ink-faint)]">
+            {fmt.bytes(file.bytes)}
+          </span>
+        </span>
+        {where}
+      </span>
+      <span className="max-w-[45%] shrink-0 text-right text-[12px] text-[var(--color-ink-faint)]">
+        {identity.kind === "header"
+          ? `Not in the catalog (${described}), so it cannot be sized here.`
+          : described}
+      </span>
+    </li>
+  );
+}
+
 function Row({
   model,
   rank,
   selected,
+  onDisk,
   onOpen,
 }: {
   model: RankedModel;
   rank: number;
   selected: boolean;
+  /** A build of this model is somewhere on this machine already. */
+  onDisk: boolean;
   onOpen: (id: string, view?: View) => void;
 }) {
   const { fit } = model;
@@ -175,7 +339,10 @@ function Row({
               </>
             )}
           </span>
-          <span className="ml-auto shrink-0">
+          <span className="ml-auto flex shrink-0 items-center gap-3">
+            {onDisk && (
+              <span className="text-[11px] text-[var(--color-good)]">on this machine</span>
+            )}
             <VerdictPill {...fmt.verdict(fit.verdict)} />
           </span>
         </div>

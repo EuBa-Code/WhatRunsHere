@@ -8,7 +8,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import * as engine from "./engine";
-import type { Machine, RankedModel, Sizing } from "./engine";
+import type { Installed, Machine, RankedModel, Sizing } from "./engine";
 import * as fmt from "./format";
 import { ProvenanceLegend } from "./components/ui";
 import { TitleBar } from "./components/TitleBar";
@@ -82,6 +82,31 @@ export default function App() {
     return () => {
       current = false;
     };
+  }, [sizing]);
+
+  // What is already on the disk, and how each of it runs at this sizing. The
+  // disk is read once; the fits follow the sizing like the ranking does.
+  const [installed, setInstalled] = useState<Installed | null>(null);
+  useEffect(() => {
+    let current = true;
+    engine
+      .installed(sizing, false)
+      .then((result) => {
+        if (current) setInstalled(result);
+      })
+      .catch(() => {
+        // A disk that cannot be read is an absence, not a failure of the
+        // window: the section is simply not shown.
+      });
+    return () => {
+      current = false;
+    };
+  }, [sizing]);
+  const refreshInstalled = useCallback(() => {
+    engine
+      .installed(sizing, true)
+      .then(setInstalled)
+      .catch(() => {});
   }, [sizing]);
 
   // The selection follows the ranking until someone picks for themselves.
@@ -166,11 +191,19 @@ export default function App() {
               ranked={ranked}
               sizing={sizing}
               selectedId={selectedId}
+              installed={installed}
               onOpen={open}
             />
           )}
           {view === "Plan" && (
-            <PlanView id={selectedId} sizing={sizing} ranked={ranked} onOpen={open} />
+            <PlanView
+              id={selectedId}
+              sizing={sizing}
+              ranked={ranked}
+              installed={installed}
+              onInstalledChanged={refreshInstalled}
+              onOpen={open}
+            />
           )}
           {view === "Cost" && (
             <CostView id={selectedId} sizing={sizing} ranked={ranked} onOpen={open} />

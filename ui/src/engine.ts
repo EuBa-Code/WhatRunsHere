@@ -377,6 +377,58 @@ export interface Volume {
   suggested: string;
 }
 
+/** Who keeps a model file on this machine. */
+export type Provider =
+  | "what_llm"
+  | "lm_studio"
+  | "ollama"
+  | "llama_cpp"
+  | "hugging_face";
+
+/** Where a provider's files were looked for, and whether the place exists. */
+export interface Location {
+  provider: Provider;
+  path: string;
+  /** False is the common case: the program is probably not installed. */
+  found: boolean;
+}
+
+/** What a file on disk turned out to be. Tagged `kind`. */
+export type Identity =
+  | { kind: "catalog"; id: string; display_name: string; quant: string }
+  | {
+      kind: "header";
+      name: string | null;
+      architecture: string | null;
+      size_label: string | null;
+      format: string | null;
+      /** `[this, of]` for one shard of a split model. */
+      shard: [number, number] | null;
+    }
+  | { kind: "unknown"; reason: string };
+
+/** One model file on this machine, and how it would run here. */
+export interface InstalledModel {
+  provider: Provider;
+  path: string;
+  bytes: number;
+  /** The filename, or for Ollama `name:tag`. */
+  name: string;
+  identity: Identity;
+  /**
+   * Solved for exactly the build on disk at the current sizing. Null when
+   * the file is not a catalog model, or does not fit at this context.
+   */
+  fit: FitView | null;
+}
+
+/** Everything found on this machine, and everywhere it was looked for. */
+export interface Installed {
+  looked_in: Location[];
+  /** Catalog models first, largest first within. */
+  files: InstalledModel[];
+}
+
 /** The event every running transfer reports itself on. */
 export const DOWNLOAD_EVENT = "download:progress";
 
@@ -399,6 +451,12 @@ export const launch = (id: string, sizing: Sizing) =>
 /** Writes the launch's file beside the weights and returns where it went. */
 export const saveLaunchFile = (id: string, sizing: Sizing) =>
   invoke<string>("save_launch_file", { id, sizing });
+/**
+ * What is on the disk. The disk is read on the first call and when `refresh`
+ * is true; otherwise only the fits are recomputed for the sizing.
+ */
+export const installed = (sizing: Sizing, refresh: boolean) =>
+  invoke<Installed>("installed", { sizing, refresh });
 export const pauseDownload = (key: string) =>
   invoke<void>("pause_download", { key });
 export const cancelDownload = (key: string) =>

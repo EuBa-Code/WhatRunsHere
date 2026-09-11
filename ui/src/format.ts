@@ -5,7 +5,7 @@
  * model at 7.9 GiB and one at 8.1 GiB are different answers on an 8 GiB card,
  * so sizes near a boundary keep a decimal that a tidier format would drop.
  */
-import type { Confidence, Host, LaunchNote, Verdict } from "./engine";
+import type { Confidence, Host, LaunchNote, Provider, Verdict } from "./engine";
 
 const KIB = 1024;
 
@@ -191,6 +191,22 @@ export function fitNote(note: Record<string, unknown> & { note: string }): strin
       return `${percent(n("utilisation"))} of the pool. It will load, but little else can.`;
     default:
       return note.note.replace(/_/g, " ");
+  }
+}
+
+/** The name a person knows a provider by. */
+export function providerLabel(provider: Provider): string {
+  switch (provider) {
+    case "what_llm":
+      return "WhatLLM";
+    case "lm_studio":
+      return "LM Studio";
+    case "ollama":
+      return "Ollama";
+    case "llama_cpp":
+      return "llama.cpp";
+    case "hugging_face":
+      return "HuggingFace cache";
   }
 }
 

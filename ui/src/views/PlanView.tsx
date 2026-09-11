@@ -8,7 +8,7 @@
  */
 import { useEffect, useState } from "react";
 import * as engine from "../engine";
-import type { Launch, Plan, RankedModel, Sizing } from "../engine";
+import type { Installed, Launch, Plan, RankedModel, Sizing } from "../engine";
 import type { View } from "../App";
 import * as fmt from "../format";
 import { MemoryColumn } from "../components/MemoryColumn";
@@ -26,11 +26,17 @@ export function PlanView({
   id,
   sizing,
   ranked,
+  installed,
+  onInstalledChanged,
   onOpen,
 }: {
   id: string | null;
   sizing: Sizing;
   ranked: RankedModel[] | null;
+  /** What is already on the disk, so a build that is here can say so. */
+  installed: Installed | null;
+  /** A download finished, so the disk holds something it did not. */
+  onInstalledChanged: () => void;
   onOpen: (id: string, view?: View) => void;
 }) {
   const [plan, setPlan] = useState<Plan | null>(null);
@@ -40,6 +46,12 @@ export function PlanView({
   // the path and a command naming the old one would not run.
   const [destinationVersion, setDestinationVersion] = useState(0);
   const downloads = useDownloads();
+
+  // Each finished transfer is a file the disk did not have a moment ago.
+  const finished = Object.values(downloads).filter((p) => p.state === "done").length;
+  useEffect(() => {
+    if (finished > 0) onInstalledChanged();
+  }, [finished, onInstalledChanged]);
 
   useEffect(() => {
     if (!id) return;
@@ -92,6 +104,15 @@ export function PlanView({
   // download control appears a moment before the launch card rather than the
   // whole section flickering in.
   const runsGguf = launch?.runs_gguf ?? true;
+
+  // The builds of this model that are somewhere on this machine already,
+  // wherever another runtime put them.
+  const onDisk = new Set<string>();
+  for (const file of installed?.files ?? []) {
+    if (file.identity.kind === "catalog" && file.identity.id === plan.id) {
+      onDisk.add(file.identity.quant.toLowerCase());
+    }
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -305,6 +326,11 @@ export function PlanView({
                 {build.chosen && (
                   <span className="shrink-0 text-[11px] text-[var(--color-brass)]">
                     chosen
+                  </span>
+                )}
+                {onDisk.has(build.quant.toLowerCase()) && (
+                  <span className="shrink-0 text-[11px] text-[var(--color-good)]">
+                    on this machine
                   </span>
                 )}
                 <span className="ml-auto shrink-0 text-[12px] text-[var(--color-ink-faint)]">
