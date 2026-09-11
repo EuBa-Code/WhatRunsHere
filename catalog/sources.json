@@ -292,7 +292,12 @@
   "gguf_repos": [
    "bartowski/Yi-1.5-9B-Chat-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 39.8,
+   "ifeval": 60.5,
+   "gpqa_diamond": 33.5
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "CohereForAI/aya-expanse-8b",
@@ -311,7 +316,12 @@
   "gguf_repos": [
    "bartowski/SmolLM2-1.7B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 19.4,
+   "ifeval": 56.7,
+   "gpqa_diamond": 27.9
+  },
+  "benchmark_source": "https://huggingface.co/HuggingFaceTB/SmolLM2-1.7B-Instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "HuggingFaceTB/SmolLM3-3B",
@@ -320,7 +330,12 @@
   "gguf_repos": [
    "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 19.6,
+   "gpqa_diamond": 35.7,
+   "ifeval": 76.7
+  },
+  "benchmark_source": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B"
  },
  {
   "id": "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct",
@@ -339,7 +354,13 @@
   "gguf_repos": [
    "bartowski/LiquidAI_LFM2-8B-A1B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 37.4,
+   "gpqa_diamond": 29.3,
+   "math": 74.2,
+   "ifeval": 77.6
+  },
+  "benchmark_source": "https://huggingface.co/LiquidAI/LFM2-8B-A1B"
  },
  {
   "id": "LiquidAI/LFM2.5-1.2B-Thinking",
@@ -348,7 +369,13 @@
   "gguf_repos": [
    "unsloth/LFM2.5-1.2B-Thinking-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 49.6,
+   "gpqa_diamond": 37.9,
+   "math": 88.0,
+   "ifeval": 88.4
+  },
+  "benchmark_source": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Thinking"
  },
  {
   "id": "Qwen/Qwen2.5-14B-Instruct",
@@ -357,7 +384,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-14B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 49.0,
+   "ifeval": 81.6,
+   "gpqa_diamond": 32.2
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/Qwen2.5-7B-Instruct",
@@ -366,7 +398,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-7B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 42.9,
+   "ifeval": 75.9,
+   "gpqa_diamond": 29.1
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/Qwen2.5-Coder-14B-Instruct",
@@ -375,7 +412,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 39.4,
+   "ifeval": 69.1,
+   "gpqa_diamond": 30.5
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/Qwen2.5-Coder-3B-Instruct",
@@ -393,7 +435,13 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3-30B-A3B-Instruct-2507-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 78.4,
+   "gpqa_diamond": 70.4,
+   "livecodebench": 43.2,
+   "ifeval": 84.7
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507"
  },
  {
   "id": "Qwen/Qwen3-4B-Instruct-2507",
@@ -402,7 +450,13 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3-4B-Instruct-2507-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 69.6,
+   "gpqa_diamond": 62.0,
+   "livecodebench": 35.1,
+   "ifeval": 83.4
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507"
  },
  {
   "id": "Qwen/Qwen3.5-2B",
@@ -411,7 +465,12 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3.5-2B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 55.3,
+   "gpqa_diamond": 30.4,
+   "ifeval": 61.2
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3.5-2B"
  },
  {
   "id": "Qwen/Qwen3.5-4B",
@@ -420,7 +479,13 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3.5-4B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 79.1,
+   "gpqa_diamond": 52.9,
+   "livecodebench": 55.8,
+   "ifeval": 89.8
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3.5-4B"
  },
  {
   "id": "Qwen/Qwen3.5-9B",
@@ -429,7 +494,13 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3.5-9B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 82.5,
+   "gpqa_diamond": 58.2,
+   "livecodebench": 65.6,
+   "ifeval": 91.5
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3.5-9B"
  },
  {
   "id": "Qwen/Qwen3.6-27B",
@@ -438,7 +509,12 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3.6-27B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 86.2,
+   "gpqa_diamond": 66.0,
+   "livecodebench": 83.9
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3.6-27B"
  },
  {
   "id": "allenai/OLMo-2-1124-13B-Instruct",
@@ -484,7 +560,12 @@
   "gguf_repos": [
    "bartowski/DeepSeek-R1-Distill-Llama-8B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 49.0,
+   "livecodebench": 39.6,
+   "math": 89.1
+  },
+  "benchmark_source": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
  },
  {
   "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
@@ -493,7 +574,12 @@
   "gguf_repos": [
    "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 59.1,
+   "livecodebench": 53.1,
+   "math": 93.9
+  },
+  "benchmark_source": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
  },
  {
   "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
@@ -502,7 +588,12 @@
   "gguf_repos": [
    "bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 49.1,
+   "livecodebench": 37.6,
+   "math": 92.8
+  },
+  "benchmark_source": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
  },
  {
   "id": "google/gemma-4-12B-it",
@@ -511,7 +602,12 @@
   "gguf_repos": [
    "bartowski/gemma-4-12B-it-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 77.2,
+   "gpqa_diamond": 78.8,
+   "livecodebench": 72.0
+  },
+  "benchmark_source": "https://huggingface.co/google/gemma-4-12B-it"
  },
  {
   "id": "google/gemma-4-26B-A4B-it",
@@ -520,7 +616,12 @@
   "gguf_repos": [
    "bartowski/google_gemma-4-26B-A4B-it-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 82.6,
+   "gpqa_diamond": 82.3,
+   "livecodebench": 77.1
+  },
+  "benchmark_source": "https://huggingface.co/google/gemma-4-26B-A4B-it"
  },
  {
   "id": "google/gemma-4-31B-it",
@@ -529,7 +630,12 @@
   "gguf_repos": [
    "bartowski/google_gemma-4-31B-it-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 85.2,
+   "gpqa_diamond": 84.3,
+   "livecodebench": 80.0
+  },
+  "benchmark_source": "https://huggingface.co/google/gemma-4-31B-it"
  },
  {
   "id": "google/gemma-4-E2B-it",
@@ -558,7 +664,12 @@
   "gguf_repos": [
    "bartowski/granite-3.1-8b-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 28.2,
+   "ifeval": 72.1,
+   "gpqa_diamond": 31.2
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-3.1-8b-instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "internlm/internlm2_5-20b-chat",
@@ -567,7 +678,13 @@
   "gguf_repos": [
    "bartowski/internlm2_5-20b-chat-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 33.3,
+   "math": 64.7,
+   "mmlu_pro": 40.0,
+   "ifeval": 70.1
+  },
+  "benchmark_source": "https://huggingface.co/internlm/internlm2_5-20b-chat; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "internlm/internlm3-8b-instruct",
@@ -576,7 +693,14 @@
   "gguf_repos": [
    "bartowski/internlm3-8b-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 57.6,
+   "gpqa_diamond": 37.4,
+   "livecodebench": 17.8,
+   "math": 83.0,
+   "ifeval": 79.3
+  },
+  "benchmark_source": "https://huggingface.co/internlm/internlm3-8b-instruct"
  },
  {
   "id": "microsoft/Phi-3-medium-4k-instruct",
@@ -585,7 +709,13 @@
   "gguf_repos": [
    "bartowski/Phi-3-medium-4k-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "math": 52.8,
+   "mmlu_pro": 46.8,
+   "ifeval": 64.2,
+   "gpqa_diamond": 33.6
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-3-medium-4k-instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "microsoft/Phi-3.5-mini-instruct",
@@ -594,7 +724,13 @@
   "gguf_repos": [
    "bartowski/Phi-3.5-mini-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 30.9,
+   "gpqa_diamond": 30.4,
+   "math": 86.2,
+   "ifeval": 57.7
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-3.5-mini-instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "microsoft/Phi-4-mini-instruct",
@@ -603,7 +739,13 @@
   "gguf_repos": [
    "bartowski/microsoft_Phi-4-mini-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 52.8,
+   "gpqa_diamond": 25.2,
+   "math": 64.0,
+   "ifeval": 73.8
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-4-mini-instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "mistralai/Codestral-22B-v0.1",
@@ -612,7 +754,12 @@
   "gguf_repos": [
    "bartowski/Codestral-22B-v0.1-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 31.6,
+   "ifeval": 57.7,
+   "gpqa_diamond": 29.9
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "mistralai/Ministral-8B-Instruct-2410",
@@ -621,7 +768,12 @@
   "gguf_repos": [
    "bartowski/Ministral-8B-Instruct-2410-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 32.9,
+   "ifeval": 59.0,
+   "gpqa_diamond": 28.4
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "mistralai/Mistral-7B-Instruct-v0.3",
@@ -630,7 +782,12 @@
   "gguf_repos": [
    "bartowski/Mistral-7B-Instruct-v0.3-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 30.8,
+   "ifeval": 54.7,
+   "gpqa_diamond": 27.9
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "mistralai/Mistral-Nemo-Instruct-2407",
@@ -639,7 +796,12 @@
   "gguf_repos": [
    "bartowski/Mistral-Nemo-Instruct-2407-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 35.2,
+   "ifeval": 63.8,
+   "gpqa_diamond": 29.0
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
@@ -648,7 +810,12 @@
   "gguf_repos": [
    "bartowski/mistralai_Mistral-Small-3.2-24B-Instruct-2506-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 69.1,
+   "gpqa_diamond": 44.2,
+   "math": 69.4
+  },
+  "benchmark_source": "https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506"
  },
  {
   "id": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
@@ -684,7 +851,13 @@
   "gguf_repos": [
    "bartowski/Falcon3-7B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 34.3,
+   "math": 81.4,
+   "ifeval": 76.1,
+   "gpqa_diamond": 31.0
+  },
+  "benchmark_source": "https://huggingface.co/tiiuae/Falcon3-7B-Instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/Llama-3.2-1B-Instruct",
@@ -693,7 +866,12 @@
   "gguf_repos": [
    "bartowski/Llama-3.2-1B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 17.4,
+   "ifeval": 58.1,
+   "gpqa_diamond": 26.8
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/Llama-3.2-3B-Instruct",
@@ -702,7 +880,12 @@
   "gguf_repos": [
    "bartowski/Llama-3.2-3B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 31.9,
+   "ifeval": 73.9,
+   "gpqa_diamond": 27.9
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/gemma-2-27b-it",
@@ -711,7 +894,12 @@
   "gguf_repos": [
    "bartowski/gemma-2-27b-it-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 44.5,
+   "ifeval": 79.8,
+   "gpqa_diamond": 37.5
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/gemma-2-2b-it",
@@ -720,7 +908,12 @@
   "gguf_repos": [
    "bartowski/gemma-2-2b-it-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 25.5,
+   "ifeval": 56.7,
+   "gpqa_diamond": 27.4
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/gemma-2-9b-it",
@@ -729,7 +922,12 @@
   "gguf_repos": [
    "bartowski/gemma-2-9b-it-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 38.8,
+   "ifeval": 74.4,
+   "gpqa_diamond": 36.1
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/gemma-3n-E4B-it",
@@ -771,7 +969,13 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 80.9,
+   "gpqa_diamond": 73.4,
+   "livecodebench": 66.0,
+   "ifeval": 88.9
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Thinking-2507"
  },
  {
   "id": "Qwen/Qwen3-4B-Thinking-2507",
@@ -782,7 +986,13 @@
   "gguf_repos": [
    "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 74.0,
+   "gpqa_diamond": 65.8,
+   "livecodebench": 55.2,
+   "ifeval": 87.4
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3-4B-Thinking-2507"
  },
  {
   "id": "Qwen/Qwen3-235B-A22B-Instruct-2507",
@@ -794,7 +1004,13 @@
    "bartowski/Qwen_Qwen3-235B-A22B-Instruct-2507-GGUF",
    "unsloth/Qwen3-235B-A22B-Instruct-2507-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 83.0,
+   "gpqa_diamond": 77.5,
+   "livecodebench": 51.8,
+   "ifeval": 88.7
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Instruct-2507"
  },
  {
   "id": "Qwen/Qwen2.5-32B-Instruct",
@@ -805,7 +1021,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-32B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 56.7,
+   "ifeval": 83.5,
+   "gpqa_diamond": 33.8
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/Qwen2.5-72B-Instruct",
@@ -816,7 +1037,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-72B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 56.3,
+   "ifeval": 86.4,
+   "gpqa_diamond": 37.5
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/Qwen2.5-3B-Instruct",
@@ -827,7 +1053,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-3B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 32.5,
+   "ifeval": 64.7,
+   "gpqa_diamond": 27.3
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/Qwen2.5-1.5B-Instruct",
@@ -838,7 +1069,12 @@
   "gguf_repos": [
    "bartowski/Qwen2.5-1.5B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 28.0,
+   "ifeval": 44.8,
+   "gpqa_diamond": 25.6
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "Qwen/QwQ-32B",
@@ -849,7 +1085,11 @@
   "gguf_repos": [
    "bartowski/Qwen_QwQ-32B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "livecodebench": 63.4,
+   "ifeval": 83.9
+  },
+  "benchmark_source": "https://qwenlm.github.io/blog/qwq-32b/ (chart)"
  },
  {
   "id": "unsloth/gemma-3-1b-it",
@@ -885,7 +1125,12 @@
   "gguf_repos": [
    "bartowski/microsoft_Phi-4-reasoning-plus-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 68.9,
+   "livecodebench": 53.1,
+   "ifeval": 84.9
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-4-reasoning-plus"
  },
  {
   "id": "microsoft/Phi-4-mini-reasoning",
@@ -896,7 +1141,11 @@
   "gguf_repos": [
    "bartowski/microsoft_Phi-4-mini-reasoning-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 52.0,
+   "math": 94.6
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-4-mini-reasoning"
  },
  {
   "id": "mistralai/Devstral-Small-2507",
@@ -952,7 +1201,11 @@
   "gguf_repos": [
    "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "math": 69.0,
+   "ifeval": 74.8
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-3.3-8b-instruct"
  },
  {
   "id": "allenai/OLMo-2-1124-7B-Instruct",
@@ -963,7 +1216,12 @@
   "gguf_repos": [
    "bartowski/OLMo-2-1124-7B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 26.7,
+   "ifeval": 72.4,
+   "gpqa_diamond": 27.9
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "unsloth/Meta-Llama-3.1-70B-Instruct",
@@ -985,7 +1243,12 @@
   "gguf_repos": [
    "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 49.2,
+   "ifeval": 73.8,
+   "gpqa_diamond": 25.8
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "NousResearch/Hermes-4-70B",
@@ -1007,7 +1270,12 @@
   "gguf_repos": [
    "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 65.2,
+   "livecodebench": 57.5,
+   "math": 94.5
+  },
+  "benchmark_source": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B"
  },
  {
   "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
@@ -1018,7 +1286,12 @@
   "gguf_repos": [
    "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 33.8,
+   "livecodebench": 16.9,
+   "math": 83.9
+  },
+  "benchmark_source": "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
  },
  {
   "id": "Qwen/Qwen2.5-0.5B-Instruct",
@@ -1064,7 +1337,10 @@
   "gguf_repos": [
    "bartowski/THUDM_GLM-4-32B-0414-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "ifeval": 87.6
+  },
+  "benchmark_source": "https://huggingface.co/zai-org/GLM-4-32B-0414"
  },
  {
   "id": "zai-org/GLM-Z1-32B-0414",
@@ -1110,7 +1386,13 @@
   "gguf_repos": [
    "bartowski/Falcon3-10B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 38.1,
+   "math": 84.9,
+   "ifeval": 78.2,
+   "gpqa_diamond": 32.9
+  },
+  "benchmark_source": "https://huggingface.co/tiiuae/Falcon3-10B-Instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "tiiuae/Falcon3-3B-Instruct",
@@ -1121,7 +1403,13 @@
   "gguf_repos": [
    "bartowski/Falcon3-3B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "math": 74.8,
+   "mmlu_pro": 30.1,
+   "ifeval": 69.8,
+   "gpqa_diamond": 28.9
+  },
+  "benchmark_source": "https://huggingface.co/tiiuae/Falcon3-3B-Instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "tiiuae/Falcon3-1B-Instruct",
@@ -1132,7 +1420,13 @@
   "gguf_repos": [
    "bartowski/Falcon3-1B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "math": 43.9,
+   "mmlu_pro": 18.4,
+   "ifeval": 55.6,
+   "gpqa_diamond": 26.7
+  },
+  "benchmark_source": "https://huggingface.co/tiiuae/Falcon3-1B-Instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "ibm-granite/granite-3.3-2b-instruct",
@@ -1143,7 +1437,11 @@
   "gguf_repos": [
    "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "math": 58.1,
+   "ifeval": 65.8
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-3.3-2b-instruct"
  },
  {
   "id": "01-ai/Yi-1.5-34B-Chat",
@@ -1154,7 +1452,12 @@
   "gguf_repos": [
    "bartowski/Yi-1.5-34B-Chat-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 45.2,
+   "ifeval": 60.7,
+   "gpqa_diamond": 36.5
+  },
+  "benchmark_source": "https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "swiss-ai/Apertus-70B-Instruct-2509",
@@ -1200,7 +1503,13 @@
   "gguf_repos": [
    "bartowski/Phi-3.5-MoE-instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 54.3,
+   "gpqa_diamond": 36.8,
+   "math": 88.7,
+   "ifeval": 69.2
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-3.5-MoE-instruct; https://huggingface.co/datasets/open-llm-leaderboard/contents (raw columns)"
  },
  {
   "id": "ByteDance-Seed/Seed-OSS-36B-Instruct",
@@ -1211,7 +1520,14 @@
   "gguf_repos": [
    "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 60.4,
+   "gpqa_diamond": 35.2,
+   "livecodebench": 67.4,
+   "math": 61.3,
+   "ifeval": 85.8
+  },
+  "benchmark_source": "https://huggingface.co/ByteDance-Seed/Seed-OSS-36B-Instruct"
  },
  {
   "id": "mistralai/Ministral-3-8B-Instruct-2512",
@@ -1223,7 +1539,11 @@
    "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
    "unsloth/Ministral-3-8B-Instruct-2512-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 66.8,
+   "livecodebench": 61.6
+  },
+  "benchmark_source": "https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512"
  },
  {
   "id": "mistralai/Ministral-3-3B-Instruct-2512",
@@ -1235,7 +1555,11 @@
    "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
    "unsloth/Ministral-3-3B-Instruct-2512-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 53.4,
+   "livecodebench": 54.8
+  },
+  "benchmark_source": "https://huggingface.co/mistralai/Ministral-3-3B-Instruct-2512"
  },
  {
   "id": "mistralai/Ministral-3-14B-Instruct-2512",
@@ -1247,7 +1571,11 @@
    "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
    "unsloth/Ministral-3-14B-Instruct-2512-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 71.2,
+   "livecodebench": 64.6
+  },
+  "benchmark_source": "https://huggingface.co/mistralai/Ministral-3-14B-Instruct-2512"
  },
  {
   "id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
@@ -1294,7 +1622,12 @@
   "gguf_repos": [
    "bartowski/microsoft_Phi-4-reasoning-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "gpqa_diamond": 65.8,
+   "livecodebench": 53.8,
+   "ifeval": 83.4
+  },
+  "benchmark_source": "https://huggingface.co/microsoft/Phi-4-reasoning"
  },
  {
   "id": "Qwen/Qwen3-235B-A22B-Thinking-2507",
@@ -1306,6 +1639,12 @@
    "bartowski/Qwen_Qwen3-235B-A22B-Thinking-2507-GGUF",
    "unsloth/Qwen3-235B-A22B-Thinking-2507-GGUF"
   ],
-  "benchmarks": {}
+  "benchmarks": {
+   "mmlu_pro": 84.4,
+   "gpqa_diamond": 81.1,
+   "livecodebench": 74.1,
+   "ifeval": 87.8
+  },
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507"
  }
 ]

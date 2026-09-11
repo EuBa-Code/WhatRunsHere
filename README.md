@@ -107,6 +107,13 @@ from: solid for something measured on this machine, dashed for a
 manufacturer's specification, dotted for an assumption nothing has replaced. It
 is the same `Confidence` the CLI prints, drawn instead of named.
 
+The quality score is anchored to published evaluations, copied from the
+publisher's model card (MMLU-Pro, GPQA Diamond, LiveCodeBench, MATH-500,
+IFEval) and, where the card has none, from the Open LLM Leaderboard's raw
+columns. Each entry in `catalog/sources.json` names where its figures were
+read. Where nothing is published the score is inferred from size and says so,
+with the fraction of the use case that real evaluations back.
+
 ## How accurate is it
 
 Both halves of the model are checked against reality rather than argued for.
