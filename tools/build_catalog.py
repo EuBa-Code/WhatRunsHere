@@ -182,6 +182,79 @@ def gated_delta_net(config: dict) -> dict:
     return {"kind": "recurrent", "state_elems": state, "params": params}
 
 
+def short_conv(config: dict) -> dict:
+    """LFM2's short-convolution block, as a recurrent layer.
+
+    From `Lfm2ShortConv`: an input projection to three times the width (the
+    gate, the value and the convolution input), a depthwise convolution of
+    `conv_L_cache` taps over the hidden width, and an output projection back.
+    `conv_bias` adds a bias to each. The state is the `conv_L_cache - 1`
+    columns the convolution keeps, per channel: a few kilobytes, which is why
+    these models run on a phone at any context.
+    """
+    hidden = config["hidden_size"]
+    taps = config.get("conv_L_cache", 3)
+    bias = bool(config.get("conv_bias", False))
+    params = (
+        hidden * 3 * hidden
+        + hidden * taps
+        + hidden * hidden
+        + (3 * hidden + hidden + hidden if bias else 0)
+    )
+    state = hidden * (taps - 1)
+    return {"kind": "recurrent", "state_elems": state, "params": params}
+
+
+def mamba2(config: dict) -> dict:
+    """Granite 4's Mamba-2 block, as a recurrent layer.
+
+    From `Mamba2Mixer`, which `GraniteMoeHybridMambaLayer` wraps: the inner
+    width is `mamba_expand` times the hidden width, split into `mamba_n_heads`
+    heads of `mamba_d_head`. One projection produces the gate, the
+    convolution input (inner width plus two state widths per group) and one
+    time-step scalar per head; a depthwise convolution of `mamba_d_conv` taps
+    runs over that middle part; `A_log`, `D` and `dt_bias` hold one scalar per
+    head; a gated norm covers the inner width; an output projection returns
+    to the hidden width. The state is one `d_head x d_state` matrix per head,
+    plus the convolution's `d_conv - 1` columns.
+    """
+    hidden = config["hidden_size"]
+    inner = config.get("mamba_expand", 2) * hidden
+    heads = config["mamba_n_heads"]
+    d_state = config["mamba_d_state"]
+    d_head = config.get("mamba_d_head", inner // heads)
+    groups = config.get("mamba_n_groups", 1)
+    d_conv = config.get("mamba_d_conv", 4)
+    conv_dim = inner + 2 * groups * d_state
+    proj_bias = bool(config.get("mamba_proj_bias", False))
+    conv_bias = bool(config.get("mamba_conv_bias", True))
+    in_width = inner + conv_dim + heads
+    params = (
+        hidden * in_width
+        + (in_width if proj_bias else 0)
+        + conv_dim * d_conv
+        + (conv_dim if conv_bias else 0)
+        + 3 * heads
+        + inner
+        + inner * hidden
+        + (hidden if proj_bias else 0)
+    )
+    state = heads * d_head * d_state + conv_dim * (d_conv - 1)
+    return {"kind": "recurrent", "state_elems": state, "params": params}
+
+
+def recurrent_block(kind: str, config: dict) -> dict | None:
+    """The recurrent description of one layer kind, when this can derive it."""
+    kind = kind.lower()
+    if kind == "linear_attention" and "linear_num_value_heads" in config:
+        return gated_delta_net(config)
+    if kind == "conv" and "conv_L_cache" in config:
+        return short_conv(config)
+    if kind == "mamba" and "mamba_n_heads" in config:
+        return mamba2(config)
+    return None
+
+
 def hybrid_layer_types(config: dict) -> list | None:
     """The per-layer kinds of a hybrid stack, as listed or as implied.
 
@@ -193,6 +266,13 @@ def hybrid_layer_types(config: dict) -> list | None:
     listed = config.get("layer_types")
     if isinstance(listed, list) and listed:
         return listed
+    attention_at = config.get("full_attn_idxs")
+    if isinstance(attention_at, list) and "conv_L_cache" in config:
+        at = {int(i) for i in attention_at}
+        return [
+            "full_attention" if i in at else "conv"
+            for i in range(config["num_hidden_layers"])
+        ]
     interval = config.get("full_attention_interval")
     if interval and config.get("linear_num_value_heads"):
         return [
@@ -224,17 +304,16 @@ def layer_layout(config: dict) -> dict:
     # saying so in its config; Qwen3.5 says so.
     layer_types = hybrid_layer_types(config)
     if isinstance(layer_types, list) and any(
-        str(t).lower() == "linear_attention" for t in layer_types
+        recurrent_block(str(t), config) for t in layer_types
     ):
         full = {"attention": kind}
         gated_by_design = str(config.get("model_type", "")).lower() == "qwen3_next"
         if config.get("attn_output_gate", gated_by_design):
             full["output_gate"] = True
-        linear = {"attention": gated_delta_net(config)}
-        specs = [
-            linear if str(t).lower() == "linear_attention" else full
-            for t in layer_types
-        ]
+        specs = []
+        for t in layer_types:
+            block = recurrent_block(str(t), config)
+            specs.append({"attention": block} if block else full)
         return {"n_layers": n_layers, "cycle": shortest_period(specs)}
 
     window = config.get("sliding_window")
@@ -266,6 +345,33 @@ def layer_layout(config: dict) -> dict:
     return {"n_layers": n_layers, "cycle": [{"attention": kind}]}
 
 
+def intermediate_size(config: dict) -> int:
+    """The dense feed-forward width, which two families compute rather than
+    state.
+
+    LFM2 names a nominal width and, when `block_auto_adjust_ff_dim` is set,
+    uses two thirds of it, scaled by `block_ffn_dim_multiplier` and rounded
+    up to `block_multiple_of`, exactly as `Lfm2MLP` does. Granite 4's hybrid
+    config reserves `intermediate_size` for its experts and keeps the dense
+    block's width in `shared_intermediate_size`, which for the dense sizes is
+    the only feed-forward there is.
+    """
+    model_type = str(config.get("model_type", "")).lower()
+    if model_type == "lfm2":
+        width = config.get("intermediate_size") or config["block_ff_dim"]
+        if config.get("block_auto_adjust_ff_dim"):
+            width = int(2 * width / 3)
+            multiplier = config.get("block_ffn_dim_multiplier")
+            if multiplier is not None:
+                width = int(multiplier * width)
+            multiple = config.get("block_multiple_of", 256)
+            width = multiple * ((width + multiple - 1) // multiple)
+        return width
+    if model_type == "granitemoehybrid" and not config.get("num_local_experts"):
+        return config.get("shared_intermediate_size") or config["intermediate_size"]
+    return config["intermediate_size"]
+
+
 def moe_spec(config: dict) -> dict | None:
     """Mixture-of-experts layout, when the model is sparse."""
     experts = (
@@ -287,20 +393,24 @@ def moe_spec(config: dict) -> dict | None:
         or config.get("expert_intermediate_size")
         or config["intermediate_size"]
     )
-    shared_count = config.get("n_shared_experts") or (
-        1 if config.get("shared_expert_intermediate_size") else 0
+    # Qwen names the shared expert's width one way, Granite 4 another.
+    shared_width = config.get("shared_expert_intermediate_size") or (
+        config.get("shared_intermediate_size")
+        if str(config.get("model_type", "")).lower() == "granitemoehybrid"
+        else None
     )
-    shared_intermediate = config.get("shared_expert_intermediate_size") or (
-        expert_intermediate if shared_count else 0
-    )
+    shared_count = config.get("n_shared_experts") or (1 if shared_width else 0)
+    shared_intermediate = shared_width or (expert_intermediate if shared_count else 0)
     return {
         "experts": experts,
         "experts_per_token": per_token,
         "expert_intermediate": expert_intermediate,
         "shared_experts": shared_count,
         "shared_intermediate": shared_intermediate,
-        # DeepSeek keeps a dense prefix; most designs do not.
-        "dense_layers": config.get("first_k_dense_replace", 0),
+        # DeepSeek and LFM2 keep a dense prefix; most designs do not.
+        "dense_layers": config.get("first_k_dense_replace")
+        or config.get("num_dense_layers")
+        or 0,
     }
 
 
@@ -308,14 +418,15 @@ def moe_spec(config: dict) -> dict | None:
 # The field being absent does not mean false: it means "use the model class
 # default", and that default differs by family. Gemma ties and omits the field;
 # Llama does not tie and omits it just as often.
-TIES_BY_DEFAULT = ("gemma",)
+TIES_BY_DEFAULT = ("gemma", "lfm2")
 
 
 def tied_embeddings(config: dict, outer: dict) -> bool:
     """Whether the output projection shares storage with the embedding table."""
     for source in (config, outer):
-        if "tie_word_embeddings" in source:
-            return bool(source["tie_word_embeddings"])
+        for key in ("tie_word_embeddings", "tie_embedding"):
+            if key in source:
+                return bool(source[key])
     model_type = str(config.get("model_type", outer.get("model_type", ""))).lower()
     return model_type.startswith(TIES_BY_DEFAULT)
 
@@ -355,12 +466,12 @@ def architecture(outer: dict) -> dict:
 
     # A hybrid stack mixes blocks that are not attention in among the ones that
     # are. The memory model carries them as `AttentionKind::Recurrent`, but only
-    # when told how many parameters and how much state each block holds. For
-    # the Gated DeltaNet block of Qwen3-Next and Qwen3.5 that follows from the
-    # `linear_*` keys, and `gated_delta_net` derives it. For state-space blocks
-    # (Jamba, Falcon-H1, Granite 4) and short convolutions (LFM2) it does not
-    # yet, and describing one as though every layer were ordinary attention
-    # gets its size wrong by a sixth. Those are refused.
+    # when told how many parameters and how much state each block holds. Three
+    # blocks are derived from their config keys, each tensor by tensor from
+    # the block's definition: Qwen3.5's Gated DeltaNet, LFM2's short
+    # convolution and Granite 4's Mamba-2. Any other kind (Jamba, Falcon-H1)
+    # is refused, because describing one as though every layer were ordinary
+    # attention gets its size wrong by a sixth.
     HYBRID_BLOCKS = ("linear", "mamba", "ssm", "conv", "recurrent")
     layer_types = hybrid_layer_types(config)
     if isinstance(layer_types, list):
@@ -368,12 +479,7 @@ def architecture(outer: dict) -> dict:
             str(kind) for kind in layer_types
             if any(marker in str(kind).lower() for marker in HYBRID_BLOCKS)
         })
-        derivable = hybrid == ["linear_attention"] and all(
-            key in config for key in (
-                "linear_num_key_heads", "linear_key_head_dim",
-                "linear_num_value_heads", "linear_value_head_dim",
-            )
-        )
+        derivable = all(recurrent_block(kind, config) for kind in hybrid)
         if hybrid and not derivable:
             kinds = sorted({str(k) for k in layer_types})
             raise CatalogError(
@@ -397,7 +503,7 @@ def architecture(outer: dict) -> dict:
     arch = {
         "hidden_size": config["hidden_size"],
         "heads": config["num_attention_heads"],
-        "intermediate_size": config["intermediate_size"],
+        "intermediate_size": intermediate_size(config),
         "vocab_size": config["vocab_size"],
         "layers": layer_layout(config),
         "ffn": "gated",
