@@ -218,6 +218,16 @@ ships with the binary and is also read from `~/.whatllm/catalog.json` if newer):
 python tools/build_catalog.py
 ```
 
+## It stays free
+
+Free, under MIT or Apache 2.0, with no feature gating, no licensing code and no
+telemetry. The architecture has no place to put a check, which is deliberate.
+
+That is a commitment rather than a stage. A project that never promised to stay
+free and later charges has broken nothing; one that promised and then charged
+has broken the only thing it had — so the promise is made here, where it can be
+held to.
+
 ## Prior art
 
 WhatLLM began as a response to [llmfit](https://github.com/AlexsJones/llmfit) by
