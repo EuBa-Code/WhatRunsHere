@@ -31,6 +31,7 @@ use whatllm_core::cost::{
 };
 use whatllm_core::fit::{self, FitContext, FitNote, FitRequest, ModelFit, RunMode, Verdict};
 use whatllm_core::hardware::Accelerator;
+use whatllm_core::launch::{Host, Launch, LaunchRequest, Target};
 use whatllm_core::memory::{self, LoadConfig, RuntimeProfile};
 use whatllm_core::model::{Catalog, ModelEntry};
 use whatllm_core::perf::{self, Calibration, Confidence};
@@ -132,23 +133,46 @@ pub struct Sizing {
 ///
 /// Named rather than described: a whole [`RuntimeProfile`] arriving from the
 /// window would be a way to ask about a runtime that does not exist.
+///
+/// Each name answers two questions that used to be one. How much memory the
+/// runtime needs is its [`RuntimeProfile`], and LM Studio and Ollama share
+/// llama.cpp's because they are llama.cpp underneath. What to do to get the
+/// model running is its [`Host`], and there the three differ: where the file
+/// goes, and what starts it.
 #[derive(Debug, Clone, Copy, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum RuntimeName {
-    /// llama.cpp, Ollama or LM Studio, with flash attention.
+    /// llama.cpp, with flash attention.
     LlamaCpp,
     /// The same without it, which costs a great deal at long context.
     LlamaCppNoFlash,
+    /// LM Studio, which is llama.cpp reading its own folder.
+    LmStudio,
+    /// Ollama, which is llama.cpp reading its own store.
+    Ollama,
     /// vLLM.
     Vllm,
     /// MLX on Apple Silicon.
     Mlx,
 }
 
+impl RuntimeName {
+    /// The program that will host the model.
+    pub const fn host(self) -> Host {
+        match self {
+            Self::LlamaCpp | Self::LlamaCppNoFlash => Host::LlamaCpp,
+            Self::LmStudio => Host::LmStudio,
+            Self::Ollama => Host::Ollama,
+            Self::Vllm => Host::Vllm,
+            Self::Mlx => Host::Mlx,
+        }
+    }
+}
+
 impl From<RuntimeName> for RuntimeProfile {
     fn from(value: RuntimeName) -> Self {
         match value {
-            RuntimeName::LlamaCpp => Self::LLAMA_CPP,
+            RuntimeName::LlamaCpp | RuntimeName::LmStudio | RuntimeName::Ollama => Self::LLAMA_CPP,
             RuntimeName::LlamaCppNoFlash => Self::LLAMA_CPP_NO_FLASH,
             RuntimeName::Vllm => Self::VLLM,
             RuntimeName::Mlx => Self::MLX,
@@ -727,12 +751,19 @@ pub struct Destination {
     /// Sent so the window can say a build will not fit before it starts
     /// rather than after twenty gigabytes have arrived.
     pub free_bytes: Option<u64>,
+    /// The host's own model folder, when the directory sits inside it.
+    ///
+    /// Set for LM Studio when it is installed: the file goes where LM Studio
+    /// reads, so the directory is not the chosen one and cannot be changed
+    /// from here. The window shows it as a fact rather than as a setting.
+    pub host_tree: Option<String>,
 }
 
 /// Where one build would go, and what is already there.
 ///
 /// Asked before anything is fetched, so the window can offer to reveal a file
-/// that is already downloaded rather than offering to download it again.
+/// that is already downloaded rather than offering to download it again. The
+/// runtime decides the directory: LM Studio reads only its own folder.
 ///
 /// # Errors
 /// When the model or the build is not in the catalog, or the system has no
@@ -742,21 +773,37 @@ pub fn destination(
     engine: tauri::State<'_, Engine>,
     id: String,
     quant: String,
+    runtime: RuntimeName,
 ) -> Result<Destination, String> {
-    let state = read(&engine);
+    destination_of(&engine, &id, &quant, runtime)
+}
+
+/// The body of [`destination`], reachable without a window.
+///
+/// # Errors
+/// As [`destination`].
+pub fn destination_of(
+    engine: &Engine,
+    id: &str,
+    quant: &str,
+    runtime: RuntimeName,
+) -> Result<Destination, String> {
+    let state = read(engine);
     let model = state
         .catalog
-        .find(&id)
+        .find(id)
         .ok_or_else(|| format!("{id} is not in the catalog"))?;
     let build = model
-        .build(&quant)
+        .build(quant)
         .ok_or_else(|| format!("{id} has no published {quant} build"))?;
 
-    let directory = download::destination_dir()?;
+    let target = download::target(runtime.host(), build)?;
+    let directory = target.directory;
     let path = directory.join(&build.file);
     let partial = directory.join(format!("{}.part", build.file));
 
     Ok(Destination {
+        host_tree: target.host_tree.map(|tree| tree.display().to_string()),
         free_bytes: download::volumes()
             .into_iter()
             .filter(|v| directory.starts_with(&v.mount))
@@ -817,14 +864,20 @@ pub fn set_download_dir(path: Option<String>) -> Result<String, String> {
     download::destination_dir().map(|dir| dir.display().to_string())
 }
 
-/// Start, or continue, fetching one build.
+/// Start, or continue, fetching one build for one runtime.
 ///
 /// Returns as soon as the transfer is under way; everything after that arrives
 /// on the `download:progress` event. A file of this size cannot be awaited by
 /// a window without the window appearing to hang.
 ///
+/// The runtime is asked for because it decides where the file goes, and a
+/// GGUF fetched for a runtime that does not run GGUF is the defect this
+/// command used to have: the window no longer offers that, and this refuses
+/// it in case something else asks.
+///
 /// # Errors
-/// When the model or the build is not in the catalog. Anything that goes wrong
+/// When the model or the build is not in the catalog, the runtime does not run
+/// the catalog's files, or there is nowhere to write. Anything that goes wrong
 /// once the transfer has begun is reported on the event, not here, because by
 /// then this has already returned.
 #[tauri::command]
@@ -833,8 +886,18 @@ pub fn download_build(
     engine: tauri::State<'_, Engine>,
     id: String,
     quant: String,
+    runtime: RuntimeName,
 ) -> Result<String, String> {
-    let (key, repo, file, bytes) = {
+    let host = runtime.host();
+    if !host.runs_gguf() {
+        return Err(format!(
+            "{} does not run the GGUF files this catalog holds, so there is nothing to \
+             download for it here",
+            host.label()
+        ));
+    }
+
+    let (key, repo, file, bytes, dir) = {
         let state = read(&engine);
         let model = state
             .catalog
@@ -848,12 +911,13 @@ pub fn download_build(
             build.repo.clone(),
             build.file.clone(),
             build.bytes,
+            download::target(host, build)?.directory,
         )
     };
 
     let downloads = std::sync::Arc::clone(&engine.downloads);
     let handle = key.clone();
-    tauri::async_runtime::spawn(download::run(app, downloads, key, repo, file, bytes));
+    tauri::async_runtime::spawn(download::run(app, downloads, key, repo, file, bytes, dir));
     Ok(handle)
 }
 
@@ -929,6 +993,116 @@ pub fn reveal(path: String) -> Result<(), String> {
 /// How a build is named across the download commands and their events.
 fn build_key(id: &str, quant: &str) -> String {
     format!("{id}@{quant}")
+}
+
+/// How to get one model running here, on the runtime the window asked for.
+///
+/// The Plan view used to end with a file. It ends with this: what to do about
+/// the weights, and the command that starts the model with the context, the
+/// layer split and the cache format the solver settled on. For a runtime that
+/// does not run the catalog's files there is no download at all, and the
+/// answer says so instead of handing over a file that would not load.
+///
+/// # Errors
+/// When the file's destination cannot be resolved. `Ok(None)` when the model
+/// is not in the catalog or does not fit, which are absences rather than
+/// failures, as in [`plan`].
+#[tauri::command]
+pub fn launch(
+    engine: tauri::State<'_, Engine>,
+    id: String,
+    sizing: Sizing,
+) -> Result<Option<Launch>, String> {
+    launch_of(&engine, &id, sizing)
+}
+
+/// The body of [`launch`], reachable without a window.
+///
+/// # Errors
+/// As [`launch`].
+pub fn launch_of(engine: &Engine, id: &str, sizing: Sizing) -> Result<Option<Launch>, String> {
+    let state = read(engine);
+    let Some(model) = state.catalog.find(id) else {
+        return Ok(None);
+    };
+    let request = sizing.request();
+    let Some(fit) = solve(&state, model, &request) else {
+        return Ok(None);
+    };
+    let host = sizing.runtime.host();
+    let build = model.build(fit.quant.id);
+
+    // Where the file would go, resolved here because it takes a settings file
+    // and a look at the disk, neither of which the engine does. A host that
+    // does not fetch the catalog's files has no destination to resolve.
+    let target = match build.filter(|_| host.runs_gguf()) {
+        Some(build) => Some(download::target(host, build)?),
+        None => None,
+    };
+    let directory = target
+        .as_ref()
+        .map(|t| t.directory.display().to_string())
+        .unwrap_or_default();
+    let path = match (&target, build) {
+        (Some(t), Some(b)) => t.directory.join(&b.file).display().to_string(),
+        _ => String::new(),
+    };
+    let host_tree = target
+        .as_ref()
+        .and_then(|t| t.host_tree.as_ref())
+        .map(|p| p.display().to_string());
+    let host_tree_missing = target
+        .as_ref()
+        .and_then(|t| t.host_tree_missing.as_ref())
+        .map(|p| p.display().to_string());
+
+    Ok(Some(whatllm_core::launch::launch(&LaunchRequest {
+        host,
+        platform: whatllm_hw::platform(),
+        apple_silicon: whatllm_hw::apple_silicon(&state.detection.system),
+        model,
+        build,
+        quant: fit.quant.id,
+        kv_quant: fit.kv_quant,
+        run_mode: fit.run_mode,
+        flash_attention: request.runtime.flash_attention,
+        context: request.context,
+        parallel: request.parallel,
+        target: Target {
+            directory: &directory,
+            path: &path,
+            host_tree: host_tree.as_deref(),
+            host_tree_missing: host_tree_missing.as_deref(),
+        },
+    })))
+}
+
+/// Write the file a host wants beside the weights, and say where it went.
+///
+/// The content is the engine's, recomputed here rather than accepted from the
+/// window, so the only thing a window can ask to have written is the file of
+/// the launch it was shown.
+///
+/// # Errors
+/// When there is no launch for the model, the launch has no file, or the file
+/// cannot be written.
+#[tauri::command]
+pub fn save_launch_file(
+    engine: tauri::State<'_, Engine>,
+    id: String,
+    sizing: Sizing,
+) -> Result<String, String> {
+    let Launch { host, file, .. } = launch_of(&engine, &id, sizing)?
+        .ok_or_else(|| format!("{id} cannot be launched on this machine"))?;
+    let file = file.ok_or_else(|| format!("{} needs no file written", host.label()))?;
+
+    let dir = std::path::PathBuf::from(&file.directory);
+    std::fs::create_dir_all(&dir)
+        .map_err(|e| format!("could not create {}: {e}", dir.display()))?;
+    let path = dir.join(&file.name);
+    std::fs::write(&path, file.content)
+        .map_err(|e| format!("could not write {}: {e}", path.display()))?;
+    Ok(path.display().to_string())
 }
 
 /// What a probe found.

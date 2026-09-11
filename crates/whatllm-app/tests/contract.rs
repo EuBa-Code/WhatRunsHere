@@ -370,6 +370,194 @@ fn a_cost_comparison_serialises_with_its_verdict_tag() {
     );
 }
 
+/// The top-ranked model, sized for one runtime.
+fn top_for(engine: &Engine, runtime: RuntimeName) -> (String, Sizing) {
+    let sizing = Sizing {
+        runtime,
+        ..sizing()
+    };
+    let ranked = api::rank_of(engine, sizing);
+    let top = ranked.first().expect("something is placeable");
+    (top.id.clone(), sizing)
+}
+
+#[test]
+fn a_launch_carries_the_fields_the_window_reads() {
+    let engine = Engine::new();
+    let (id, sizing) = top_for(&engine, RuntimeName::LlamaCpp);
+    let launch = api::launch_of(&engine, &id, sizing)
+        .expect("a destination resolves")
+        .expect("the top model launches");
+    let json = serde_json::to_value(&launch).expect("Launch serialises");
+
+    has_keys(
+        &json,
+        &["host", "runs_gguf", "weights", "file", "commands", "notes"],
+        "Launch",
+    );
+    assert_eq!(json["host"], "llama_cpp");
+    assert_eq!(json["runs_gguf"], true);
+    // `weights` is internally tagged, so the window switches on `action`.
+    assert!(
+        json["weights"]["action"].is_string(),
+        "weights must carry its `action` tag"
+    );
+    if json["weights"]["action"] == "download" {
+        has_keys(
+            &json["weights"],
+            &["quant", "path", "bytes", "command"],
+            "Weights::Download",
+        );
+        assert!(
+            launch
+                .commands
+                .iter()
+                .any(|c| c.starts_with("llama-server ")),
+            "llama.cpp gets a llama-server command: {:?}",
+            launch.commands
+        );
+    }
+    for note in &launch.notes {
+        let note = serde_json::to_value(note).expect("LaunchNote serialises");
+        assert!(note["note"].is_string(), "a note carries its tag: {note}");
+    }
+}
+
+#[test]
+fn a_host_that_does_not_run_gguf_is_not_offered_a_download() {
+    let engine = Engine::new();
+
+    let (id, sizing) = top_for(&engine, RuntimeName::Vllm);
+    let launch = api::launch_of(&engine, &id, sizing)
+        .expect("nothing to resolve")
+        .expect("launches");
+    assert!(!launch.runs_gguf);
+    let json = serde_json::to_value(&launch.weights).expect("serialises");
+    assert_eq!(json["action"], "host_fetches", "{json}");
+    has_keys(&json, &["format", "repo"], "Weights::HostFetches");
+    assert!(
+        launch.commands.iter().any(|c| c.starts_with("vllm serve ")),
+        "{:?}",
+        launch.commands
+    );
+    assert!(
+        launch
+            .notes
+            .iter()
+            .any(|n| matches!(n, whatllm_core::launch::LaunchNote::NotThisFormat { .. })),
+        "the window has to say GGUF is not vLLM's format: {:?}",
+        launch.notes
+    );
+
+    let (id, sizing) = top_for(&engine, RuntimeName::Mlx);
+    let launch = api::launch_of(&engine, &id, sizing)
+        .expect("nothing to resolve")
+        .expect("launches");
+    let json = serde_json::to_value(&launch.weights).expect("serialises");
+    assert_eq!(json["action"], "search", "{json}");
+    has_keys(
+        &json,
+        &["format", "url", "command_shape"],
+        "Weights::Search",
+    );
+    assert!(
+        launch.commands.is_empty(),
+        "no repository is known, so no command is invented: {:?}",
+        launch.commands
+    );
+}
+
+#[test]
+fn the_gguf_hosts_each_get_their_own_action() {
+    let engine = Engine::new();
+
+    // Ollama: a Modelfile beside the weights, an import and a run.
+    let (id, sizing) = top_for(&engine, RuntimeName::Ollama);
+    let launch = api::launch_of(&engine, &id, sizing)
+        .expect("a destination resolves")
+        .expect("launches");
+    if let Some(file) = &launch.file {
+        assert!(file.name.ends_with(".Modelfile"), "{}", file.name);
+        assert!(file.content.starts_with("FROM ./"), "{}", file.content);
+        assert!(
+            file.content.contains("PARAMETER num_ctx 8192"),
+            "the sized context is carried in: {}",
+            file.content
+        );
+        assert_eq!(launch.commands.len(), 2, "{:?}", launch.commands);
+        assert!(launch.commands[0].starts_with("ollama create "));
+        assert!(launch.commands[1].starts_with("ollama run "));
+    } else {
+        assert!(
+            matches!(
+                launch.weights,
+                whatllm_core::launch::Weights::NoBuild { .. }
+            ),
+            "no file only when there is no build: {:?}",
+            launch.weights
+        );
+    }
+
+    // LM Studio: the file goes into its folder when it has one, otherwise
+    // where everything else goes, and the launch says which.
+    let (id, sizing) = top_for(&engine, RuntimeName::LmStudio);
+    let launch = api::launch_of(&engine, &id, sizing)
+        .expect("a destination resolves")
+        .expect("launches");
+    assert!(
+        launch.commands.is_empty(),
+        "LM Studio is driven from its window"
+    );
+    match &launch.weights {
+        whatllm_core::launch::Weights::DownloadIntoTree { path, tree, .. } => {
+            assert!(
+                path.starts_with(tree.as_str()),
+                "{path} is not under {tree}"
+            );
+        }
+        whatllm_core::launch::Weights::Download { .. } => {
+            assert!(
+                launch.notes.iter().any(|n| matches!(
+                    n,
+                    whatllm_core::launch::LaunchNote::HostNotInstalled { .. }
+                )),
+                "LM Studio absent is said, not hidden: {:?}",
+                launch.notes
+            );
+        }
+        other => panic!("LM Studio downloads or says why not: {other:?}"),
+    }
+
+    // The destination the download control reads agrees with the launch.
+    let plan = api::plan_of(&engine, &id, sizing).expect("a plan");
+    if let Some(chosen) = plan.builds.iter().find(|b| b.chosen) {
+        let destination = api::destination_of(&engine, &id, &chosen.quant, RuntimeName::LmStudio)
+            .expect("resolves");
+        let json = serde_json::to_value(&destination).expect("serialises");
+        has_keys(
+            &json,
+            &[
+                "directory",
+                "path",
+                "present_bytes",
+                "partial_bytes",
+                "free_bytes",
+                "host_tree",
+            ],
+            "Destination",
+        );
+        let in_tree = matches!(
+            launch.weights,
+            whatllm_core::launch::Weights::DownloadIntoTree { .. }
+        );
+        assert_eq!(
+            destination.host_tree.is_some(),
+            in_tree,
+            "the destination and the launch disagree about LM Studio's folder"
+        );
+    }
+}
+
 #[test]
 fn an_unknown_model_is_absent_rather_than_a_failure() {
     // The window can hold a selection across a catalog update that dropped the

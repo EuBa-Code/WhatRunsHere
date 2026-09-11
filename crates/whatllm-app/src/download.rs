@@ -25,7 +25,15 @@
 //! **A filename out of the catalog is not trusted as a path.** The catalog is
 //! assembled from metadata written by strangers, and a name carrying `..` or a
 //! separator would place the write somewhere nobody asked for. Anything but a
-//! plain `.gguf` filename is refused.
+//! plain `.gguf` filename is refused, and the same goes for the repository
+//! name when it becomes two directories under LM Studio's folder.
+//!
+//! **Where the file goes depends on who will read it.** llama.cpp and Ollama
+//! read from wherever the file is, so it goes to the chosen directory. LM
+//! Studio reads only its own folder, so the file goes straight there, under
+//! the publisher and repository it came from, and appears in LM Studio's list
+//! with nothing to move. Downloading to the chosen directory and offering to
+//! copy would double a twenty-gigabyte file for no reason.
 
 use futures_util::StreamExt;
 use serde::Serialize;
@@ -192,17 +200,11 @@ impl Downloads {
 /// The catalog is built from repository metadata written by strangers. A name
 /// carrying a separator or a parent reference would write outside the
 /// directory it was given, so anything that is not a plain GGUF filename is
-/// refused rather than repaired — a sanitised version of a hostile name is
+/// refused rather than repaired: a sanitised version of a hostile name is
 /// still a name nobody chose.
 fn safe_filename(name: &str) -> Result<&str, String> {
-    let plain = !name.is_empty()
-        && name.len() <= 255
-        && name
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-'))
-        && !name.starts_with('.')
-        && !name.contains("..")
-        && name.to_ascii_lowercase().ends_with(".gguf");
+    let plain =
+        whatllm_state::weights::plain_segment(name) && name.to_ascii_lowercase().ends_with(".gguf");
 
     if plain {
         Ok(name)
@@ -222,29 +224,24 @@ fn source_url(repo: &str, file: &str) -> String {
     format!("https://huggingface.co/{repo}/resolve/main/{file}?download=true")
 }
 
-/// Where models are kept.
-///
-/// A chosen directory wins. Otherwise the platform's download directory, in a
-/// subdirectory of its own, because a nineteen-gigabyte file belongs somewhere
-/// a person can find without being told where to look and a catalog of them
-/// should not bury everything else that lands there.
+/// Where models are kept when nothing about the host says otherwise.
 ///
 /// The choice matters more than most settings: a model is tens of gigabytes
 /// and the system disk is frequently the small fast one, so anybody with a
-/// second drive will want to say so.
+/// second drive will want to say so. The answer itself lives in
+/// `whatllm-state`, because the command line prints commands that read from
+/// the same directory this writes to.
 ///
 /// # Errors
 /// When nothing has been chosen and the system reports neither a download
 /// directory nor a home directory.
 pub fn destination_dir() -> Result<PathBuf, String> {
-    if let Some(chosen) = whatllm_state::settings::load().download_dir {
-        return Ok(chosen);
-    }
-    let base = dirs::download_dir()
-        .or_else(dirs::home_dir)
-        .ok_or_else(|| "no download or home directory on this system".to_owned())?;
-    Ok(base.join("WhatLLM Models"))
+    whatllm_state::weights::download_dir()
 }
+
+// Which directory a build goes to for which host is decided beside the
+// directory itself, in `whatllm-state`, for the same reason.
+pub use whatllm_state::weights::{target, Target};
 
 /// A disk a model could be written to.
 #[derive(Debug, Clone, Serialize)]
@@ -308,7 +305,11 @@ pub fn volumes() -> Vec<Volume> {
     seen
 }
 
-/// Begin, or continue, fetching one build.
+/// Begin, or continue, fetching one build into `dir`.
+///
+/// The directory is decided before this is spawned, by [`target`], because it
+/// depends on which program will read the file and that is the caller's to
+/// know.
 pub async fn run(
     app: AppHandle,
     downloads: Arc<Downloads>,
@@ -316,6 +317,7 @@ pub async fn run(
     repo: String,
     file: String,
     expected_bytes: u64,
+    dir: PathBuf,
 ) {
     let Some(signals) = downloads.claim(&key) else {
         // Already running. The window is showing its progress already.
@@ -330,6 +332,7 @@ pub async fn run(
         &repo,
         &file,
         expected_bytes,
+        &dir,
     )
     .await;
     downloads.release(&key);
@@ -373,7 +376,7 @@ fn report(app: &AppHandle, downloads: &Downloads, progress: &Progress) {
     let _ = app.emit(PROGRESS_EVENT, progress);
 }
 
-#[allow(clippy::too_many_lines)]
+#[allow(clippy::too_many_lines, clippy::too_many_arguments)]
 async fn transfer(
     app: &AppHandle,
     downloads: &Downloads,
@@ -382,6 +385,7 @@ async fn transfer(
     repo: &str,
     file: &str,
     expected_bytes: u64,
+    dir: &Path,
 ) -> Result<PathBuf, TransferError> {
     report(
         app,
@@ -392,8 +396,7 @@ async fn transfer(
     );
 
     let name = safe_filename(file)?;
-    let dir = destination_dir()?;
-    tokio::fs::create_dir_all(&dir)
+    tokio::fs::create_dir_all(dir)
         .await
         .map_err(|e| format!("could not create {}: {e}", dir.display()))?;
 
