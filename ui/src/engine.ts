@@ -4,7 +4,7 @@
  * Written against `crates/whatllm-app/src/api.rs` and checked by
  * `crates/whatllm-app/tests/contract.rs`, which asserts these field names
  * against real serialised output. Rename one in Rust without changing it here
- * and that test fails by name — because a hand-written type declaration is a
+ * and that test fails by name, because a hand-written type declaration is a
  * promise nothing else checks, and a broken one reads `undefined` and shows a
  * blank where a figure should be.
  *
@@ -265,7 +265,7 @@ export interface CostQuery {
  * Where a transfer has got to. Internally tagged; switch on `state`.
  *
  * The one part of this application that reaches the network, and the only one
- * whose work outlives the view that started it — which is why it reports on an
+ * whose work outlives the view that started it, which is why it reports on an
  * event rather than by returning.
  */
 export type Progress =

@@ -3,8 +3,8 @@
  *
  * The inputs are assumptions, so they are editable and visible rather than
  * buried in a preferences pane: a comparison whose premises are hidden is a
- * claim, not a calculation. The one figure that is not an assumption — how
- * many hours of generation a month of this traffic takes — comes from the
+ * claim, not a calculation. The one figure that is not an assumption, how
+ * many hours of generation a month of this traffic takes, comes from the
  * measured speed, and carries its provenance like every other.
  */
 import { useEffect, useState } from "react";
@@ -132,7 +132,7 @@ export function CostView({
           <p className="mt-5 rounded-lg bg-[var(--color-brass-wash)] px-4 py-3 text-[12px] leading-relaxed text-[var(--color-ink-dim)]">
             Prompt processing is not counted. Nothing has measured this
             machine's compute throughput, so the time spent reading your prompt
-            is unknown — and unknown is reported as unknown rather than charged
+            is unknown, and unknown is reported as unknown rather than charged
             at zero. The local figure is therefore a floor, not an estimate.
           </p>
         )}
@@ -203,7 +203,7 @@ function Verdict({ comparison }: { comparison: CostComparison }) {
         </p>
         <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[var(--color-ink-dim)]">
           At this volume the two cost about the same, so the decision belongs on
-          other grounds — whether the data may leave the machine, whether it
+          other grounds: whether the data may leave the machine, whether it
           must work offline, whether a rate limit would matter.
         </p>
       </>

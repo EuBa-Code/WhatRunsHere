@@ -122,7 +122,7 @@ export function PlanView({
           <span className="figure text-[var(--color-ink)]">
             {fmt.bytes(fit.memory.required)}
           </span>{" "}
-          of the {fmt.bytes(plan.pool_bytes)} available —{" "}
+          of the {fmt.bytes(plan.pool_bytes)} available:{" "}
           {fmt.percent(fit.utilisation)} of the pool, leaving {fmt.bytes(spare)}.{" "}
           {fit.memory.weights_measured
             ? "The weight figure is the published file, measured."
@@ -200,7 +200,7 @@ export function PlanView({
               </Spec>
               <Spec label="Longest context here">
                 <span className="figure text-[13px]">
-                  {fit.max_context ? fmt.tokens(fit.max_context) : "—"}
+                  {fit.max_context ? fmt.tokens(fit.max_context) : "not known"}
                 </span>
               </Spec>
             </dl>
@@ -510,7 +510,7 @@ function ModelPicker({
       >
         {ranked.map((model, index) => (
           <option key={model.id} value={model.id}>
-            {index + 1}. {model.name} — {model.fit.quant},{" "}
+            {index + 1}. {model.name} · {model.fit.quant},{" "}
             {fmt.bytes(model.fit.memory.required)}, {fmt.tps(model.fit.decode_tps)} tok/s
           </option>
         ))}

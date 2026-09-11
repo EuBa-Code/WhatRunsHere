@@ -2,7 +2,7 @@
  * The pieces every view is built from.
  *
  * [`Figure`] is the important one. Every number the engine produces knows how
- * it was arrived at, and that status is drawn as a rule under the numeral —
+ * it was arrived at, and that status is drawn as a rule under the numeral:
  * solid for something measured here, dashed for a manufacturer's figure,
  * dotted for an assumption. One legend explains the three; after that the page
  * can be read without labels on every value.
@@ -145,7 +145,7 @@ export function Spec({
  * A choice among a handful of options, as a segmented control.
  *
  * A select would be smaller, but these are the controls that change the whole
- * answer — what the model is for, what to optimise for — and hiding them
+ * answer (what the model is for, what to optimise for), and hiding them
  * behind a closed menu hides that the answer depends on them.
  */
 export function Segmented<T extends string>({
@@ -188,7 +188,7 @@ export function Segmented<T extends string>({
   );
 }
 
-/** A horizontal 0–100 meter, for a bounded score. */
+/** A horizontal 0 to 100 meter, for a bounded score. */
 export function Meter({ value, tone = "brass" }: { value: number; tone?: string }) {
   return (
     <div

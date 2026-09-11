@@ -7,7 +7,7 @@
  * left. Everything below it is evidence for that picture.
  *
  * On a machine nothing has measured, that picture is drawn from an assumption,
- * and the invitation to replace it comes first — before the machine, before
+ * and the invitation to replace it comes first, before the machine, before
  * the model. It is one second of work and it sharpens every figure in the
  * application, which is the best thing this application does and a poor thing
  * to bury in a card.
@@ -83,7 +83,7 @@ export function MachineView({
                 {fmt.bytes(pool.usable_bytes)}{" "}
                 <Explain
                   title="Usable memory"
-                  body="Installed memory less a reserve for the operating system and its caches. It is what a model can claim with the machine otherwise quiet — deliberately not whatever happens to be free this second, so the answer does not change because a browser opened."
+                  body="Installed memory less a reserve for the operating system and its caches. It is what a model can claim with the machine otherwise quiet, and deliberately not whatever happens to be free this second, so the answer does not change because a browser opened."
                 >
                   usable
                 </Explain>
@@ -306,7 +306,7 @@ function FirstRun({
       <MeasureButton
         measuring={measuring}
         onMeasure={onMeasure}
-        label="Measure — one second"
+        label="Measure, one second"
         tone="primary"
       />
     </Card>
@@ -348,7 +348,7 @@ function detectionNote(note: Record<string, unknown> & { note: string }): string
   const n = (key: string) => Number(note[key]);
   switch (note.note) {
     case "ignored_virtual_adapter":
-      return `${s("name")} was ignored — a display, not something that computes.`;
+      return `${s("name")} was ignored: a display, not something that computes.`;
     case "integrated_graphics":
       return note.claimed_vram_bytes
         ? `${s("name")} shares the machine's memory rather than owning any. The ${fmt.bytes(

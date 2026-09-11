@@ -2,7 +2,7 @@
  * The controls that change every answer.
  *
  * Kept in a bar of their own, above the view rather than inside it, because
- * context length and concurrency are not settings — they are half the
+ * context length and concurrency are not settings. They are half the
  * question. A model that fits at 8k and not at 128k has not changed; the ask
  * has.
  */

@@ -10,7 +10,7 @@
  * What that costs has to be paid back deliberately, because the system was
  * doing all of it: the bar must be draggable, double-clicking it must maximise,
  * and the three controls must exist and behave the way every other window on
- * the platform does — including the close button turning red, which is the one
+ * the platform does, including the close button turning red, which is the one
  * piece of platform styling nobody expects to lose.
  */
 import { useEffect, useState, type ReactNode } from "react";

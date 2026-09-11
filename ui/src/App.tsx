@@ -1,8 +1,8 @@
 /**
  * The window.
  *
- * Four views over one machine and one catalog. The sizing controls — context,
- * concurrency, what the model is for — belong to the whole application rather
+ * Four views over one machine and one catalog. The sizing controls (context,
+ * concurrency, what the model is for) belong to the whole application rather
  * than to any view, because changing one changes every answer, and a control
  * that lived inside a tab would make it look as though it did not.
  */

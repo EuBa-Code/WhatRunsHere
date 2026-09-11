@@ -2,13 +2,13 @@
  * Saying what a term means, where the term is.
  *
  * This application is dense on purpose, and dense is only a virtue if someone
- * can get in. The way in is not a simplified mode — that would put the real
- * product behind a switch — but an explanation attached to the word that needs
+ * can get in. The way in is not a simplified mode, which would put the real
+ * product behind a switch, but an explanation attached to the word that needs
  * it, available on hover and on focus, and absent otherwise.
  *
  * Native `title` attributes were what this replaced. They take a second to
  * appear, cannot be reached from the keyboard, and are drawn by the operating
- * system in a style nothing else here shares — which is a poor way to deliver
+ * system in a style nothing else here shares, which is a poor way to deliver
  * the one idea the application is built around.
  */
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
@@ -30,8 +30,8 @@ interface Placement {
  *
  * A word gains a faint dotted underline, the long-standing convention for
  * "there is more here". **A figure does not**, and the distinction is not
- * cosmetic: a dotted rule under a numeral already means something here — that
- * nothing measured it — and a second dotted line meaning "hover me" would make
+ * cosmetic: a dotted rule under a numeral already means something here (that
+ * nothing measured it), and a second dotted line meaning "hover me" would make
  * the one claim this product rests on unreadable. Around a figure the
  * affordance appears on hover, where nothing is being asserted.
  */
@@ -153,7 +153,7 @@ export function quantExplanation(quant: string, bitsPerWeight: number): {
 
   if (name.startsWith("F16") || name.startsWith("BF16") || name.startsWith("F32")) {
     return {
-      title: `${quant} — no compression`,
+      title: `${quant}: no compression`,
       body: `The weights exactly as trained, at ${bits}. Nothing is lost and nothing is saved: this is the largest the model gets, and the answers it gives are the ones its makers measured.`,
     };
   }
@@ -166,7 +166,7 @@ export function quantExplanation(quant: string, bitsPerWeight: number): {
           ? "A real saving with a cost you may notice on harder questions."
           : "Aggressive. It fits where nothing else does, and it shows.";
   return {
-    title: `${quant} — compressed weights`,
+    title: `${quant}: compressed weights`,
     body: `Each weight stored in about ${bits} instead of 16. The file shrinks by roughly the same ratio, and so does the memory it needs and the time spent reading it. ${severity}`,
   };
 }
@@ -180,8 +180,8 @@ export function qualityExplanation(rank: { at_or_below: number; of: number } | n
     ? ` Among the ${rank.of} models here, it scores at least as well as ${rank.at_or_below - 1} of the other ${rank.of - 1}.`
     : "";
   return {
-    title: "Quality, 0–100",
-    body: `A weighted average of this model's published benchmark results — MMLU-Pro, GPQA, LiveCodeBench, MATH and others — weighted for what you said you would use it for. Nothing scores near 100: the benchmarks are hard, and the best models here are in the sixties.${placing}`,
+    title: "Quality, 0 to 100",
+    body: `A weighted average of this model's published benchmark results (MMLU-Pro, GPQA, LiveCodeBench, MATH and others), weighted for what you said you would use it for. Nothing scores near 100: the benchmarks are hard, and the best models here are in the sixties.${placing}`,
   };
 }
 

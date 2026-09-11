@@ -3,8 +3,8 @@
  *
  * This is the one thing WhatLLM knows that a parameter count cannot express,
  * so it is the one thing the window is built around. It appears three times at
- * three sizes — as a row in the model list, as the machine's own pool, and
- * full size in a plan — and it is the same object each time, so a shape learnt
+ * three sizes (as a row in the model list, as the machine's own pool, and
+ * full size in a plan), and it is the same object each time, so a shape learnt
  * in one place is readable in the others.
  *
  * The bands are ordered by how well the engine knows them. Weights come from a

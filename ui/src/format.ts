@@ -28,7 +28,7 @@ export function bytes(value: number): string {
 
 /** Bytes per second as the figure people quote. */
 export function bandwidth(bytesPerSecond: number): string {
-  if (!Number.isFinite(bytesPerSecond) || bytesPerSecond <= 0) return "—";
+  if (!Number.isFinite(bytesPerSecond) || bytesPerSecond <= 0) return "n/a";
   return `${(bytesPerSecond / 1e9).toFixed(1)} GB/s`;
 }
 
@@ -54,18 +54,18 @@ export function params(count: number): string {
 
 /** Generation speed. Below ten the tenths matter; above it they do not. */
 export function tps(value: number): string {
-  if (!Number.isFinite(value)) return "—";
+  if (!Number.isFinite(value)) return "n/a";
   return value < 10 ? value.toFixed(1) : String(Math.round(value));
 }
 
 export function percent(fraction: number, digits = 0): string {
-  if (!Number.isFinite(fraction)) return "—";
+  if (!Number.isFinite(fraction)) return "n/a";
   return `${(fraction * 100).toFixed(digits)}%`;
 }
 
 /** Money, to the cent, in whatever currency the prices were given in. */
 export function money(value: number): string {
-  if (!Number.isFinite(value)) return "—";
+  if (!Number.isFinite(value)) return "n/a";
   return value.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -74,7 +74,7 @@ export function money(value: number): string {
 
 /** A transfer rate, in the units a connection is sold in. */
 export function rate(bytesPerSecond: number): string {
-  if (!Number.isFinite(bytesPerSecond) || bytesPerSecond <= 0) return "—";
+  if (!Number.isFinite(bytesPerSecond) || bytesPerSecond <= 0) return "n/a";
   const mb = bytesPerSecond / (1024 * 1024);
   return mb >= 10 ? `${Math.round(mb)} MB/s` : `${mb.toFixed(1)} MB/s`;
 }
@@ -180,7 +180,7 @@ export function fitNote(note: Record<string, unknown> & { note: string }): strin
     case "enable_flash_attention":
       return `Flash attention would save ${bytes(
         n("saves_bytes"),
-      )} — the attention score matrix, which is quadratic in context.`;
+      )}: the attention score matrix, which is quadratic in context.`;
     case "quantise_to_avoid_offload":
       return `${String(note.to)} would keep every layer on the accelerator. Spilling layers to system memory costs far more than the format does.`;
     case "room_for_better_quant":

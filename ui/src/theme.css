@@ -5,7 +5,7 @@
 
    WhatLLM makes no network calls. A font loaded from a CDN would be the one
    request the whole engine was built to avoid, so all three are vendored as
-   latin-subset woff2 — 193 KB for the set.
+   latin-subset woff2, 193 KB for the set.
    ───────────────────────────────────────────────────────────────────────── */
 
 @font-face {
@@ -58,7 +58,7 @@
 /* `static` because several of these are reached as `var(--color-${tone})`,
    built at runtime from a verdict or a signal name. Tailwind emits only the
    theme variables it can see referenced in the source, and a name assembled
-   from a template literal is not one — the variable then resolves to nothing
+   from a template literal is not one. The variable then resolves to nothing
    and the element loses its colour with no error anywhere. */
 @theme static {
   --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;

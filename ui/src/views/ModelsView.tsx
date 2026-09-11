@@ -130,9 +130,9 @@ function Row({
   const runs = fit.verdict !== "does_not_fit";
 
   // The row opens a plan, and it also carries explanations that can be
-  // hovered and focused. One cannot be nested inside the other — a button
+  // hovered and focused. One cannot be nested inside the other (a button
   // inside a button is invalid, and a screen reader reads the outer label over
-  // the inner one — so the row's own action is a button stretched behind the
+  // the inner one), so the row's own action is a button stretched behind the
   // content, and only the explanations take pointer events in front of it.
   return (
     <li
