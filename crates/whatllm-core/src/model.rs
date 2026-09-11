@@ -164,6 +164,32 @@ impl Catalog {
         self.version <= SUPPORTED_VERSION
     }
 
+    /// Which published build a file on disk is, if it is one at all.
+    ///
+    /// The catalog records the exact byte count of every build, and a
+    /// multi-gigabyte size is as good as a fingerprint: two builds of the same
+    /// length across 701 would be a coincidence, and the filename settles it
+    /// when it happens. A file whose size matches nothing is not guessed at
+    /// from its name, because a name is the one thing anybody can change.
+    /// When the size matches several builds and the name matches none of
+    /// them, nothing is returned rather than the wrong one.
+    pub fn identify(&self, bytes: u64, file_name: &str) -> Option<(&ModelEntry, &GgufBuild)> {
+        let mut candidates = self
+            .models
+            .iter()
+            .flat_map(|model| model.builds.iter().map(move |build| (model, build)))
+            .filter(|(_, build)| build.bytes == bytes);
+
+        let first = candidates.next()?;
+        let Some(second) = candidates.next() else {
+            return Some(first);
+        };
+        [first, second]
+            .into_iter()
+            .chain(candidates)
+            .find(|(_, build)| build.file.eq_ignore_ascii_case(file_name))
+    }
+
     /// Measured builds across the whole catalog.
     pub fn measured_builds(&self) -> usize {
         self.models.iter().map(|m| m.builds.len()).sum()
@@ -291,6 +317,38 @@ mod tests {
             "a sparse model needs both figures: {label}"
         );
         assert!(model.active_params() < model.total_params());
+    }
+
+    #[test]
+    fn a_file_is_identified_by_its_exact_size_and_the_name_only_breaks_ties() {
+        let mut catalog = catalog();
+        let build = |quant: &str, file: &str, bytes: u64| GgufBuild {
+            quant: quant.to_owned(),
+            repo: "someone/repo-GGUF".to_owned(),
+            file: file.to_owned(),
+            bytes,
+        };
+        catalog.models[0].builds = vec![
+            build("Q4_K_M", "a-Q4_K_M.gguf", 4_000),
+            build("Q8_0", "a-Q8_0.gguf", 8_000),
+        ];
+        catalog.models[1].builds = vec![build("Q6_K", "b-Q6_K.gguf", 8_000)];
+
+        // Unique size: identified whatever the file is called.
+        let (model, found) = catalog.identify(4_000, "renamed.bin").expect("unique size");
+        assert_eq!(model.id, catalog.models[0].id);
+        assert_eq!(found.quant, "Q4_K_M");
+
+        // Two builds of one size: the name decides, case-insensitively.
+        let (model, _) = catalog.identify(8_000, "B-Q6_K.GGUF").expect("named");
+        assert_eq!(model.id, catalog.models[1].id);
+
+        // Two builds of one size and a name that matches neither: nothing,
+        // rather than either.
+        assert!(catalog.identify(8_000, "sha256-blob").is_none());
+
+        // A size the catalog does not know: nothing, however familiar the name.
+        assert!(catalog.identify(4_001, "a-Q4_K_M.gguf").is_none());
     }
 
     #[test]

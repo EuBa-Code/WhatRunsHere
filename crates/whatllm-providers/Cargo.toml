@@ -1,0 +1,28 @@
+[package]
+name = "whatllm-providers"
+description = "What is already on this machine: the model files each local runtime keeps, found on disk and identified against the catalog."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[lints.rust]
+missing_docs = "warn"
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+cast_precision_loss = "allow"
+cast_possible_truncation = "allow"
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+
+[dependencies]
+dirs = "7.0.0"
+serde = { workspace = true, features = ["derive"] }
+serde_json = "1"
+whatllm-core = { workspace = true }
+whatllm-state = { workspace = true }

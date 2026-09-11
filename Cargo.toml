@@ -5,6 +5,7 @@ members = [
     "crates/whatllm-hw",
     "crates/whatllm-probe",
     "crates/whatllm-state",
+    "crates/whatllm-providers",
     "crates/whatllm-cli",
     "crates/whatllm-app",
 ]
@@ -22,6 +23,7 @@ whatllm-core = { path = "crates/whatllm-core", version = "0.1.0" }
 whatllm-hw = { path = "crates/whatllm-hw", version = "0.1.0" }
 whatllm-probe = { path = "crates/whatllm-probe", version = "0.1.0" }
 whatllm-state = { path = "crates/whatllm-state", version = "0.1.0" }
+whatllm-providers = { path = "crates/whatllm-providers", version = "0.1.0" }
 serde = { version = "1", features = ["derive"] }
 thiserror = "1"
 

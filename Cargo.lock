@@ -4725,6 +4725,7 @@ dependencies = [
  "whatllm-core",
  "whatllm-hw",
  "whatllm-probe",
+ "whatllm-providers",
  "whatllm-state",
 ]
 
@@ -4739,6 +4740,7 @@ dependencies = [
  "whatllm-core",
  "whatllm-hw",
  "whatllm-probe",
+ "whatllm-providers",
  "whatllm-state",
 ]
 
@@ -4768,6 +4770,17 @@ name = "whatllm-probe"
 version = "0.1.0"
 dependencies = [
  "serde",
+]
+
+[[package]]
+name = "whatllm-providers"
+version = "0.1.0"
+dependencies = [
+ "dirs 7.0.0",
+ "serde",
+ "serde_json",
+ "whatllm-core",
+ "whatllm-state",
 ]
 
 [[package]]
