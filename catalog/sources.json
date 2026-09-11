@@ -470,7 +470,8 @@
    "gpqa_diamond": 30.4,
    "ifeval": 61.2
   },
-  "benchmark_source": "https://huggingface.co/Qwen/Qwen3.5-2B"
+  "benchmark_source": "https://huggingface.co/Qwen/Qwen3.5-2B",
+  "excluded": "size validation: 11% off on most builds (Q6_K 22% over) while the 4B and 9B siblings size to within a percent; the 248k vocabulary is a quarter of this file and how llama.cpp quantizes the doubled embedding tensor is not reproduced, the same defect as the other small tied models"
  },
  {
   "id": "Qwen/Qwen3.5-4B",
@@ -1646,5 +1647,28 @@
    "ifeval": 87.8
   },
   "benchmark_source": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507"
+ },
+ {
+  "id": "Qwen/Qwen3-Next-80B-A3B-Instruct",
+  "display_name": "Qwen3-Next 80B-A3B Instruct",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-09-09",
+  "gguf_repos": [
+   "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+   "unsloth/Qwen3-Next-80B-A3B-Instruct-GGUF"
+  ],
+  "benchmarks": {}
+ },
+ {
+  "id": "Qwen/Qwen3-Next-80B-A3B-Thinking",
+  "display_name": "Qwen3-Next 80B-A3B Thinking",
+  "family": "Qwen3",
+  "license": "apache-2.0",
+  "released": "2025-09-09",
+  "gguf_repos": [
+   "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF"
+  ],
+  "benchmarks": {}
  }
 ]

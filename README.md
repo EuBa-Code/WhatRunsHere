@@ -79,14 +79,14 @@ the desktop application runs on it.
 | `whatllm-cli`: `doctor`, `probe`, `fit`, `plan`, `installed`, `cost` | Working |
 | Desktop application: Tauri 2, React 19, Tailwind v4 | Working (Machine, Models, Plan, Cost) |
 | Handing the model to its runtime: a download, a Modelfile, or the command that works | Working (llama.cpp, LM Studio, Ollama, vLLM, MLX) |
-| Model catalog | 97 models, 1196 measured builds |
+| Model catalog | 102 models, 1253 measured builds |
 | Continuous validation | size and throughput models checked on every rebuild |
 | Nightly catalog refresh | GitHub Actions, refuses to shrink the catalog |
 | GPU compute probe (for time-to-first-token) | Not started |
 | Catalog updates over the network | Not started |
 | What is already on this machine: WhatLLM's folder, LM Studio, Ollama, llama.cpp's cache, the HuggingFace cache | Working (disk only, identified by exact size) |
 
-188 Rust tests and 10 Python tests, no network access in any of them, and `cargo clippy --all-targets`
+192 Rust tests and 10 Python tests, no network access in any of them, and `cargo clippy --all-targets`
 clean under `pedantic`.
 
 **Nothing here reaches the network unless you press a button that says it
@@ -118,12 +118,12 @@ with the fraction of the use case that real evaluations back.
 
 Both halves of the model are checked against reality rather than argued for.
 
-### Memory: 1.4% against 1169 real files, checked on every rebuild
+### Memory: 1.7% against 1225 real files, checked on every rebuild
 
 The catalog records the exact byte count of every published build it knows
 about, which makes the check free and offline: compute each model's size from
 its architecture and compare against what the file actually weighs. Across
-**1169 builds of 97 models** the mean absolute error is **1.4%**.
+**1225 builds of 102 models** the mean absolute error is **1.7%**.
 
 That number is not a measurement somebody took once. `size_validation` runs it
 on every rebuild of the catalog and on every pull request, so an architecture
@@ -212,7 +212,7 @@ whatllm cost <model>    # local against hosted, with the break-even volume
 `installed` reads the places each local runtime keeps its files (WhatLLM's
 own folder, LM Studio's, Ollama's store, llama.cpp's cache and the HuggingFace
 cache) and identifies each file against the catalog by its exact byte count,
-which across 1196 builds is as good as a fingerprint. A file it recognises is
+which across 1253 builds is as good as a fingerprint. A file it recognises is
 sized for exactly the build it is; one it does not is named from its own
 header and declared not sizeable, rather than guessed at. Nothing is asked of
 any running program.

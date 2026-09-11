@@ -1,6 +1,6 @@
 {
  "version": 1,
- "generated": "2026-09-11",
+ "generated": "2026-09-12",
  "models": [
   {
    "id": "01-ai/Yi-1.5-34B-Chat",
@@ -3569,6 +3569,658 @@
    ],
    "license": "apache-2.0",
    "released": "2025-07-31"
+  },
+  {
+   "id": "Qwen/Qwen3-Next-80B-A3B-Instruct",
+   "display_name": "Qwen3-Next 80B-A3B Instruct",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 16,
+    "intermediate_size": 5120,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 48,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 33718464
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 33718464
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 33718464
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 256
+       },
+       "output_gate": true
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144,
+    "moe": {
+     "experts": 512,
+     "experts_per_token": 10,
+     "expert_intermediate": 512,
+     "shared_experts": 1,
+     "shared_intermediate": 512,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-Q4_K_M.gguf",
+     "bytes": 48727677408
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-Q4_K_S.gguf",
+     "bytes": 46930876896
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-IQ4_XS.gguf",
+     "bytes": 42848221664
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-Q3_K_L.gguf",
+     "bytes": 38227001824
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-Q3_K_M.gguf",
+     "bytes": 36655710688
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-Q3_K_S.gguf",
+     "bytes": 34864218592
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-IQ3_XXS.gguf",
+     "bytes": 31726709216
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-Q2_K.gguf",
+     "bytes": 28167604704
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-IQ2_XS.gguf",
+     "bytes": 22217421280
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Qwen_Qwen3-Next-80B-A3B-Instruct-GGUF",
+     "file": "Qwen_Qwen3-Next-80B-A3B-Instruct-IQ2_XXS.gguf",
+     "bytes": 19298972128
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-09-09"
+  },
+  {
+   "id": "Qwen/Qwen3-Next-80B-A3B-Thinking",
+   "display_name": "Qwen3-Next 80B-A3B Thinking",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 16,
+    "intermediate_size": 5120,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 48,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 33718464
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 33718464
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 33718464
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 256
+       },
+       "output_gate": true
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144,
+    "moe": {
+     "experts": 512,
+     "experts_per_token": 10,
+     "expert_intermediate": 512,
+     "shared_experts": 1,
+     "shared_intermediate": 512,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q4_K_M",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-Q4_K_M.gguf",
+     "bytes": 48506101920
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-Q4_K_S.gguf",
+     "bytes": 45509730464
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-IQ4_XS.gguf",
+     "bytes": 42644480160
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-Q3_K_M.gguf",
+     "bytes": 38299875488
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-Q3_K_S.gguf",
+     "bytes": 34580478112
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-UD-IQ3_XXS.gguf",
+     "bytes": 32959844512
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-Q2_K.gguf",
+     "bytes": 29171167392
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF",
+     "file": "Qwen3-Next-80B-A3B-Thinking-UD-IQ2_XXS.gguf",
+     "bytes": 26211160224
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-09-09"
+  },
+  {
+   "id": "Qwen/Qwen3.5-4B",
+   "display_name": "Qwen3.5-4B",
+   "family": "Qwen3.5",
+   "architecture": {
+    "hidden_size": 2560,
+    "heads": 16,
+    "intermediate_size": 9216,
+    "vocab_size": 248320,
+    "layers": {
+     "n_layers": 32,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 42139840
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 42139840
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 42139840
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 256
+       },
+       "output_gate": true
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {
+    "mmlu_pro": 79.1,
+    "gpqa_diamond": 52.9,
+    "livecodebench": 55.8,
+    "ifeval": 89.8
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-bf16.gguf",
+     "bytes": 8665620192
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q8_0.gguf",
+     "bytes": 4622131168
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q6_K.gguf",
+     "bytes": 3805358048
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q5_K_M.gguf",
+     "bytes": 3443763168
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q5_K_S.gguf",
+     "bytes": 3256412128
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q4_K_M.gguf",
+     "bytes": 3013027808
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q4_K_S.gguf",
+     "bytes": 2846156768
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-IQ4_XS.gguf",
+     "bytes": 2671339488
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q3_K_L.gguf",
+     "bytes": 2665441248
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q3_K_M.gguf",
+     "bytes": 2575656928
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q3_K_S.gguf",
+     "bytes": 2454251488
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-IQ3_XXS.gguf",
+     "bytes": 2243829728
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_Qwen3.5-4B-GGUF",
+     "file": "Qwen_Qwen3.5-4B-Q2_K.gguf",
+     "bytes": 2191779808
+    }
+   ],
+   "license": null,
+   "released": null
+  },
+  {
+   "id": "Qwen/Qwen3.5-9B",
+   "display_name": "Qwen3.5-9B",
+   "family": "Qwen3.5",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 16,
+    "intermediate_size": 12288,
+    "vocab_size": 248320,
+    "layers": {
+     "n_layers": 32,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 67403968
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 67403968
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 548864,
+        "params": 67403968
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 256
+       },
+       "output_gate": true
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {
+    "mmlu_pro": 82.5,
+    "gpqa_diamond": 58.2,
+    "livecodebench": 65.6,
+    "ifeval": 91.5
+   },
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q8_0.gguf",
+     "bytes": 9804541984
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q6_K.gguf",
+     "bytes": 7958818848
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q5_K_M.gguf",
+     "bytes": 7111487520
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q5_K_S.gguf",
+     "bytes": 6784987168
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q4_K_M.gguf",
+     "bytes": 6169341984
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q4_K_S.gguf",
+     "bytes": 5856735264
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-IQ4_XS.gguf",
+     "bytes": 5501202464
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q3_K_L.gguf",
+     "bytes": 5369589792
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q3_K_M.gguf",
+     "bytes": 5178748960
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q3_K_S.gguf",
+     "bytes": 4927877152
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-IQ3_XXS.gguf",
+     "bytes": 4534579232
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_Qwen3.5-9B-GGUF",
+     "file": "Qwen_Qwen3.5-9B-Q2_K.gguf",
+     "bytes": 4322832416
+    }
+   ],
+   "license": null,
+   "released": null
+  },
+  {
+   "id": "Qwen/Qwen3.6-27B",
+   "display_name": "Qwen3.6-27B",
+   "family": "Qwen3.6",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 24,
+    "intermediate_size": 17408,
+    "vocab_size": 248320,
+    "layers": {
+     "n_layers": 64,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 817152,
+        "params": 115876064
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 817152,
+        "params": 115876064
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 817152,
+        "params": 115876064
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 256
+       },
+       "output_gate": true
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {
+    "mmlu_pro": 86.2,
+    "gpqa_diamond": 66.0,
+    "livecodebench": 83.9
+   },
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q8_0.gguf",
+     "bytes": 29116387840
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q6_K.gguf",
+     "bytes": 23675466240
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q5_K_M.gguf",
+     "bytes": 20965122560
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q5_K_S.gguf",
+     "bytes": 19893281280
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q4_K_M.gguf",
+     "bytes": 17984872960
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q4_K_S.gguf",
+     "bytes": 16925483520
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-IQ4_XS.gguf",
+     "bytes": 15780160000
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q3_K_L.gguf",
+     "bytes": 15491781120
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q3_K_M.gguf",
+     "bytes": 14818071040
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q3_K_S.gguf",
+     "bytes": 13932679680
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-IQ3_XXS.gguf",
+     "bytes": 12839109120
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-Q2_K.gguf",
+     "bytes": 12051776000
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-IQ2_XS.gguf",
+     "bytes": 10199134720
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Qwen_Qwen3.6-27B-GGUF",
+     "file": "Qwen_Qwen3.6-27B-IQ2_XXS.gguf",
+     "bytes": 9605378560
+    }
+   ],
+   "license": null,
+   "released": null
   },
   {
    "id": "allenai/OLMo-2-1124-13B-Instruct",
