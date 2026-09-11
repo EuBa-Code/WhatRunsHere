@@ -1,0 +1,68 @@
+name: Pages
+
+# The download page. It is a single static file with its data already inside
+# it, so there is nothing to build — the job exists to publish `site/` and to
+# check that the figures in the page still match what the engine says.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/pages.yml"
+      # The page quotes the catalog back at the visitor, so a rebuilt catalog
+      # can make it stale even when nothing in site/ changed.
+      - "catalog/catalog.json"
+  workflow_dispatch:
+
+# One deployment at a time, and a newer commit wins rather than queueing
+# behind an older one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  check:
+    name: figures match the engine
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      # The numbers in the page are the solver's own output, written in by
+      # `examples/demo_data`. Regenerating here and finding a diff means the
+      # page is quoting an answer the engine no longer gives — which is the
+      # one kind of wrong this project cannot afford in its shop window.
+      - name: Regenerate the demo figures
+        run: cargo run --release -p whatllm-cli --example demo_data
+
+      - name: Fail if the page is out of date
+        run: |
+          if ! git diff --quiet -- site/index.html; then
+            echo "::error file=site/index.html::The figures in the download page no longer match the engine."
+            echo "Run: cargo run --release -p whatllm-cli --example demo_data"
+            git --no-pager diff --stat -- site/index.html
+            exit 1
+          fi
+          echo "The page quotes the engine correctly."
+
+  deploy:
+    name: deploy
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4
