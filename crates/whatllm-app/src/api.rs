@@ -54,6 +54,10 @@ pub struct Engine {
     /// above because a download runs for minutes and must not hold anything
     /// the rest of the application reads.
     downloads: std::sync::Arc<Downloads>,
+    /// What the last look at the disk found. Kept because the sizing controls
+    /// change every answer and would otherwise re-read five directories per
+    /// slider stop; refreshed when the window says the disk changed.
+    installed: std::sync::Mutex<Option<whatllm_providers::Scan>>,
 }
 
 struct State {
@@ -92,6 +96,7 @@ impl Engine {
                 source,
             }),
             downloads: std::sync::Arc::default(),
+            installed: std::sync::Mutex::new(None),
         }
     }
 }
@@ -1103,6 +1108,92 @@ pub fn save_launch_file(
     std::fs::write(&path, file.content)
         .map_err(|e| format!("could not write {}: {e}", path.display()))?;
     Ok(path.display().to_string())
+}
+
+/// One model file on this machine, and how it would run here.
+#[derive(Debug, Serialize)]
+pub struct InstalledModel {
+    /// Where it is, who keeps it, and what it is.
+    #[serde(flatten)]
+    pub file: whatllm_providers::InstalledFile,
+    /// How this exact build runs at the current sizing: solved for the format
+    /// on disk rather than the one the solver would have chosen, because the
+    /// question is about the file that is there. `None` when the file is not
+    /// a catalog model, or when it does not fit at this context.
+    pub fit: Option<FitView>,
+}
+
+/// Everything on this machine, and everywhere it was looked for.
+#[derive(Debug, Serialize)]
+pub struct Installed {
+    /// Where each provider's files were looked for, and whether the place
+    /// exists. An absent one means the program is probably not installed.
+    pub looked_in: Vec<whatllm_providers::Location>,
+    /// Every model file found, catalog models first.
+    pub files: Vec<InstalledModel>,
+}
+
+/// What is already on this machine, and how each of it would run here.
+///
+/// Reads the disk only when asked to (`refresh`) or on the first call; after
+/// that the files are the ones last seen and only the fits are recomputed,
+/// because the sizing controls change every answer and each stop of a slider
+/// must not cost five directory walks.
+#[tauri::command]
+pub fn installed(engine: tauri::State<'_, Engine>, sizing: Sizing, refresh: bool) -> Installed {
+    installed_of(&engine, sizing, refresh)
+}
+
+/// The body of [`installed`], reachable without a window.
+///
+/// # Panics
+/// If a panic elsewhere poisoned the scan cache, which would mean the last
+/// look at the disk is in an unknown state.
+pub fn installed_of(engine: &Engine, sizing: Sizing, refresh: bool) -> Installed {
+    let state = read(engine);
+    let mut cache = engine
+        .installed
+        .lock()
+        .expect("the installed-model cache was poisoned by a panic elsewhere");
+    if refresh || cache.is_none() {
+        *cache = Some(whatllm_providers::scan(&state.catalog));
+    }
+    let scan = cache.as_ref().expect("filled just above");
+    let request = sizing.request();
+
+    let files = scan
+        .files
+        .iter()
+        .map(|file| {
+            let fit = match &file.identity {
+                whatllm_providers::Identity::Catalog { id, quant, .. } => {
+                    state.catalog.find(id).and_then(|model| {
+                        let build = model.build(quant)?;
+                        // This build and no other: the file on disk is the
+                        // question, not the format the solver would prefer.
+                        let ctx = FitContext::new(
+                            &model.architecture,
+                            &model.benchmarks,
+                            &state.detection.system,
+                            &state.calibration,
+                        )
+                        .with_builds(std::slice::from_ref(build));
+                        fit::solve(&ctx, &request).map(FitView::from)
+                    })
+                }
+                _ => None,
+            };
+            InstalledModel {
+                file: file.clone(),
+                fit,
+            }
+        })
+        .collect();
+
+    Installed {
+        looked_in: scan.looked_in.clone(),
+        files,
+    }
 }
 
 /// What a probe found.

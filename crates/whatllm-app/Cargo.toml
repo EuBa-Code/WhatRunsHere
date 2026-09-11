@@ -43,6 +43,7 @@ tokio = { version = "1.53.1", default-features = false, features = ["fs", "io-ut
 whatllm-core = { workspace = true }
 whatllm-hw = { workspace = true }
 whatllm-probe = { workspace = true }
+whatllm-providers = { workspace = true }
 whatllm-state = { workspace = true }
 
 [build-dependencies]

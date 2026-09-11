@@ -118,7 +118,7 @@ fn a_ranked_model_carries_the_fields_the_list_reads() {
     let ranked = api::rank_of(&engine, sizing());
     assert!(
         !ranked.is_empty(),
-        "56 models and a machine with memory: something must be placeable"
+        "a catalog and a machine with memory: something must be placeable"
     );
 
     let json = serde_json::to_value(&ranked[0]).expect("RankedModel serialises");
@@ -556,6 +556,46 @@ fn the_gguf_hosts_each_get_their_own_action() {
             "the destination and the launch disagree about LM Studio's folder"
         );
     }
+}
+
+#[test]
+fn what_is_on_this_machine_carries_the_fields_the_window_reads() {
+    let engine = Engine::new();
+    let installed = api::installed_of(&engine, sizing(), true);
+    let json = serde_json::to_value(&installed).expect("Installed serialises");
+    has_keys(&json, &["looked_in", "files"], "Installed");
+
+    // Every machine with a home directory has somewhere to look, whether or
+    // not anything is there.
+    let looked = json["looked_in"].as_array().expect("an array");
+    assert!(!looked.is_empty(), "nowhere was looked for a model");
+    has_keys(&looked[0], &["provider", "path", "found"], "Location");
+
+    // Whatever the machine the tests run on holds, each file has the same
+    // shape, the identity carries its tag, and a catalog match has a fit or
+    // an honest absence of one.
+    for file in json["files"].as_array().expect("an array") {
+        has_keys(
+            file,
+            &["provider", "path", "bytes", "name", "identity", "fit"],
+            "InstalledModel",
+        );
+        assert!(
+            file["identity"]["kind"].is_string(),
+            "identity must carry its `kind` tag: {}",
+            file["identity"]
+        );
+        if file["identity"]["kind"] != "catalog" {
+            assert!(
+                file["fit"].is_null(),
+                "only a catalog model can be sized: {file}"
+            );
+        }
+    }
+
+    // A second call without a refresh answers from the same look at the disk.
+    let again = api::installed_of(&engine, sizing(), false);
+    assert_eq!(again.files.len(), installed.files.len());
 }
 
 #[test]
