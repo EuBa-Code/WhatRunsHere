@@ -1,0 +1,147 @@
+name: Release
+
+# Installers for the three platforms, attached to the tag that asked for them.
+#
+# The page at whatllm reads this release through the GitHub API and builds its
+# download buttons from whatever is attached here, so the asset names matter:
+# it matches `.msi`/`.exe` for Windows, `.dmg` for macOS, `.AppImage`/`.deb`
+# for Linux. Tauri's own naming already produces those.
+on:
+  push:
+    tags: ["v*"]
+  # So a release can be rehearsed on a branch without cutting a tag first.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build the installers without publishing a release"
+        type: boolean
+        default: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.label }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Apple Silicon and Intel are separate binaries rather than one
+          # universal build: the universal one is the size of both, and
+          # nobody downloading a 9 MB tool needs the other half of it.
+          - os: macos-latest
+            label: macOS (Apple Silicon)
+            target: aarch64-apple-darwin
+          - os: macos-13
+            label: macOS (Intel)
+            target: x86_64-apple-darwin
+          - os: ubuntu-22.04
+            label: Linux
+            target: x86_64-unknown-linux-gnu
+          - os: windows-latest
+            label: Windows
+            target: x86_64-pc-windows-msvc
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      # Tauri draws through the system webview, which on Linux is a package
+      # rather than part of the OS. 22.04 rather than 24.04 on purpose: the
+      # AppImage links against the glibc of the machine that built it, so
+      # building on the older one is what makes it run on both.
+      - name: Linux webview dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev \
+            librsvg2-dev patchelf libgtk-3-dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+
+      # `tauri::generate_context!` reads the built front end at compile time,
+      # so the window cannot be compiled until this has run.
+      - name: Install front-end dependencies
+        run: npm ci
+        working-directory: ui
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: crates/whatllm-app
+          args: --target ${{ matrix.target }}
+          # Uploaded as artifacts and released in one go by the job below, so
+          # a failure on one platform does not leave a half-populated release
+          # page that people can already download from.
+          includeUpdaterJson: false
+          uploadReleaseAssets: false
+
+      - name: Collect the installers
+        shell: bash
+        run: |
+          mkdir -p dist
+          find target/${{ matrix.target }}/release/bundle -type f \
+            \( -name "*.msi" -o -name "*-setup.exe" -o -name "*.dmg" \
+               -o -name "*.AppImage" -o -name "*.deb" -o -name "*.rpm" \) \
+            -exec cp {} dist/ \;
+          ls -la dist/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installers-${{ matrix.target }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    name: publish the release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: List what will be published
+        run: ls -la dist/
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          draft: true
+          generate_release_notes: true
+          # A draft, deliberately. The installers are unsigned, so the notes
+          # have to say what Windows and macOS will do about that before
+          # anybody downloads one — and that is a sentence a person should
+          # write, not a workflow.
+          body: |
+            ## Installers
+
+            Unsigned, for now. Windows will show a SmartScreen warning
+            ("More info" then "Run anyway"); macOS will refuse the first open
+            until you right-click the app and choose Open. Both are the
+            operating system telling you the truth: nobody has paid a
+            certificate authority to vouch for this binary yet.
+
+            Everything WhatLLM computes runs offline. The only thing it fetches
+            is a model's weights, when you ask it to.
