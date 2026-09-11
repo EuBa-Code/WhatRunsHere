@@ -197,9 +197,18 @@ throughput_validation -- --nocapture`.
 whatllm doctor          # what this machine is, and what has been measured
 whatllm probe           # measure memory bandwidth, ~5 seconds
 whatllm fit             # rank the catalog for this machine
-whatllm plan <model>    # memory breakdown, curves, and what to change
+whatllm plan <model>    # memory breakdown, curves, what to change, how to run it
+whatllm installed       # what is already on this disk, and how each would run
 whatllm cost <model>    # local against hosted, with the break-even volume
 ```
+
+`installed` reads the places each local runtime keeps its files (WhatLLM's
+own folder, LM Studio's, Ollama's store, llama.cpp's cache and the HuggingFace
+cache) and identifies each file against the catalog by its exact byte count,
+which across 1196 builds is as good as a fingerprint. A file it recognises is
+sized for exactly the build it is; one it does not is named from its own
+header and declared not sizeable, rather than guessed at. Nothing is asked of
+any running program.
 
 Every command takes `--json`. `--context`, `--parallel`, `--use`, `--prefer` and
 `--runtime` shape the question.
