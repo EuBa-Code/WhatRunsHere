@@ -14,6 +14,8 @@
 //! The calibration is cached per machine, keyed on a fingerprint, so plugging a
 //! disk into a different computer cannot silently reuse the wrong measurement.
 
+pub mod settings;
+
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
