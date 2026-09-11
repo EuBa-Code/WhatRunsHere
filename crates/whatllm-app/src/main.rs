@@ -35,6 +35,7 @@ fn main() {
             api::cancel_download,
             api::downloads,
             api::reveal,
+            api::save_image,
         ])
         .run(tauri::generate_context!())
         .expect("the application window could not be created");

@@ -30,6 +30,7 @@ module_name_repetitions = "allow"
 must_use_candidate = "allow"
 
 [dependencies]
+base64 = "0.23.1"
 dirs = "7.0.0"
 futures-util = { version = "0.3.34", default-features = false, features = ["std"] }
 reqwest = { version = "0.13.5", default-features = false, features = ["stream", "http2", "rustls"] }

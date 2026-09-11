@@ -823,6 +823,45 @@ pub fn downloads(engine: tauri::State<'_, Engine>) -> Vec<Progress> {
     engine.downloads.snapshot()
 }
 
+/// Write a shared result to disk, and say where it went.
+///
+/// The window draws the card and copies it to the clipboard itself. This is
+/// the path for when that fails, which on Linux it often does: the async
+/// clipboard API is uneven across the webviews, and a button that silently
+/// does nothing is worse than one that hands you a file.
+///
+/// # Errors
+/// When the image is not valid base64, or the file cannot be written.
+#[tauri::command]
+pub fn save_image(data: String, name: String) -> Result<String, String> {
+    use base64::Engine as _;
+
+    // The name is built by the window from a model name out of the catalog,
+    // so it gets the same treatment every other outside string does.
+    let safe: String = name
+        .chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() || c == '-' || c == '_' {
+                c
+            } else {
+                '-'
+            }
+        })
+        .collect();
+    let file = format!("{}.png", safe.trim_matches('-'));
+
+    let bytes = base64::engine::general_purpose::STANDARD
+        .decode(data.as_bytes())
+        .map_err(|e| format!("the image did not decode: {e}"))?;
+
+    let dir = dirs::download_dir()
+        .or_else(dirs::home_dir)
+        .ok_or_else(|| "no download or home directory on this system".to_owned())?;
+    let path = dir.join(file);
+    std::fs::write(&path, bytes).map_err(|e| format!("could not write {}: {e}", path.display()))?;
+    Ok(path.display().to_string())
+}
+
 /// Show a downloaded file where it landed.
 ///
 /// # Errors

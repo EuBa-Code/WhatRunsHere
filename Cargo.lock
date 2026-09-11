@@ -4628,6 +4628,7 @@ dependencies = [
 name = "whatllm-app"
 version = "0.1.0"
 dependencies = [
+ "base64 0.23.1",
  "dirs 7.0.0",
  "futures-util",
  "reqwest",
