@@ -1,0 +1,1177 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WhatLLM</title>
+<meta name="description" content="Which language models will actually run well on your machine — measured, not guessed." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Instrument+Sans:wght@400..600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+/>
+
+<style>
+  /* ─────────────────────────────────────────────────────────────────────
+     The application's own tokens, unchanged.
+
+     This page is the shop window for a piece of software that already has a
+     palette and three typefaces, chosen for reasons written down next to the
+     code. Inventing a second identity for the page would make the download
+     and the thing downloaded look like different products.
+
+     Dark first, because the application is: the bare :root carries the dark
+     set, and light is re-pointed under both the media query and the stamp.
+     ───────────────────────────────────────────────────────────────────── */
+  :root {
+    --ground: #0e1017;
+    --surface: #161923;
+    --raised: #1d2130;
+    --line: #272c3c;
+    --line-soft: #1f2432;
+    --ink: #e9eaf0;
+    --ink-dim: #a2a8bb;
+    --ink-faint: #6d738a;
+
+    --brass: #e3a44c;
+    --brass-deep: #b87f2e;
+    --brass-wash: #2a2115;
+
+    --band-weights: #e3a44c;
+    --band-cache: #6fa8c7;
+    --band-other: #9b8ac4;
+
+    --good: #5fbf8f;
+    --tight: #e3a44c;
+    --over: #d4685e;
+
+    --display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+
+    --measure: 64ch;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ground: #f4f4f8;
+      --surface: #ffffff;
+      --raised: #fafafd;
+      --line: #e2e3ec;
+      --line-soft: #edeef4;
+      --ink: #171922;
+      --ink-dim: #5a6076;
+      --ink-faint: #878da3;
+      --brass: #a8701c;
+      --brass-deep: #8a5c14;
+      --brass-wash: #fdf4e6;
+      --band-weights: #c2861f;
+      --band-cache: #3f7f9f;
+      --band-other: #7663a8;
+      --good: #2f8f63;
+      --tight: #b5811f;
+      --over: #b8483d;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --ground: #f4f4f8;
+    --surface: #ffffff;
+    --raised: #fafafd;
+    --line: #e2e3ec;
+    --line-soft: #edeef4;
+    --ink: #171922;
+    --ink-dim: #5a6076;
+    --ink-faint: #878da3;
+    --brass: #a8701c;
+    --brass-deep: #8a5c14;
+    --brass-wash: #fdf4e6;
+    --band-weights: #c2861f;
+    --band-cache: #3f7f9f;
+    --band-other: #7663a8;
+    --good: #2f8f63;
+    --tight: #b5811f;
+    --over: #b8483d;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .wrap {
+    width: min(100% - 2.5rem, 68rem);
+    margin-inline: auto;
+  }
+
+  /* ── Typography ─────────────────────────────────────────────────────── */
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 5.2vw, 3.5rem);
+    line-height: 1.04;
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow {
+    font-family: var(--display);
+    font-size: 0.66rem;
+    font-weight: 600;
+    font-stretch: 108%;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  .lede {
+    max-width: var(--measure);
+    color: var(--ink-dim);
+    font-size: 1.06rem;
+    margin: 0;
+  }
+
+  .fig {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "zero" 1;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Provenance rules ───────────────────────────────────────────────────
+     The application draws a rule beneath every figure saying where it came
+     from. The page reuses the real thing rather than describing it, because
+     the claim is easier to believe when you are looking at it.
+     ───────────────────────────────────────────────────────────────────── */
+  .prov {
+    padding-bottom: 3px;
+    background-repeat: repeat-x;
+    background-position: 0 100%;
+    background-size: 6px 1.5px;
+  }
+  .prov-measured {
+    background-image: linear-gradient(to right, var(--brass) 0 100%);
+  }
+  .prov-spec {
+    background-image: linear-gradient(
+      to right,
+      var(--ink-faint) 0 60%,
+      transparent 60% 100%
+    );
+  }
+  .prov-assumed {
+    background-image: linear-gradient(
+      to right,
+      var(--ink-faint) 0 25%,
+      transparent 25% 100%
+    );
+  }
+
+  /* ── Shell ──────────────────────────────────────────────────────────── */
+
+  header.bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in oklab, var(--ground) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    height: 3.25rem;
+  }
+
+  .wordmark {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+  }
+
+  .bar a.ghost {
+    margin-left: auto;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    text-decoration: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .bar a.ghost:hover {
+    color: var(--ink);
+    background: var(--raised);
+  }
+
+  section {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    border-top: 1px solid var(--line-soft);
+  }
+  section:first-of-type {
+    border-top: 0;
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────────── */
+
+  .hero {
+    padding-top: clamp(2.75rem, 6vw, 4.25rem);
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--brass);
+  }
+
+  /* ── The instrument ─────────────────────────────────────────────────────
+     The demo is the hero. Every figure in it came out of the real solver —
+     see crates/whatllm-cli/examples/demo_data.rs — so the page shows the
+     product working rather than a picture of it working.
+     ───────────────────────────────────────────────────────────────────── */
+
+  .panel {
+    margin-top: 2.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .panel-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 0.7rem 0;
+  }
+
+  .tab {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--ink-faint);
+    font: inherit;
+    font-size: 0.82rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 9px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+  }
+  .tab:hover {
+    color: var(--ink-dim);
+  }
+  .tab[aria-selected="true"] {
+    background: var(--raised);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+
+  .panel-caption {
+    padding: 1.1rem 1.25rem 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.9rem;
+  }
+  .panel-caption .name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.02rem;
+  }
+  .panel-caption .detail {
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+  }
+  .panel-caption .runs {
+    margin-left: auto;
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+  }
+
+  .rows {
+    padding: 0.35rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .row:last-child {
+    border-bottom: 0;
+  }
+
+  .row-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.7rem;
+  }
+  .row-top .model {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+  .row-top .quant,
+  .row-top .size {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .row-top .speed {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .row-top .speed span {
+    color: var(--ink-faint);
+    font-size: 0.74rem;
+  }
+
+  .bar-track {
+    display: flex;
+    height: 11px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--line-soft);
+  }
+  .bar-track > i {
+    display: block;
+    transition: width 0.42s cubic-bezier(0.22, 0.9, 0.3, 1);
+  }
+  .seg-weights {
+    background: var(--band-weights);
+  }
+  .seg-cache {
+    background: var(--band-cache);
+  }
+  .seg-other {
+    background: var(--band-other);
+  }
+  .seg-headroom {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--line) 0 2px,
+      transparent 2px 5px
+    );
+  }
+  .seg-over {
+    background: var(--over);
+  }
+
+  .row-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.8rem;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+  .pill::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: currentColor;
+  }
+  .v-comfortable,
+  .v-fits {
+    color: var(--good);
+    background: color-mix(in oklab, var(--good) 13%, transparent);
+  }
+  .v-tight {
+    color: var(--tight);
+    background: color-mix(in oklab, var(--tight) 14%, transparent);
+  }
+
+  .panel-foot {
+    border-top: 1px solid var(--line-soft);
+    padding: 0.85rem 1.25rem;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    background: var(--raised);
+  }
+
+  /* ── Legend ─────────────────────────────────────────────────────────── */
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.1rem;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+  }
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex: none;
+  }
+
+  /* ── Download ───────────────────────────────────────────────────────── */
+
+  .downloads {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .plat {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .plat:hover {
+    border-color: var(--ink-faint);
+    background: var(--raised);
+  }
+  .plat:active {
+    transform: translateY(1px);
+  }
+  .plat[aria-disabled="true"] {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .plat.primary {
+    border-color: var(--brass-deep);
+    background: linear-gradient(
+      100deg,
+      var(--brass-wash),
+      var(--surface) 70%
+    );
+  }
+  .plat .os {
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .plat .meta {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .plat svg {
+    flex: none;
+    color: var(--ink-dim);
+  }
+  .plat .go {
+    margin-left: auto;
+    color: var(--ink-faint);
+  }
+
+  .fallback {
+    margin-top: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1rem 1.15rem;
+    background: var(--surface);
+  }
+  .fallback p {
+    margin: 0 0 0.7rem;
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+    max-width: var(--measure);
+  }
+  pre {
+    margin: 0;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.75;
+    color: var(--ink-dim);
+    background: var(--ground);
+    border: 1px solid var(--line-soft);
+    border-radius: 9px;
+    padding: 0.75rem 0.9rem;
+  }
+  pre b {
+    color: var(--brass);
+    font-weight: 500;
+  }
+
+  /* ── Three claims, each with the thing itself beside it ─────────────── */
+
+  .claims {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+    margin-top: 2.25rem;
+  }
+  .claim {
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  @media (min-width: 52rem) {
+    .claim {
+      grid-template-columns: 19rem 1fr;
+      gap: 2.5rem;
+    }
+  }
+  .claim .specimen {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 1rem 1.1rem;
+  }
+  .claim p {
+    margin: 0.5rem 0 0;
+    color: var(--ink-dim);
+    max-width: var(--measure);
+    font-size: 0.95rem;
+  }
+
+  .spec-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.3rem 0;
+  }
+  .spec-row + .spec-row {
+    border-top: 1px solid var(--line-soft);
+  }
+  .spec-row .k {
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+  }
+  .spec-row .v {
+    font-family: var(--mono);
+    font-size: 0.84rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Proof ──────────────────────────────────────────────────────────── */
+
+  .proof {
+    display: grid;
+    gap: 1px;
+    margin-top: 2rem;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  }
+  .proof > div {
+    background: var(--surface);
+    padding: 1.15rem 1.25rem;
+  }
+  .proof .n {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    display: block;
+  }
+  .proof .k {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+    line-height: 1.45;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-block: 2.5rem 3.25rem;
+    color: var(--ink-faint);
+    font-size: 0.84rem;
+  }
+  footer .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  footer a {
+    color: var(--ink-dim);
+    text-decoration-color: var(--line);
+    text-underline-offset: 3px;
+  }
+  footer a:hover {
+    color: var(--ink);
+  }
+  footer p {
+    margin: 0;
+    max-width: var(--measure);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<header class="bar">
+  <div class="wrap bar-inner">
+    <svg width="16" height="18" viewBox="0 0 16 18" aria-hidden="true">
+      <rect
+        x="0.75"
+        y="0.75"
+        width="14.5"
+        height="16.5"
+        rx="3"
+        fill="none"
+        stroke="var(--line)"
+        stroke-width="1.5"
+      />
+      <rect x="3" y="10" width="10" height="5" rx="1" fill="var(--band-weights)" />
+      <rect x="3" y="7" width="10" height="2.2" rx="1" fill="var(--band-cache)" />
+      <rect x="3" y="5.2" width="10" height="1.2" rx="0.6" fill="var(--band-other)" />
+    </svg>
+    <span class="wordmark">WhatLLM</span>
+    <a class="ghost" href="https://github.com/eugeniobarberini/whatllm">Source</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Local models, measured</p>
+        <h1>
+          Which models will actually run well on
+          <em>your</em> machine
+        </h1>
+        <p class="lede">
+          Not whether the file fits. Whether it still fits at 32k context, how
+          fast it will be once the conversation is long, what it costs against
+          an API — and which of those numbers were measured rather than
+          assumed.
+        </p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head" role="tablist" aria-label="Choose a machine">
+          <!-- Filled from the embedded data, which the engine wrote. -->
+        </div>
+        <div class="panel-caption">
+          <span class="name"></span>
+          <span class="detail"></span>
+          <span class="runs"></span>
+        </div>
+        <div class="rows"></div>
+        <p class="panel-foot">
+          Every figure above was computed by WhatLLM's own solver for a machine
+          of that shape, at 8k context — not typed in by hand. The machines are
+          described from published specifications, so these are estimates, and
+          the application says so on your machine too until you measure it.
+        </p>
+      </div>
+
+      <ul class="legend">
+        <li>
+          <span class="swatch" style="background: var(--band-weights)"></span>
+          weights
+        </li>
+        <li>
+          <span class="swatch" style="background: var(--band-cache)"></span>
+          attention cache
+        </li>
+        <li>
+          <span class="swatch" style="background: var(--band-other)"></span>
+          activations and runtime
+        </li>
+        <li>
+          <span
+            class="swatch"
+            style="
+              background-image: repeating-linear-gradient(
+                45deg,
+                var(--line) 0 2px,
+                transparent 2px 4px
+              );
+              border: 1px solid var(--line);
+            "
+          ></span>
+          headroom left free
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="wrap">
+      <p class="eyebrow">Download</p>
+      <h2>Free, open source, and it runs offline</h2>
+      <p class="lede" style="margin-top: 0.75rem">
+        One window. It reads the machine it is on, ranks 56 models against it,
+        and fetches the weights when you ask it to. Nothing else leaves the
+        computer.
+      </p>
+
+      <div class="downloads"><!-- Filled once the releases are known. --></div>
+
+      <div class="fallback">
+        <p>
+          <strong>No binaries have been published yet.</strong> The first
+          release has not been cut, so for now it is built from source — a Rust
+          toolchain and Node 22, about two minutes.
+        </p>
+        <pre><b>git clone</b> https://github.com/eugeniobarberini/whatllm
+<b>cd</b> whatllm
+<b>npm</b> --prefix ui ci &amp;&amp; <b>npm</b> --prefix ui run build
+<b>cargo run</b> --release -p whatllm-app</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Why the answers are different</p>
+      <h2>Three things it refuses to guess</h2>
+
+      <div class="claims">
+        <div class="claim">
+          <div class="specimen">
+            <div class="spec-row">
+              <span class="k">Streaming bandwidth</span>
+              <span class="v prov prov-measured">48.7 GB/s</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">One thread</span>
+              <span class="v prov prov-measured">24.3 GB/s</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">Per-token overhead</span>
+              <span class="v">2.50 ms</span>
+            </div>
+          </div>
+          <div>
+            <h3>It measures your machine, in about a second</h3>
+            <p>
+              Generation speed is set by how fast weights can be read, not by
+              how fast the processor is. WhatLLM times that directly rather
+              than looking your hardware up in a table — which is also why it
+              works on a card nobody has catalogued yet, and why it cannot be
+              fooled by a laptop chip that shares its model number with a
+              desktop one.
+            </p>
+          </div>
+        </div>
+
+        <div class="claim">
+          <div class="specimen">
+            <div class="spec-row">
+              <span class="k">Weights</span><span class="v">10.9 GiB</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">Attention cache</span><span class="v">104 MiB</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">Activations</span><span class="v">51.4 MiB</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">Runtime</span><span class="v">400 MiB</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">Headroom</span><span class="v">352 MiB</span>
+            </div>
+          </div>
+          <div>
+            <h3>It counts everything the model needs, not just the file</h3>
+            <p>
+              The attention cache is what decides how long a conversation can
+              get, and it is computed from each model's real architecture —
+              grouped-query, sliding windows, DeepSeek's latent attention all
+              have genuinely different slopes. Treating them alike is how a
+              671B model gets reported as needing more cache than a 70B one
+              when it needs less.
+            </p>
+          </div>
+        </div>
+
+        <div class="claim">
+          <div class="specimen">
+            <div class="spec-row">
+              <span class="k">Measured here</span>
+              <span class="v prov prov-measured">48.7 GB/s</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">From a specification</span>
+              <span class="v prov prov-spec">1008 GB/s</span>
+            </div>
+            <div class="spec-row">
+              <span class="k">Assumed</span>
+              <span class="v prov prov-assumed">30.0 GB/s</span>
+            </div>
+          </div>
+          <div>
+            <h3>It tells you which numbers it actually knows</h3>
+            <p>
+              Every figure carries a rule beneath it: solid for something timed
+              on your machine, dashed for a manufacturer's claim, dotted for an
+              assumption nothing has replaced yet. Six model families are left
+              out of the catalog entirely because their architecture cannot be
+              described correctly — a list that tells the truth about 56 models
+              is worth more than one that is wrong about 62.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Checked against reality</p>
+      <h2>The models are validated, not argued for</h2>
+
+      <div class="proof">
+        <div>
+          <span class="n">1.5%</span>
+          <span class="k"
+            >mean error between the computed weight size and the real file,
+            across 689 published builds</span
+          >
+        </div>
+        <div>
+          <span class="n">0.88–0.99</span>
+          <span class="k"
+            >R² of the speed model fitted to 181 measurements from 9 real
+            machines</span
+          >
+        </div>
+        <div>
+          <span class="n">153</span>
+          <span class="k"
+            >tests, none of which touch the network, run on Windows, macOS and
+            Linux</span
+          >
+        </div>
+        <div>
+          <span class="n">3</span>
+          <span class="k"
+            >constants in the code that came from those measurements rather
+            than from reasoning, each citing the data</span
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/eugeniobarberini/whatllm">Source</a>
+      <a href="https://github.com/eugeniobarberini/whatllm/releases">Releases</a>
+      <a href="https://github.com/eugeniobarberini/whatllm/issues">Report a misdetection</a>
+      <a href="https://github.com/AlexsJones/llmfit">llmfit, which framed the problem</a>
+    </div>
+    <p>
+      MIT or Apache 2.0. Nothing here reaches the network unless you press a
+      button that says it will: the catalog is compiled into the binary and
+      every answer is computed offline, with the single exception of fetching a
+      model's weights when you ask for them.
+    </p>
+  </div>
+</footer>
+
+<script id="demo" type="application/json">
+{"context":8192,"generated":"2026-09-10","machines":[{"detail":"16 GB of memory, integrated graphics — the machine most people already have","name":"A laptop with no graphics card","runs":55,"tab":"Laptop","top":[{"cache":641728512,"headroom":268435456,"name":"Qwen3 4B","other":465651200,"params":4022458880,"pool":13958643712,"quality":48.3,"quant":"Q5_K_M","required":4265329088,"tps":11.51,"verdict":"comfortable","weights":2889513920,"where":"CPU"},{"cache":108625920,"headroom":368979062,"name":"gpt-oss 20B","other":473318912,"params":20907927360,"pool":13958643712,"quality":50.0,"quant":"Q5_K_M","required":12668281142,"tps":14.88,"verdict":"tight","weights":11717357248,"where":"CPU"},{"cache":499122176,"headroom":268435456,"name":"Qwen3 1.7B","other":451495424,"params":2031732736,"pool":13958643712,"quality":37.4,"quant":"Q6_K","required":2892060576,"tps":20.05,"verdict":"comfortable","weights":1673007520,"where":"CPU"}]},{"detail":"NVIDIA RTX 4060 Ti, 16 GB — 288 GB/s, published","name":"A mid-range card","runs":56,"tab":"RTX 4060 Ti","top":[{"cache":427819008,"headroom":678713124,"name":"Qwen3 30B-A3B","other":451495424,"params":30532110336,"pool":16106127360,"quality":55.8,"quant":"Q5_K_M","required":23302483908,"tps":27.79,"verdict":"comfortable","weights":21744456352,"where":"Partial offload (32/48 layers)"},{"cache":641728512,"headroom":268435456,"name":"Qwen3 8B","other":482952704,"params":8190726144,"pool":16106127360,"quality":53.4,"quant":"Q6_K","required":8119016480,"tps":27.33,"verdict":"comfortable","weights":6725899808,"where":"GPU"},{"cache":204472320,"headroom":383620752,"name":"gpt-oss 20B","other":473318912,"params":20907927360,"pool":16106127360,"quality":51.4,"quant":"Q8_0","required":13170979152,"tps":57.14,"verdict":"fits","weights":12109567168,"where":"GPU"}]},{"detail":"NVIDIA RTX 4090, 24 GB — 1008 GB/s, published","name":"The card people buy for this","runs":56,"tab":"RTX 4090","top":[{"cache":1677721600,"headroom":532936840,"name":"Phi-4 14B","other":506339328,"params":14659507200,"pool":24696061952,"quality":58.5,"quant":"Q8_0","required":18297498184,"tps":40.29,"verdict":"fits","weights":15580500416,"where":"GPU"},{"cache":1342177280,"headroom":526370535,"name":"Qwen3 14B","other":504972800,"params":14768296960,"pool":24696061952,"quality":58.2,"quant":"Q8_0","required":18072055047,"tps":41.44,"verdict":"fits","weights":15698534432,"where":"GPU"},{"cache":1140850688,"headroom":729194490,"name":"Qwen3 32B","other":530138624,"params":32762106880,"pool":24696061952,"quality":60.8,"quant":"Q5_K_S","required":25035677498,"tps":23.21,"verdict":"comfortable","weights":22635493696,"where":"Partial offload (63/64 layers)"}]},{"detail":"M3 Max, 36 GB unified — 300 GB/s, published","name":"Apple Silicon, one pool of memory","runs":56,"tab":"MacBook Pro","top":[{"cache":805306368,"headroom":790845732,"name":"Qwen3 30B-A3B","other":451495424,"params":30532110336,"pool":33822867456,"quality":56.7,"quant":"Q6_K","required":27152370116,"tps":47.26,"verdict":"fits","weights":25104722592,"where":"Unified memory"},{"cache":641728512,"headroom":268435456,"name":"Qwen3 8B","other":482952704,"params":8190726144,"pool":33822867456,"quality":53.4,"quant":"Q6_K","required":8119016480,"tps":27.85,"verdict":"comfortable","weights":6725899808,"where":"Unified memory"},{"cache":204472320,"headroom":383620752,"name":"gpt-oss 20B","other":473318912,"params":20907927360,"pool":33822867456,"quality":51.4,"quant":"Q8_0","required":13170979152,"tps":56.91,"verdict":"comfortable","weights":12109567168,"where":"Unified memory"}]},{"detail":"Ryzen AI MAX+ 395 — 96 GB carved out in firmware, 256 GB/s","name":"128 GB, most of it given to the graphics","runs":56,"tab":"Ryzen AI MAX+","top":[{"cache":427819008,"headroom":1000897418,"name":"Qwen3 30B-A3B","other":451495424,"params":30532110336,"pool":128849018880,"quality":56.8,"quant":"Q8_0","required":34364144682,"tps":39.22,"verdict":"comfortable","weights":32483932832,"where":"Unified memory"},{"cache":204472320,"headroom":383620752,"name":"gpt-oss 20B","other":473318912,"params":20907927360,"pool":128849018880,"quality":51.4,"quant":"Q8_0","required":13170979152,"tps":49.6,"verdict":"comfortable","weights":12109567168,"where":"Unified memory"},{"cache":641728512,"headroom":268435456,"name":"Qwen3 8B","other":482952704,"params":8190726144,"pool":128849018880,"quality":53.4,"quant":"Q6_K","required":8119016480,"tps":24.01,"verdict":"comfortable","weights":6725899808,"where":"Unified memory"}]}]}
+</script>
+
+<script>
+  (function () {
+    "use strict";
+
+    var REPO = "eugeniobarberini/whatllm";
+    var demo = JSON.parse(document.getElementById("demo").textContent);
+
+    /* Binary units, because that is what every runtime and driver reports. */
+    function bytes(n) {
+      var units = ["KiB", "MiB", "GiB", "TiB"];
+      var v = n / 1024;
+      var u = 0;
+      while (v >= 1024 && u < units.length - 1) {
+        v /= 1024;
+        u += 1;
+      }
+      return (v < 100 ? v.toFixed(1) : Math.round(v)) + " " + units[u];
+    }
+
+    function params(n) {
+      var b = n / 1e9;
+      return (b >= 10 ? Math.round(b) : b.toFixed(1)) + "B";
+    }
+
+    var head = document.querySelector(".panel-head");
+    var caption = document.querySelector(".panel-caption");
+    var rows = document.querySelector(".rows");
+
+    function render(index) {
+      var machine = demo.machines[index];
+
+      Array.prototype.forEach.call(head.children, function (tab, i) {
+        tab.setAttribute("aria-selected", String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+
+      caption.querySelector(".name").textContent = machine.name;
+      caption.querySelector(".detail").textContent = machine.detail;
+      caption.querySelector(".runs").textContent =
+        machine.runs + " of 56 models run here";
+
+      rows.textContent = "";
+      machine.top.forEach(function (m) {
+        /* Drawn against the pool the model was placed in, so a bar that is
+           nearly full means nearly full. A model spilling past the end of an
+           accelerator shows the overflow rather than being rescaled to fit,
+           which is the whole point of drawing it. */
+        var scale = Math.max(m.pool, m.required);
+        var pct = function (v) {
+          return (v / scale) * 100 + "%";
+        };
+        var over = m.required > m.pool;
+
+        var row = document.createElement("div");
+        row.className = "row";
+        row.innerHTML =
+          '<div class="row-top">' +
+          '<span class="model"></span>' +
+          '<span class="quant"></span>' +
+          '<span class="size"></span>' +
+          '<span class="speed"><b></b> <span>tok/s</span></span>' +
+          "</div>" +
+          '<div class="bar-track">' +
+          '<i class="seg-weights"></i>' +
+          '<i class="seg-cache"></i>' +
+          '<i class="seg-other"></i>' +
+          '<i class="seg-headroom"></i>' +
+          (over ? '<i class="seg-over" style="width:4px"></i>' : "") +
+          "</div>" +
+          '<div class="row-foot">' +
+          '<span class="pill"></span>' +
+          "<span class=\"place\"></span>" +
+          '<span class="qual"></span>' +
+          "</div>";
+
+        row.querySelector(".model").textContent = m.name;
+        row.querySelector(".quant").textContent = m.quant;
+        row.querySelector(".size").textContent =
+          params(m.params) + " · " + bytes(m.required);
+        row.querySelector(".speed b").textContent =
+          m.tps < 10 ? m.tps.toFixed(1) : Math.round(m.tps);
+
+        var pill = row.querySelector(".pill");
+        pill.className = "pill v-" + m.verdict;
+        pill.textContent =
+          m.verdict === "comfortable"
+            ? "Comfortable"
+            : m.verdict === "fits"
+              ? "Fits"
+              : "Tight";
+        row.querySelector(".place").textContent = m.where;
+        row.querySelector(".qual").textContent = "quality " + m.quality;
+
+        rows.appendChild(row);
+
+        /* Widths applied after insertion so the change animates when the
+           machine is switched, and the first paint is not a flash of zero. */
+        var segs = row.querySelectorAll(".bar-track > i");
+        segs[0].style.width = pct(m.weights);
+        segs[1].style.width = pct(m.cache);
+        segs[2].style.width = pct(m.other);
+        segs[3].style.width = over ? "0%" : pct(m.headroom);
+      });
+    }
+
+    demo.machines.forEach(function (machine, i) {
+      var tab = document.createElement("button");
+      tab.type = "button";
+      tab.className = "tab";
+      tab.setAttribute("role", "tab");
+      tab.textContent = machine.tab;
+      tab.addEventListener("click", function () {
+        render(i);
+      });
+      tab.addEventListener("keydown", function (event) {
+        var next =
+          event.key === "ArrowRight"
+            ? i + 1
+            : event.key === "ArrowLeft"
+              ? i - 1
+              : null;
+        if (next === null) return;
+        event.preventDefault();
+        var target = (next + demo.machines.length) % demo.machines.length;
+        render(target);
+        head.children[target].focus();
+      });
+      head.appendChild(tab);
+    });
+
+    /* Opened on the machine most visitors are reading this on. */
+    render(0);
+
+    /* ── Releases ──────────────────────────────────────────────────────────
+       Asked for at load. Until the first release exists — or if GitHub is
+       unreachable — the build-from-source panel below stays, which is the
+       honest answer rather than a dead button.
+       ────────────────────────────────────────────────────────────────── */
+
+    var PLATFORMS = [
+      {
+        os: "Windows",
+        note: "Windows 10 and 11",
+        match: /\.(msi|exe)$/i,
+        here: /Win/i,
+        icon: "M0 2.6L6.5 1.7V7.6H0V2.6ZM7.4 1.6L16 0.4V7.6H7.4V1.6ZM0 8.5H6.5V14.4L0 13.5V8.5ZM7.4 8.5H16V15.6L7.4 14.5V8.5Z",
+      },
+      {
+        os: "macOS",
+        note: "Apple Silicon and Intel",
+        match: /\.dmg$/i,
+        here: /Mac/i,
+        icon: "M11 1.2C11 2.3 10.1 3.4 9 3.3C8.9 2.2 9.8 1.1 11 1.2ZM13.3 11.6C13 12.3 12.6 13 12 13.6C11.4 14.2 11 14.6 10.2 14.6C9.5 14.6 9.3 14.2 8.4 14.2C7.5 14.2 7.2 14.6 6.5 14.6C5.8 14.7 5.3 14.1 4.7 13.5C3.5 12 2.6 9.4 3.8 7.6C4.4 6.7 5.5 6.1 6.6 6.1C7.4 6.1 8.1 6.6 8.5 6.6C9 6.6 9.8 6 10.7 6.1C11.1 6.1 12.3 6.3 13 7.4C11.3 8.5 11.6 11 13.3 11.6Z",
+      },
+      {
+        os: "Linux",
+        note: "AppImage and .deb",
+        match: /\.(AppImage|deb)$/i,
+        here: /Linux|X11/i,
+        icon: "M8 0.6C5.5 0.6 5.9 3.1 5.9 3.1C5.9 4.4 5.2 5.2 4.6 6.4C3.9 7.7 3.4 9.3 2.8 10.6C2.3 11.9 3.1 12.2 3.1 12.9C3.1 14 4 15.4 8 15.4C12 15.4 12.9 14 12.9 12.9C12.9 12.2 13.7 11.9 13.2 10.6C12.6 9.3 12.1 7.7 11.4 6.4C10.8 5.2 10.1 4.4 10.1 3.1C10.1 3.1 10.5 0.6 8 0.6Z",
+      },
+    ];
+
+    function iconFor(path) {
+      return (
+        '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">' +
+        '<path d="' + path + '" fill="currentColor" /></svg>'
+      );
+    }
+
+    fetch("https://api.github.com/repos/" + REPO + "/releases/latest")
+      .then(function (response) {
+        if (!response.ok) throw new Error(String(response.status));
+        return response.json();
+      })
+      .then(function (release) {
+        var assets = release.assets || [];
+        if (!assets.length) throw new Error("no assets");
+
+        var grid = document.querySelector(".downloads");
+        var mine = PLATFORMS.filter(function (p) {
+          return p.here.test(navigator.userAgent);
+        })[0];
+
+        PLATFORMS.forEach(function (platform) {
+          var asset = assets.filter(function (a) {
+            return platform.match.test(a.name);
+          })[0];
+          if (!asset) return;
+
+          var card = document.createElement("a");
+          card.className = "plat" + (platform === mine ? " primary" : "");
+          card.href = asset.browser_download_url;
+          card.innerHTML =
+            iconFor(platform.icon) +
+            "<span>" +
+            '<span class="os"></span>' +
+            '<span class="meta"></span>' +
+            "</span>" +
+            '<span class="go" aria-hidden="true">↓</span>';
+          card.querySelector(".os").textContent =
+            (platform === mine ? "Download for " : "") + platform.os;
+          card.querySelector(".meta").textContent =
+            (release.tag_name || "") + " · " + bytes(asset.size);
+          grid.appendChild(card);
+        });
+
+        if (grid.children.length) {
+          document.querySelector(".fallback").hidden = true;
+        }
+      })
+      .catch(function () {
+        /* Deliberately silent. The page already shows the honest answer, and
+           a console error about a repository that has no release yet is not
+           news to anybody reading it. */
+      });
+  })();
+</script>
