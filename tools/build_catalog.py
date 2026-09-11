@@ -141,10 +141,101 @@ def attention_kind(config: dict) -> dict:
     }
 
 
+def gated_delta_net(config: dict) -> dict:
+    """The linear-attention block of Qwen3-Next and Qwen3.5, as a recurrent
+    layer: how many weights it stores and how much state it carries.
+
+    Read off the block's own definition (`Qwen3NextGatedDeltaNet` in
+    transformers). Each of its tensors follows from five config keys:
+
+    * `in_proj_qkvz`: hidden x (2 key_dim + 2 value_dim), for q, k, v and z.
+    * `in_proj_ba`: hidden x 2 value heads, the per-head beta and decay.
+    * `conv1d`: a depthwise convolution over 2 key_dim + value_dim channels,
+      `linear_conv_kernel_dim` taps each, no bias.
+    * `A_log` and `dt_bias`: one scalar per value head each.
+    * the gated norm: one weight per value-head width.
+    * `out_proj`: value_dim x hidden.
+
+    The state is one key_dim x value_dim matrix per value head, plus the
+    kernel-minus-one columns the convolution keeps. It never grows with
+    context, which is the whole point of the block, and it is held in full
+    precision whatever the cache format.
+    """
+    hidden = config["hidden_size"]
+    k_heads = config["linear_num_key_heads"]
+    k_dim = config["linear_key_head_dim"]
+    v_heads = config["linear_num_value_heads"]
+    v_dim = config["linear_value_head_dim"]
+    kernel = config.get("linear_conv_kernel_dim", 4)
+    key_dim = k_heads * k_dim
+    value_dim = v_heads * v_dim
+    channels = 2 * key_dim + value_dim
+    params = (
+        hidden * (2 * key_dim + 2 * value_dim)
+        + hidden * 2 * v_heads
+        + channels * kernel
+        + 2 * v_heads
+        + v_dim
+        + value_dim * hidden
+    )
+    state = v_heads * k_dim * v_dim + channels * (kernel - 1)
+    return {"kind": "recurrent", "state_elems": state, "params": params}
+
+
+def hybrid_layer_types(config: dict) -> list | None:
+    """The per-layer kinds of a hybrid stack, as listed or as implied.
+
+    Qwen3.5 lists `layer_types` outright. Qwen3-Next's config predates the
+    list and says only `full_attention_interval`; transformers derives the
+    list from it as every interval-th layer full, the rest linear, and so
+    does this. A config with neither is not a hybrid.
+    """
+    listed = config.get("layer_types")
+    if isinstance(listed, list) and listed:
+        return listed
+    interval = config.get("full_attention_interval")
+    if interval and config.get("linear_num_value_heads"):
+        return [
+            "full_attention" if (i + 1) % interval == 0 else "linear_attention"
+            for i in range(config["num_hidden_layers"])
+        ]
+    return None
+
+
+def shortest_period(specs: list) -> list:
+    """The repeating unit of a per-layer list, which is the whole list when
+    it does not repeat."""
+    for period in range(1, len(specs) + 1):
+        if all(specs[i] == specs[i % period] for i in range(len(specs))):
+            return specs[:period]
+    return specs
+
+
 def layer_layout(config: dict) -> dict:
-    """Build the repeating layer cycle, including sliding-window patterns."""
+    """Build the repeating layer cycle, including sliding-window patterns and
+    the linear-attention layers of a hybrid stack."""
     n_layers = config["num_hidden_layers"]
     kind = attention_kind(config)
+
+    # A hybrid stack: linear-attention layers carrying constant state between
+    # full-attention layers, in the order the config lists them. Qwen3.5
+    # repeats three of one then one of the other; the cycle is read off the
+    # list rather than assumed. Qwen3-Next gates its attention output without
+    # saying so in its config; Qwen3.5 says so.
+    layer_types = hybrid_layer_types(config)
+    if isinstance(layer_types, list) and any(
+        str(t).lower() == "linear_attention" for t in layer_types
+    ):
+        full = {"attention": kind}
+        gated_by_design = str(config.get("model_type", "")).lower() == "qwen3_next"
+        if config.get("attn_output_gate", gated_by_design):
+            full["output_gate"] = True
+        linear = {"attention": gated_delta_net(config)}
+        specs = [
+            linear if str(t).lower() == "linear_attention" else full
+            for t in layer_types
+        ]
+        return {"n_layers": n_layers, "cycle": shortest_period(specs)}
 
     window = config.get("sliding_window")
     # Several architectures carry a window value but disable it.
@@ -263,23 +354,32 @@ def architecture(outer: dict) -> dict:
             raise CatalogError(f"config is missing `{required}`")
 
     # A hybrid stack mixes blocks that are not attention in among the ones that
-    # are: linear attention in Qwen3.5, state-space blocks in Jamba and
-    # Falcon-H1, short convolutions in LFM2. The memory model carries them --
-    # see `AttentionKind::Recurrent` -- but only when told how many parameters
-    # and how much state each block holds, and neither follows from
-    # `config.json`. Describing one as though every layer were ordinary
-    # attention gets its size wrong by a sixth.
+    # are. The memory model carries them as `AttentionKind::Recurrent`, but only
+    # when told how many parameters and how much state each block holds. For
+    # the Gated DeltaNet block of Qwen3-Next and Qwen3.5 that follows from the
+    # `linear_*` keys, and `gated_delta_net` derives it. For state-space blocks
+    # (Jamba, Falcon-H1, Granite 4) and short convolutions (LFM2) it does not
+    # yet, and describing one as though every layer were ordinary attention
+    # gets its size wrong by a sixth. Those are refused.
     HYBRID_BLOCKS = ("linear", "mamba", "ssm", "conv", "recurrent")
-    layer_types = config.get("layer_types")
-    if isinstance(layer_types, list) and any(
-        any(marker in str(kind).lower() for marker in HYBRID_BLOCKS)
-        for kind in layer_types
-    ):
-        kinds = sorted({str(k) for k in layer_types})
-        raise CatalogError(
-            f"hybrid stack ({', '.join(kinds)}); the per-block parameter count "
-            "is not derivable from the config"
+    layer_types = hybrid_layer_types(config)
+    if isinstance(layer_types, list):
+        hybrid = sorted({
+            str(kind) for kind in layer_types
+            if any(marker in str(kind).lower() for marker in HYBRID_BLOCKS)
+        })
+        derivable = hybrid == ["linear_attention"] and all(
+            key in config for key in (
+                "linear_num_key_heads", "linear_key_head_dim",
+                "linear_num_value_heads", "linear_value_head_dim",
+            )
         )
+        if hybrid and not derivable:
+            kinds = sorted({str(k) for k in layer_types})
+            raise CatalogError(
+                f"hybrid stack ({', '.join(kinds)}); the per-block parameter count "
+                "is not derivable from the config"
+            )
 
     # Some designs vary a dimension per layer -- Gemma 3n's MatFormer gives each
     # layer its own feed-forward width. WhatLLM's architecture model carries one
@@ -332,12 +432,8 @@ def approximate_params(arch: dict) -> tuple[int, int]:
     """
     hidden = arch["hidden_size"]
     layers = arch["layers"]["n_layers"]
-    heads = arch["heads"]
     vocab = arch["vocab_size"]
-    spec = arch["layers"]["cycle"][0]["attention"]
-    head_dim = spec.get("head_dim", hidden // max(heads, 1))
-    kv_heads = spec.get("kv_heads", heads)
-    attention = layers * (2 * hidden * heads * head_dim + 2 * hidden * kv_heads * head_dim)
+    attention = _attention_params(arch)
     moe = arch.get("moe")
     if moe:
         ffn = layers * moe["experts"] * 3 * hidden * moe["expert_intermediate"]
@@ -396,6 +492,28 @@ def observe_shape(arch: dict, builds: list) -> tuple[bool, str] | None:
     return (best[1], best[2]) if best else None
 
 
+def _attention_params(arch: dict) -> int:
+    """Parameters in every attention or recurrent block of the stack, walking
+    the layer cycle as the Rust count does."""
+    hidden = arch["hidden_size"]
+    heads = arch["heads"]
+    cycle = arch["layers"]["cycle"]
+    total = 0
+    for index in range(arch["layers"]["n_layers"]):
+        layer = cycle[index % len(cycle)]
+        spec = layer["attention"]
+        if spec.get("kind") == "recurrent":
+            total += spec["params"]
+            continue
+        head_dim = spec.get("head_dim", hidden // max(heads, 1))
+        kv_heads = spec.get("kv_heads", heads)
+        query = hidden * heads * head_dim
+        # Query and output projections, a gate beside the query when there is
+        # one, and the key and value projections.
+        total += query * (3 if layer.get("output_gate") else 2) + 2 * hidden * kv_heads * head_dim
+    return total
+
+
 def _param_terms(arch: dict) -> tuple[int, int, int]:
     """Parameters outside the feed-forward, one feed-forward matrix, one
     vocabulary tensor.
@@ -414,11 +532,7 @@ def _param_terms(arch: dict) -> tuple[int, int, int]:
     """
     hidden = arch["hidden_size"]
     layers = arch["layers"]["n_layers"]
-    heads = arch["heads"]
-    spec = arch["layers"]["cycle"][0]["attention"]
-    head_dim = spec.get("head_dim", hidden // max(heads, 1))
-    kv_heads = spec.get("kv_heads", heads)
-    attention = layers * (2 * hidden * heads * head_dim + 2 * hidden * kv_heads * head_dim)
+    attention = _attention_params(arch)
     moe = arch.get("moe")
     if moe:
         ffn_unit = layers * moe["experts"] * hidden * moe["expert_intermediate"]
