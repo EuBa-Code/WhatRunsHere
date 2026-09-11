@@ -34,6 +34,7 @@ use std::io::SeekFrom;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
+use sysinfo::Disks;
 use tauri::{AppHandle, Emitter};
 use tokio::io::{AsyncSeekExt, AsyncWriteExt};
 
@@ -223,17 +224,88 @@ fn source_url(repo: &str, file: &str) -> String {
 
 /// Where models are kept.
 ///
-/// The platform's download directory, because a nineteen-gigabyte file belongs
-/// somewhere a person can find without being told where to look. A subdirectory
-/// keeps a catalog of them from burying everything else that lands there.
+/// A chosen directory wins. Otherwise the platform's download directory, in a
+/// subdirectory of its own, because a nineteen-gigabyte file belongs somewhere
+/// a person can find without being told where to look and a catalog of them
+/// should not bury everything else that lands there.
+///
+/// The choice matters more than most settings: a model is tens of gigabytes
+/// and the system disk is frequently the small fast one, so anybody with a
+/// second drive will want to say so.
 ///
 /// # Errors
-/// When the system reports neither a download directory nor a home directory.
+/// When nothing has been chosen and the system reports neither a download
+/// directory nor a home directory.
 pub fn destination_dir() -> Result<PathBuf, String> {
+    if let Some(chosen) = whatllm_state::settings::load().download_dir {
+        return Ok(chosen);
+    }
     let base = dirs::download_dir()
         .or_else(dirs::home_dir)
         .ok_or_else(|| "no download or home directory on this system".to_owned())?;
     Ok(base.join("WhatLLM Models"))
+}
+
+/// A disk a model could be written to.
+#[derive(Debug, Clone, Serialize)]
+pub struct Volume {
+    /// What the system calls it, or the mount point when it has no name.
+    pub name: String,
+    /// Where it is mounted. `C:\` on Windows, `/` or `/mnt/...` elsewhere.
+    pub mount: String,
+    /// Bytes free right now.
+    pub free_bytes: u64,
+    /// Bytes the disk holds in total.
+    pub total_bytes: u64,
+    /// Whether the current destination is on this disk.
+    pub selected: bool,
+    /// Where a model would go if this disk were chosen.
+    pub suggested: String,
+}
+
+/// Every disk a model could plausibly be written to.
+///
+/// Read-only media and anything with no room for the smallest published build
+/// are left out: offering a destination that cannot hold anything is a way of
+/// making somebody discover that after the download starts.
+pub fn volumes() -> Vec<Volume> {
+    /// Smaller than any build in the catalog, so a disk under this can hold
+    /// nothing at all.
+    const USELESS_BELOW: u64 = 512 * 1024 * 1024;
+
+    let current = destination_dir().unwrap_or_default();
+    let disks = Disks::new_with_refreshed_list();
+
+    let mut seen: Vec<Volume> = Vec::new();
+    for disk in &disks {
+        if disk.is_read_only() || disk.available_space() < USELESS_BELOW {
+            continue;
+        }
+        let mount = disk.mount_point().to_path_buf();
+        // A disk mounted twice is one disk. Keeping both would offer the same
+        // free space under two names and quietly double it in a reader's head.
+        if seen.iter().any(|v| v.mount == mount.display().to_string()) {
+            continue;
+        }
+        let name = disk.name().to_string_lossy().trim().to_owned();
+        seen.push(Volume {
+            name: if name.is_empty() {
+                mount.display().to_string()
+            } else {
+                name
+            },
+            selected: current.starts_with(&mount),
+            suggested: mount.join("WhatLLM Models").display().to_string(),
+            mount: mount.display().to_string(),
+            free_bytes: disk.available_space(),
+            total_bytes: disk.total_space(),
+        });
+    }
+
+    // Roomiest first, which is the order somebody choosing a disk for a large
+    // file is reading in.
+    seen.sort_by_key(|v| std::cmp::Reverse(v.free_bytes));
+    seen
 }
 
 /// Begin, or continue, fetching one build.

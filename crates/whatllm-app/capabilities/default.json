@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "The application window, and the controls that draw its own title bar. Nothing beyond it: the page cannot reach the network, so a model download has to go through a command into the Rust process, where the address it may use is fixed.",
+  "description": "The application window, the controls that draw its own title bar, and a folder picker for choosing where models are written. Nothing beyond that: the page cannot reach the network, so a model download has to go through a command into the Rust process, where the address it may use is fixed.",
   "windows": [
     "main"
   ],
@@ -11,6 +11,7 @@
     "core:window:allow-minimize",
     "core:window:allow-toggle-maximize",
     "core:window:allow-is-maximized",
-    "core:window:allow-close"
+    "core:window:allow-close",
+    "dialog:allow-open"
   ]
 }

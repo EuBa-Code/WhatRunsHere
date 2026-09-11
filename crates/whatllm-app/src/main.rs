@@ -21,6 +21,7 @@ use whatllm_app::api;
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .manage(api::Engine::new())
         .invoke_handler(tauri::generate_handler![
             api::machine,
@@ -36,6 +37,8 @@ fn main() {
             api::downloads,
             api::reveal,
             api::save_image,
+            api::volumes,
+            api::set_download_dir,
         ])
         .run(tauri::generate_context!())
         .expect("the application window could not be created");

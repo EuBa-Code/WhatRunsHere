@@ -722,6 +722,11 @@ pub struct Destination {
     pub present_bytes: Option<u64>,
     /// Bytes of an interrupted transfer waiting to be continued.
     pub partial_bytes: Option<u64>,
+    /// Bytes free on the disk the directory sits on, when it can be read.
+    ///
+    /// Sent so the window can say a build will not fit before it starts
+    /// rather than after twenty gigabytes have arrived.
+    pub free_bytes: Option<u64>,
 }
 
 /// Where one build would go, and what is already there.
@@ -752,6 +757,14 @@ pub fn destination(
     let partial = directory.join(format!("{}.part", build.file));
 
     Ok(Destination {
+        free_bytes: download::volumes()
+            .into_iter()
+            .filter(|v| directory.starts_with(&v.mount))
+            // The longest matching mount point is the disk the directory is
+            // actually on: `/` matches everything, and `/mnt/data` matches
+            // more of it.
+            .max_by_key(|v| v.mount.len())
+            .map(|v| v.free_bytes),
         directory: directory.display().to_string(),
         path: path.display().to_string(),
         present_bytes: std::fs::metadata(&path)
@@ -760,6 +773,48 @@ pub fn destination(
             .filter(|&len| len == build.bytes),
         partial_bytes: std::fs::metadata(&partial).ok().map(|m| m.len()),
     })
+}
+
+/// The disks a model could be written to, and which one is in use.
+#[tauri::command]
+pub fn volumes() -> Vec<download::Volume> {
+    download::volumes()
+}
+
+/// Choose where downloaded weights are written.
+///
+/// The directory is created now rather than at the start of the next download,
+/// so a path that cannot be used says so while somebody is still looking at
+/// the control that set it.
+///
+/// # Errors
+/// When the directory cannot be created or written to, or the choice cannot be
+/// stored.
+#[tauri::command]
+pub fn set_download_dir(path: Option<String>) -> Result<String, String> {
+    let mut settings = whatllm_state::settings::load();
+
+    match path.filter(|p| !p.trim().is_empty()) {
+        Some(chosen) => {
+            let dir = std::path::PathBuf::from(chosen);
+            std::fs::create_dir_all(&dir)
+                .map_err(|e| format!("{} cannot be used: {e}", dir.display()))?;
+
+            // Creating a directory can succeed where writing into it fails,
+            // on a share or a read-only mount. Better to find out here.
+            let probe = dir.join(".whatllm-write-test");
+            std::fs::write(&probe, b"")
+                .map_err(|e| format!("{} is not writable: {e}", dir.display()))?;
+            let _ = std::fs::remove_file(&probe);
+
+            settings.download_dir = Some(dir);
+        }
+        // Cleared, which puts it back to the platform default.
+        None => settings.download_dir = None,
+    }
+
+    whatllm_state::settings::save(&settings)?;
+    download::destination_dir().map(|dir| dir.display().to_string())
 }
 
 /// Start, or continue, fetching one build.
