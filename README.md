@@ -72,25 +72,26 @@ the desktop application runs on it.
 
 | Component | State |
 |---|---|
-| `whatllm-core` — memory, throughput, quality, cost, fit solver | Working |
-| `whatllm-hw` — hardware detection | Working (Windows, Linux, macOS) |
-| `whatllm-probe` — on-device calibration | Working (host memory bandwidth) |
-| `whatllm-state` — catalog and calibration on disk | Working |
-| `whatllm-cli` — `doctor`, `probe`, `fit`, `plan`, `cost` | Working |
-| Desktop application — Tauri 2, React 19, Tailwind v4 | Working (Machine, Models, Plan, Cost) |
+| `whatllm-core`: memory, throughput, quality, cost, fit solver | Working |
+| `whatllm-hw`: hardware detection | Working (Windows, Linux, macOS) |
+| `whatllm-probe`: on-device calibration | Working (host memory bandwidth) |
+| `whatllm-state`: catalog and calibration on disk | Working |
+| `whatllm-cli`: `doctor`, `probe`, `fit`, `plan`, `cost` | Working |
+| Desktop application: Tauri 2, React 19, Tailwind v4 | Working (Machine, Models, Plan, Cost) |
+| Handing the model to its runtime: a download, a Modelfile, or the command that works | Working (llama.cpp, LM Studio, Ollama, vLLM, MLX) |
 | Model catalog | 56 models, 701 measured builds |
 | Continuous validation | size and throughput models checked on every rebuild |
 | Nightly catalog refresh | GitHub Actions, refuses to shrink the catalog |
 | GPU compute probe (for time-to-first-token) | Not started |
 | Catalog updates over the network | Not started |
-| Provider detection — what is already downloaded | Not started |
+| Provider detection: what is already downloaded | Not started |
 
-147 tests, no network access in any of them, and `cargo clippy --all-targets`
+176 Rust tests and 10 Python tests, no network access in any of them, and `cargo clippy --all-targets`
 clean under `pedantic`.
 
 **Nothing here reaches the network unless you press a button that says it
-will.** Every answer — what your machine is, what fits, how fast, what it costs
-— is computed offline from the catalog compiled into the binary. The one
+will.** Every answer (what your machine is, what fits, how fast, what it costs)
+is computed offline from the catalog compiled into the binary. The one
 exception is downloading a model's weights, which happens only when you ask for
 them and only from the repository the catalog recorded.
 
@@ -202,6 +203,18 @@ whatllm cost <model>    # local against hosted, with the break-even volume
 
 Every command takes `--json`. `--context`, `--parallel`, `--use`, `--prefer` and
 `--runtime` shape the question.
+
+`plan` ends with how to run it, and that answer changes with `--runtime`,
+because the catalog holds GGUF and not every runtime runs GGUF. For llama.cpp
+it is the `llama-server` line with the context, the layer split and the cache
+format that were sized, so the thing that runs is the thing that was measured.
+For Ollama it is a Modelfile and the import. For LM Studio it is the path
+inside LM Studio's own folder, so the model appears in its list with nothing
+to move. For vLLM it is the `vllm serve` line and no download at all, because
+vLLM fetches the original weights itself. For MLX it is a search, because the
+catalog does not carry a conversion and guessing one would be exactly the
+approximation this tool refuses. The window does the same, with a button in
+place of the download command.
 
 ## Building
 
