@@ -18,6 +18,7 @@ import {
   quantExplanation,
   speedExplanation,
 } from "../components/Explain";
+import { Download, buildKey, useDownloads } from "../components/Download";
 import { runModeLabel } from "./ModelsView";
 
 export function PlanView({
@@ -33,6 +34,7 @@ export function PlanView({
 }) {
   const [plan, setPlan] = useState<Plan | null>(null);
   const [missing, setMissing] = useState(false);
+  const downloads = useDownloads();
 
   useEffect(() => {
     if (!id) return;
@@ -66,6 +68,7 @@ export function PlanView({
 
   const { fit } = plan;
   const spare = Math.max(0, plan.pool_bytes - fit.memory.required);
+  const chosen = plan.builds.find((build) => build.chosen);
 
   return (
     <div className="flex flex-col gap-6">
@@ -126,6 +129,18 @@ export function PlanView({
             : "No published file exists at this format, so the weight figure is computed from the model's tensor shapes."}
         </p>
       </Card>
+
+      {/* Directly under the accounting that justified this build, because
+          the decision and the action are the same moment. */}
+      {chosen && (
+        <Download
+          id={plan.id}
+          quant={chosen.quant}
+          bytes={chosen.bytes}
+          progress={downloads[buildKey(plan.id, chosen.quant)]}
+          builds={plan.builds}
+        />
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[1.35fr_1fr]">
         <Card className="px-6 pb-6 pt-5">
@@ -233,31 +248,49 @@ export function PlanView({
       )}
 
       <Card className="px-6 py-5">
-        <Eyebrow>Published builds</Eyebrow>
+        <Eyebrow>Every published build</Eyebrow>
+        <p className="mt-2 text-[12px] text-[var(--color-ink-faint)]">
+          The solver chose one. Any of them can be fetched instead — a smaller
+          format if the machine is shared, a larger one if there is room.
+        </p>
         <ul className="mt-3">
-          {plan.builds.map((build) => (
-            <li
-              key={build.quant}
-              className="flex items-baseline gap-4 border-b border-[var(--color-line-soft)] py-2 last:border-0"
-            >
-              <span
-                className={`figure w-20 text-[13px] ${
-                  build.chosen ? "text-[var(--color-brass)]" : ""
-                }`}
+          {plan.builds.map((build) => {
+            const state = downloads[buildKey(plan.id, build.quant)];
+            return (
+              <li
+                key={build.quant}
+                className="flex items-center gap-4 border-b border-[var(--color-line-soft)] py-2.5 last:border-0"
               >
-                {build.quant}
-              </span>
-              <span className="figure w-20 text-[13px] text-[var(--color-ink-dim)]">
-                {fmt.bytes(build.bytes)}
-              </span>
-              {build.chosen && (
-                <span className="text-[11px] text-[var(--color-brass)]">chosen</span>
-              )}
-              <code className="ml-auto select-text truncate text-[11px] text-[var(--color-ink-faint)]">
-                {build.command}
-              </code>
-            </li>
-          ))}
+                <span
+                  className={`figure w-20 shrink-0 text-[13px] ${
+                    build.chosen ? "text-[var(--color-brass)]" : ""
+                  }`}
+                >
+                  {build.quant}
+                </span>
+                <span className="figure w-20 shrink-0 text-[13px] text-[var(--color-ink-dim)]">
+                  {fmt.bytes(build.bytes)}
+                </span>
+                {build.chosen && (
+                  <span className="shrink-0 text-[11px] text-[var(--color-brass)]">
+                    chosen
+                  </span>
+                )}
+                <span className="ml-auto shrink-0 text-[12px] text-[var(--color-ink-faint)]">
+                  {buildStatus(state)}
+                </span>
+                {!build.chosen && !state && (
+                  <button
+                    type="button"
+                    onClick={() => void engine.downloadBuild(plan.id, build.quant)}
+                    className="shrink-0 rounded-lg border border-[var(--color-line)] px-2.5 py-1 text-[12px] transition-colors hover:bg-[var(--color-raised)]"
+                  >
+                    Download
+                  </button>
+                )}
+              </li>
+            );
+          })}
         </ul>
         {plan.builds.length === 0 && (
           <p className="mt-2 text-[13px] text-[var(--color-ink-faint)]">
@@ -434,6 +467,26 @@ function ContextCurve({ plan, at }: { plan: Plan; at: number }) {
       </p>
     </>
   );
+}
+
+/** A build's transfer, in a few words for a table that has no room. */
+function buildStatus(state: engine.Progress | undefined): string {
+  switch (state?.state) {
+    case "starting":
+      return "starting…";
+    case "running":
+      return state.total > 0
+        ? `${Math.round((state.received / state.total) * 100)}%`
+        : "downloading";
+    case "paused":
+      return "paused";
+    case "done":
+      return "downloaded";
+    case "failed":
+      return "failed";
+    default:
+      return "";
+  }
 }
 
 /** Move between models without going back to the list. */

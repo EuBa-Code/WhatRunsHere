@@ -72,6 +72,29 @@ export function money(value: number): string {
   });
 }
 
+/** A transfer rate, in the units a connection is sold in. */
+export function rate(bytesPerSecond: number): string {
+  if (!Number.isFinite(bytesPerSecond) || bytesPerSecond <= 0) return "—";
+  const mb = bytesPerSecond / (1024 * 1024);
+  return mb >= 10 ? `${Math.round(mb)} MB/s` : `${mb.toFixed(1)} MB/s`;
+}
+
+/**
+ * How much longer, rounded honestly.
+ *
+ * Never to the second: a rate that swings with the connection makes a figure
+ * that precise a lie that updates five times a second. Minutes, and "under a
+ * minute" rather than counting down to zero.
+ */
+export function remaining(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds < 0) return "";
+  if (seconds < 60) return "under a minute left";
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `about ${minutes} min left`;
+  const hours = seconds / 3600;
+  return hours < 2 ? "over an hour left" : `about ${Math.round(hours)} hours left`;
+}
+
 /** How long ago something happened, in the words a person would use. */
 export function since(secondsSinceEpoch: number): string {
   const elapsed = Math.max(0, Date.now() / 1000 - secondsSinceEpoch);

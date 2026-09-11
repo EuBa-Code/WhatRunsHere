@@ -261,6 +261,39 @@ export interface CostQuery {
   api_output: number;
 }
 
+/**
+ * Where a transfer has got to. Internally tagged; switch on `state`.
+ *
+ * The one part of this application that reaches the network, and the only one
+ * whose work outlives the view that started it — which is why it reports on an
+ * event rather than by returning.
+ */
+export type Progress =
+  | { state: "starting"; key: string }
+  | {
+      state: "running";
+      key: string;
+      received: number;
+      total: number;
+      bytes_per_s: number;
+    }
+  | { state: "paused"; key: string; received: number; total: number }
+  | { state: "done"; key: string; path: string; bytes: number }
+  | { state: "cancelled"; key: string }
+  | { state: "failed"; key: string; reason: string };
+
+export interface Destination {
+  directory: string;
+  path: string;
+  /** Set when the finished file is already there at the recorded length. */
+  present_bytes: number | null;
+  /** Set when an interrupted transfer is waiting to be continued. */
+  partial_bytes: number | null;
+}
+
+/** The event every running transfer reports itself on. */
+export const DOWNLOAD_EVENT = "download:progress";
+
 export const machine = () => invoke<Machine>("machine");
 export const rank = (sizing: Sizing) => invoke<RankedModel[]>("rank", { sizing });
 export const plan = (id: string, sizing: Sizing) =>
@@ -269,3 +302,13 @@ export const cost = (id: string, sizing: Sizing, query: CostQuery) =>
   invoke<CostComparison | null>("cost", { id, sizing, query });
 export const measure = (quick: boolean) =>
   invoke<Measurement>("measure", { quick });
+export const destination = (id: string, quant: string) =>
+  invoke<Destination>("destination", { id, quant });
+export const downloadBuild = (id: string, quant: string) =>
+  invoke<string>("download_build", { id, quant });
+export const pauseDownload = (key: string) =>
+  invoke<void>("pause_download", { key });
+export const cancelDownload = (key: string) =>
+  invoke<void>("cancel_download", { key });
+export const downloads = () => invoke<Progress[]>("downloads");
+export const reveal = (path: string) => invoke<void>("reveal", { path });
