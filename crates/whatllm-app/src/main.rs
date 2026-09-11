@@ -6,9 +6,12 @@
 //! this crate adds no modelling of its own, because a second implementation of
 //! any of it would be a second thing to keep correct.
 //!
-//! It makes no network calls. Neither does the webview: the content security
-//! policy in `tauri.conf.json` permits only the bundled assets and the IPC
-//! channel, so the promise the engine makes is enforced rather than asserted.
+//! Nothing here reaches the network except [`download`], and that only when
+//! somebody presses the button. The webview cannot reach it at all: the content
+//! security policy in `tauri.conf.json` permits the bundled assets and the IPC
+//! channel and nothing else, so a request can only originate in this process,
+//! from the one module that makes them. The boundary is enforced rather than
+//! asserted, which is the only kind of promise worth making about it.
 
 #![forbid(unsafe_code)]
 // The desktop build must not open a console window behind the application.
@@ -26,6 +29,12 @@ fn main() {
             api::plan,
             api::cost,
             api::measure,
+            api::destination,
+            api::download_build,
+            api::pause_download,
+            api::cancel_download,
+            api::downloads,
+            api::reveal,
         ])
         .run(tauri::generate_context!())
         .expect("the application window could not be created");

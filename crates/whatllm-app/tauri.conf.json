@@ -42,7 +42,7 @@
       "icons/icon.ico"
     ],
     "shortDescription": "Which language models will actually run well on your machine",
-    "longDescription": "WhatLLM measures the machine it runs on and works out, from each model's real architecture, which ones will fit and how fast they will be. It makes no network calls.",
+    "longDescription": "WhatLLM measures the machine it runs on and works out, from each model's real architecture, which ones will fit and how fast they will be. Every answer is computed offline; the only thing it fetches is a model's weights, when you ask it to.",
     "publisher": "WhatLLM contributors",
     "category": "DeveloperTool",
     "license": "MIT OR Apache-2.0"

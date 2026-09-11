@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "The application window, and the controls that draw its own title bar. Nothing beyond it: WhatLLM reads the machine it runs on and makes no network calls, so the webview needs no capability that could.",
+  "description": "The application window, and the controls that draw its own title bar. Nothing beyond it: the page cannot reach the network, so a model download has to go through a command into the Rust process, where the address it may use is fixed.",
   "windows": [
     "main"
   ],

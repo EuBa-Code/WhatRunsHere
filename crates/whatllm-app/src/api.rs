@@ -44,9 +44,15 @@ pub use whatllm_core::quality::UseCase;
 use whatllm_probe::ProbeOptions;
 use whatllm_state::{CachedCalibration, CatalogSource};
 
+use crate::download::{self, Downloads, Progress};
+
 /// Everything the window reasons about, read once and held.
 pub struct Engine {
     inner: RwLock<State>,
+    /// Transfers this session has started. Separate from the read-write lock
+    /// above because a download runs for minutes and must not hold anything
+    /// the rest of the application reads.
+    downloads: std::sync::Arc<Downloads>,
 }
 
 struct State {
@@ -84,6 +90,7 @@ impl Engine {
                 catalog,
                 source,
             }),
+            downloads: std::sync::Arc::default(),
         }
     }
 }
@@ -702,6 +709,132 @@ pub fn cost_of(
             output_per_mtok: query.api_output,
         },
     ))
+}
+
+/// Where a build's weights would be written, and whether they are there.
+#[derive(Debug, Serialize)]
+pub struct Destination {
+    /// The directory downloads land in.
+    pub directory: String,
+    /// The full path this build would take.
+    pub path: String,
+    /// Bytes already on disk at that path, when the file is complete.
+    pub present_bytes: Option<u64>,
+    /// Bytes of an interrupted transfer waiting to be continued.
+    pub partial_bytes: Option<u64>,
+}
+
+/// Where one build would go, and what is already there.
+///
+/// Asked before anything is fetched, so the window can offer to reveal a file
+/// that is already downloaded rather than offering to download it again.
+///
+/// # Errors
+/// When the model or the build is not in the catalog, or the system has no
+/// directory to put downloads in.
+#[tauri::command]
+pub fn destination(
+    engine: tauri::State<'_, Engine>,
+    id: String,
+    quant: String,
+) -> Result<Destination, String> {
+    let state = read(&engine);
+    let model = state
+        .catalog
+        .find(&id)
+        .ok_or_else(|| format!("{id} is not in the catalog"))?;
+    let build = model
+        .build(&quant)
+        .ok_or_else(|| format!("{id} has no published {quant} build"))?;
+
+    let directory = download::destination_dir()?;
+    let path = directory.join(&build.file);
+    let partial = directory.join(format!("{}.part", build.file));
+
+    Ok(Destination {
+        directory: directory.display().to_string(),
+        path: path.display().to_string(),
+        present_bytes: std::fs::metadata(&path)
+            .ok()
+            .map(|m| m.len())
+            .filter(|&len| len == build.bytes),
+        partial_bytes: std::fs::metadata(&partial).ok().map(|m| m.len()),
+    })
+}
+
+/// Start, or continue, fetching one build.
+///
+/// Returns as soon as the transfer is under way; everything after that arrives
+/// on the `download:progress` event. A file of this size cannot be awaited by
+/// a window without the window appearing to hang.
+///
+/// # Errors
+/// When the model or the build is not in the catalog. Anything that goes wrong
+/// once the transfer has begun is reported on the event, not here, because by
+/// then this has already returned.
+#[tauri::command]
+pub fn download_build(
+    app: tauri::AppHandle,
+    engine: tauri::State<'_, Engine>,
+    id: String,
+    quant: String,
+) -> Result<String, String> {
+    let (key, repo, file, bytes) = {
+        let state = read(&engine);
+        let model = state
+            .catalog
+            .find(&id)
+            .ok_or_else(|| format!("{id} is not in the catalog"))?;
+        let build = model
+            .build(&quant)
+            .ok_or_else(|| format!("{id} has no published {quant} build"))?;
+        (
+            build_key(&model.id, &build.quant),
+            build.repo.clone(),
+            build.file.clone(),
+            build.bytes,
+        )
+    };
+
+    let downloads = std::sync::Arc::clone(&engine.downloads);
+    let handle = key.clone();
+    tauri::async_runtime::spawn(download::run(app, downloads, key, repo, file, bytes));
+    Ok(handle)
+}
+
+/// Stop a transfer, keeping what has arrived so it can be continued.
+#[tauri::command]
+pub fn pause_download(engine: tauri::State<'_, Engine>, key: String) {
+    download::pause(&engine.downloads, &key);
+}
+
+/// Stop a transfer and discard what has arrived.
+#[tauri::command]
+pub fn cancel_download(engine: tauri::State<'_, Engine>, key: String) {
+    download::cancel(&engine.downloads, &key);
+}
+
+/// What every transfer this session started last reported.
+///
+/// Events are fire-and-forget, so a window that was on another view when one
+/// finished would otherwise still be showing a bar that stopped moving.
+#[tauri::command]
+pub fn downloads(engine: tauri::State<'_, Engine>) -> Vec<Progress> {
+    engine.downloads.snapshot()
+}
+
+/// Show a downloaded file where it landed.
+///
+/// # Errors
+/// When the path is not there any more, or no file manager could be started.
+#[tauri::command]
+pub fn reveal(path: String) -> Result<(), String> {
+    download::reveal(std::path::Path::new(&path))
+}
+
+/// How a build is named across the download commands and their events.
+fn build_key(id: &str, quant: &str) -> String {
+    format!("{id}@{quant}")
 }
 
 /// What a probe found.
