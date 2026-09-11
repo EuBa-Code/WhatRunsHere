@@ -4775,6 +4775,7 @@ name = "whatllm-state"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "dirs 7.0.0",
  "serde",
  "serde_json",
  "whatllm-core",

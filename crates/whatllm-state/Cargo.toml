@@ -22,6 +22,10 @@ must_use_candidate = "allow"
 
 [dependencies]
 anyhow = "1"
+# The platform's download folder, which is where weights go until somebody
+# chooses otherwise. Read through the same crate the window uses so that the
+# command line names the directory the window would actually write to.
+dirs = "7.0.0"
 serde = { workspace = true, features = ["derive"] }
 serde_json = "1"
 whatllm-core = { workspace = true }

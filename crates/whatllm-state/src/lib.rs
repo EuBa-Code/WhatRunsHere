@@ -15,6 +15,7 @@
 //! disk into a different computer cannot silently reuse the wrong measurement.
 
 pub mod settings;
+pub mod weights;
 
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
