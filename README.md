@@ -71,11 +71,18 @@ the desktop application runs on it.
 147 tests, no network access in any of them, and `cargo clippy --all-targets`
 clean under `pedantic`.
 
-**The application makes no network calls, and this is enforced rather than
-asserted.** Its content security policy admits only the bundled assets and the
-IPC channel; the three typefaces are carried in the binary rather than fetched
-from a font CDN, which would have been the one request the whole engine exists
-to avoid.
+**Nothing here reaches the network unless you press a button that says it
+will.** Every answer — what your machine is, what fits, how fast, what it costs
+— is computed offline from the catalog compiled into the binary. The one
+exception is downloading a model's weights, which happens only when you ask for
+them and only from the repository the catalog recorded.
+
+That boundary is enforced rather than asserted. The window's content security
+policy admits the bundled assets and the IPC channel and nothing else, so the
+page itself cannot make a request at all: a transfer can only originate in the
+Rust process, from the one module that does it. The three typefaces are carried
+in the binary rather than fetched from a font CDN, which would have been a
+request nobody asked for.
 
 Every figure it shows carries a rule beneath it saying where the figure came
 from — solid for something measured on this machine, dashed for a
