@@ -1,16 +1,33 @@
 # WhatLLM
 
-**Which language models will actually run well on your machine — and what happens when they do.**
+**Which language models will actually run well on your machine — measured, not
+looked up.**
 
-Most sizing tools answer one question: does the file fit in the memory you have?
-That question is easy, and it is not the one that matters. A model that fits at
-an empty prompt runs out of memory at 32k context. A model that "fits" with a
-tenth of its layers in system RAM runs at a fifth of the speed. A model that fits
-comfortably may be a worse choice than a smaller one you could run at higher
-precision. And whether any of it beats simply paying for an API depends on your
-electricity bill and how much you actually use it.
+Any tool that answers this needs two numbers about your hardware: how much
+memory it has, and how fast that memory is. The second one is what decides how
+fast a model generates, and nearly everything reads it out of a table of known
+cards.
 
-WhatLLM answers those questions instead.
+A table is wrong in a specific and common way. An RTX 5070 Laptop GPU has a
+128-bit bus and 8 GB; the desktop card that shares the number has 192-bit and
+12 GB. Keyed on the model number, a table hands back the desktop figure for the
+laptop — llmfit measured that overestimate at up to 1.8× across the 30, 40 and
+50 mobile lines — and the error lands in every tokens-per-second figure built on
+top of it.
+
+WhatLLM does not keep that table. It derives bandwidth from the bus width and
+memory clock the device itself reports, which reproduces the published figure
+for every part NVIDIA has shipped and will keep reproducing it for parts that do
+not exist yet. Then it measures system memory directly, with a benchmark that
+takes about a second, and says so: every figure it shows carries a mark saying
+whether it was measured here, taken from a specification, or assumed.
+
+The rest follows from getting that right. A model that fits at an empty prompt
+runs out of memory at 32k context. A model that "fits" with a tenth of its
+layers in system RAM runs at a fifth of the speed. A model that fits comfortably
+may be a worse choice than a smaller one at higher precision. And whether any of
+it beats paying for an API depends on your electricity bill and how much you
+actually use it.
 
 ## What makes it different
 

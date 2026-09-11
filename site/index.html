@@ -1,7 +1,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>WhatLLM</title>
-<meta name="description" content="Which language models will actually run well on your machine — measured, not guessed." />
+<meta name="description" content="Which language models run well on your machine. WhatLLM measures your hardware instead of looking it up in a table of known cards." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -713,16 +713,23 @@
   <section class="hero">
     <div class="wrap">
       <div class="hero-copy">
-        <p class="eyebrow">Local models, measured</p>
+        <p class="eyebrow">Local models</p>
         <h1>
-          Which models will actually run well on
-          <em>your</em> machine
+          Which models run well on your machine.
+          <em>Measured, not looked up.</em>
         </h1>
         <p class="lede">
-          Not whether the file fits. Whether it still fits at 32k context, how
-          fast it will be once the conversation is long, what it costs against
-          an API — and which of those numbers were measured rather than
-          assumed.
+          What decides how fast a model generates is how fast your memory is,
+          and nearly every tool reads that out of a table of known cards. A
+          table is wrong in a specific way: an RTX 5070 Laptop has a 128-bit
+          bus where the desktop card sharing that number has 192-bit, so keyed
+          on the model number it overstates the laptop by up to 1.8× — and the
+          error lands in every tokens-per-second figure built on it.
+        </p>
+        <p class="lede">
+          WhatLLM keeps no such table. It reads the bus width and memory clock
+          off the device, times your system memory in about a second, and marks
+          every figure it shows with where that figure came from.
         </p>
       </div>
 
