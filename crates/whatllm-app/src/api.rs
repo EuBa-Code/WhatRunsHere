@@ -2,7 +2,7 @@
 //!
 //! Six commands, each a thin wrapper: detection and the catalog are read once
 //! at startup and held, and everything else is computed on demand from them.
-//! Nothing here decides anything — the shapes below are the engine's own types,
+//! Nothing here decides anything. The shapes below are the engine's own types,
 //! serialised as they stand, so a figure shown in the window is the same figure
 //! `whatllm --json` prints.
 //!
@@ -497,8 +497,8 @@ pub fn rank_of(engine: &Engine, sizing: Sizing) -> Vec<RankedModel> {
         .collect();
 
     // Quality rank, before the list is reordered by fit score. The two are
-    // different questions — the best model here is rarely the best model —
-    // and reading rank off the fit order would answer the wrong one.
+    // different questions (the best model here is rarely the best model), and
+    // reading rank off the fit order would answer the wrong one.
     let mut scores: Vec<f64> = ranked.iter().map(|m| m.fit.quality).collect();
     scores.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
     let of = scores.len();

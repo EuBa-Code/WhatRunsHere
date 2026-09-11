@@ -289,7 +289,7 @@ impl Session {
                 cached.host_bytes_per_s / 1e9,
                 state::age(cached.measured_at)
             ),
-            None => format!("{bandwidth:.0} GB/s assumed — run `whatllm probe` to measure"),
+            None => format!("{bandwidth:.0} GB/s assumed. Run `whatllm probe` to measure"),
         }
     }
 }
@@ -454,7 +454,7 @@ fn describe_detection(note: &whatllm_hw::DetectionNote) -> String {
     use whatllm_hw::DetectionNote as N;
     match note {
         N::IgnoredVirtualAdapter { name } => {
-            format!("ignored {name} — a display, not something that computes")
+            format!("ignored {name}: a display, not something that computes")
         }
         N::IntegratedGraphics {
             name,
@@ -671,7 +671,7 @@ fn show_fit(
                 "  {:<30} {:>9} {}",
                 style.dim(row.display_name),
                 style.dim(&row.size),
-                style.dim("— does not fit at this context")
+                style.dim("does not fit at this context")
             );
             continue;
         };
@@ -971,7 +971,7 @@ fn describe_note(note: &FitNote, style: Style) -> String {
             quality_gain
         ),
         FitNote::RunningClose { utilisation } => format!(
-            "Running at {:.0}% of the pool — anything else on this machine will \
+            "Running at {:.0}% of the pool. Anything else on this machine will \
              push it over",
             utilisation * 100.0
         ),
@@ -1013,7 +1013,7 @@ fn show_cost(
         "{}",
         render::heading(
             style,
-            &format!("{} — local against hosted", model.display_name)
+            &format!("{}: local against hosted", model.display_name)
         )
     );
     println!(
@@ -1101,7 +1101,7 @@ fn show_cost(
     println!();
     let verdict = match comparison.verdict {
         cost::CostVerdict::LocalCheaper { by_percent } => style.good(&format!(
-            "Local is {by_percent:.0}% cheaper — {:.2} a month saved",
+            "Local is {by_percent:.0}% cheaper, {:.2} a month saved",
             comparison.monthly_saving()
         )),
         cost::CostVerdict::ApiCheaper { by_percent } => style.warn(&format!(

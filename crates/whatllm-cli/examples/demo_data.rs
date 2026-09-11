@@ -1,8 +1,8 @@
 //! The figures the download page shows, computed by the engine itself.
 //!
 //! A page that demonstrates what this tool answers has to get those answers
-//! from somewhere, and the tempting shortcut — a few plausible numbers written
-//! into the JavaScript — would make the site a second implementation of the
+//! from somewhere, and the tempting shortcut (a few plausible numbers written
+//! into the JavaScript) would make the site a second implementation of the
 //! thing the whole project refuses to have. So it is not one. This runs the
 //! real solver over a handful of described machines and writes what it decided
 //! to `site/demo.json`, which the page reads and does no arithmetic on.
@@ -110,7 +110,7 @@ fn calibrated(bandwidth_gbps: f64, tflops: Option<f64>, on_accelerator: bool) ->
         },
         // The figure the throughput validation measured. See perf.rs.
         overhead_ms_per_token: if on_accelerator { 1.8 } else { 2.5 },
-        // Described from a specification, never measured — which is exactly
+        // Described from a specification, never measured, which is exactly
         // what the page has to admit.
         source: Confidence::VendorSpec,
     }
@@ -121,7 +121,7 @@ fn machines() -> Vec<Machine> {
         Machine {
             tab: "Laptop",
             name: "A laptop with no graphics card",
-            detail: "16 GB of memory, integrated graphics — the machine most people already have",
+            detail: "16 GB of memory, integrated graphics: the machine most people already have",
             profile: SystemProfile {
                 cpu: cpu("Intel Core Ultra 7", 8),
                 memory: memory(16),
@@ -133,7 +133,7 @@ fn machines() -> Vec<Machine> {
         Machine {
             tab: "RTX 4060 Ti",
             name: "A mid-range card",
-            detail: "NVIDIA RTX 4060 Ti, 16 GB — 288 GB/s, published",
+            detail: "NVIDIA RTX 4060 Ti, 16 GB, 288 GB/s, published",
             profile: SystemProfile {
                 cpu: cpu("AMD Ryzen 7 7700X", 8),
                 memory: memory(32),
@@ -145,7 +145,7 @@ fn machines() -> Vec<Machine> {
         Machine {
             tab: "RTX 4090",
             name: "The card people buy for this",
-            detail: "NVIDIA RTX 4090, 24 GB — 1008 GB/s, published",
+            detail: "NVIDIA RTX 4090, 24 GB, 1008 GB/s, published",
             profile: SystemProfile {
                 cpu: cpu("AMD Ryzen 9 7950X", 16),
                 memory: memory(64),
@@ -157,7 +157,7 @@ fn machines() -> Vec<Machine> {
         Machine {
             tab: "MacBook Pro",
             name: "Apple Silicon, one pool of memory",
-            detail: "M3 Max, 36 GB unified — 300 GB/s, published",
+            detail: "M3 Max, 36 GB unified, 300 GB/s, published",
             profile: SystemProfile {
                 cpu: CpuInfo {
                     brand: "Apple M3 Max".to_owned(),
@@ -174,7 +174,7 @@ fn machines() -> Vec<Machine> {
         Machine {
             tab: "Ryzen AI MAX+",
             name: "128 GB, most of it given to the graphics",
-            detail: "Ryzen AI MAX+ 395 — 96 GB carved out in firmware, 256 GB/s",
+            detail: "Ryzen AI MAX+ 395, 96 GB carved out in firmware, 256 GB/s",
             profile: SystemProfile {
                 cpu: cpu("AMD Ryzen AI MAX+ 395", 16),
                 memory: HostMemory {

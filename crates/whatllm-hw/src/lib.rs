@@ -101,7 +101,7 @@ pub struct Detection {
     ///
     /// The verdict is what the tool acts on; this is what produced it. A report
     /// of a misdetection is only actionable with both, and with both it can be
-    /// replayed as a test — see [`classify_raw`].
+    /// replayed as a test. See [`classify_raw`].
     #[serde(default)]
     pub raw_adapters: Vec<platform::RawAdapter>,
 }
@@ -204,7 +204,7 @@ fn interpret(
                 name: adapter.name.clone(),
                 claimed_vram_bytes: adapter.claimed_vram_bytes,
             });
-            // The pool is system memory, reported once — but only as much of
+            // The pool is system memory, reported once, but only as much of
             // it as the platform will let a compute job hold. macOS enforces
             // such a ceiling and nothing else does; where one is reported it
             // is still clamped to the memory that exists, since the sysctl
@@ -295,7 +295,7 @@ pub fn detect() -> Detection {
     let memory = HostMemory {
         // Firmware handed the carveout to the integrated GPU before the kernel
         // started, so the operating system does not count it. A model can use
-        // it — that is the entire point of it — so both figures get it back.
+        // it (that is the entire point of it) so both figures get it back.
         total_bytes: os_total + carveout.unwrap_or(0),
         available_bytes: sys.available_memory() + carveout.unwrap_or(0),
         // Left unset: no platform reports these reliably, and the probe
@@ -548,7 +548,7 @@ mod tests {
         const GIB: u64 = 1024 * 1024 * 1024;
 
         // What detect() builds on a 128 GB machine with 96 GB carved out: the
-        // adapter is integrated, so the pool is the whole of system memory —
+        // adapter is integrated, so the pool is the whole of system memory,
         // which now includes the carveout the OS could not see.
         let memory = HostMemory {
             total_bytes: 128 * GIB,

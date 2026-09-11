@@ -3,7 +3,7 @@
 //! The solver walks every placement the hardware allows, every weight
 //! quantization from best to worst, and every cache quantization, and keeps the
 //! configuration that best matches what the user said they wanted. Then it says
-//! why — and, more usefully, what to change.
+//! why and, more usefully, what to change.
 //!
 //! Two decisions here differ from the usual approach and are worth defending:
 //!
@@ -154,7 +154,7 @@ pub enum RunMode {
     /// Split: some layers on the accelerator, the rest in system memory.
     ///
     /// Reported separately because the performance cost is severe and
-    /// non-obvious — see [`crate::perf`].
+    /// non-obvious. See [`crate::perf`].
     Offloaded {
         /// Layers resident on the accelerator.
         gpu_layers: u32,
@@ -354,7 +354,7 @@ struct Candidate {
     on_accelerator: bool,
     /// Whether device and host memory are the same physical pool.
     ///
-    /// They frequently are — every laptop with integrated graphics — and it
+    /// They frequently are (every laptop with integrated graphics) and it
     /// matters here because "offload the rest to system RAM" is not a placement
     /// on such a machine. It is the same memory counted twice.
     unified: bool,

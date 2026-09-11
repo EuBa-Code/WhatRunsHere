@@ -3,8 +3,8 @@
 //! Worth reading for one reason: this module contains no table of graphics
 //! cards. Memory bandwidth is derived from the bus width and memory clock the
 //! device itself reports, which reproduces the published figure for every part
-//! NVIDIA has shipped — 384 bits at 10501 MHz is the 1008 GB/s on the RTX 4090's
-//! spec sheet, 5120 bits at 1593 MHz is the A100 80GB's 2039 GB/s — and, more to
+//! NVIDIA has shipped (384 bits at 10501 MHz is the 1008 GB/s on the RTX 4090's
+//! spec sheet, 5120 bits at 1593 MHz is the A100 80GB's 2039 GB/s) and, more to
 //! the point, will keep reproducing it for parts that do not exist yet.
 //!
 //! The same goes for how much memory is free. NVML reports what is actually
@@ -47,12 +47,12 @@ impl std::error::Error for NvidiaError {}
 /// The list comes from llmfit, which learned these cases in the field.
 ///
 /// A list is the wrong shape for this and will lag new parts: a unified part it
-/// does not know gets treated as discrete, and its memory is then counted twice
-/// — once as video memory and once as system RAM. The obvious cross-check does
-/// not rescue it either. "Reported memory equals system RAM" describes a DGX
-/// Spark and equally describes a 24 GB machine with a 24 GB card, and getting
-/// that backwards would mis-model a discrete card badly. Until NVML exposes the
-/// addressing mode through a safe binding, the list is what there is.
+/// does not know gets treated as discrete, and its memory is then counted
+/// twice, once as video memory and once as system RAM. The obvious cross-check
+/// does not rescue it either. "Reported memory equals system RAM" describes a
+/// DGX Spark and equally describes a 24 GB machine with a 24 GB card, and
+/// getting that backwards would mis-model a discrete card badly. Until NVML
+/// exposes the addressing mode through a safe binding, a list is all there is.
 fn is_unified_memory_part(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     // Grace Blackwell superchips.
@@ -79,7 +79,7 @@ fn bandwidth_gbps(bus_width_bits: u32, memory_clock_mhz: u32) -> f64 {
 /// throughput.
 ///
 /// Shader FLOPs follow exactly from core count and clock. Tensor throughput
-/// does not — the ratio is an architectural choice — but it has sat at roughly
+/// does not (the ratio is an architectural choice) but it has sat at roughly
 /// two times dense fp16-with-fp32-accumulate across recent consumer parts, and
 /// an estimate that tracks the hardware beats no time-to-first-token estimate
 /// at all. Superseded the moment a probe measures the real thing.

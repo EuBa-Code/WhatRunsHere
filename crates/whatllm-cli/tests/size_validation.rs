@@ -32,7 +32,7 @@ const WORST_ERROR_LIMIT: f64 = 0.12;
 /// tolerance. llama.cpp does not take a model to two bits uniformly: below about
 /// four, it holds more and more tensors back at higher precision, and how many
 /// depends on the feed-forward ratio. A mixture-of-experts model, where the
-/// experts dominate, drifts furthest — the formula reads a third under on
+/// experts dominate, drifts furthest: the formula reads a third under on
 /// gpt-oss at `Q2_K`.
 ///
 /// Nobody is served by pretending otherwise, and nobody is much harmed by it

@@ -8,7 +8,7 @@
 //! confidently recommends a GPU placement onto a device that does not compute.
 //!
 //! **Integrated graphics.** Windows reports an aperture size for integrated
-//! GPUs — 2 GB is typical — and both WMI and the registry will hand it to you
+//! GPUs (2 GB is typical) and both WMI and the registry will hand it to you
 //! as though it were video memory. It is not. Integrated graphics have no
 //! memory of their own; they share system RAM. Sizing a model against that
 //! 2 GB figure rejects models the machine could comfortably run, and sizing
@@ -43,16 +43,16 @@ pub enum AdapterClass {
 /// a gigabyte or two; nothing integrated owns five.
 ///
 /// That last sentence stopped being true, which is why this floor is no longer
-/// consulted alone — see [`classify_with_carveout`].
+/// consulted alone. See [`classify_with_carveout`].
 const DISCRETE_MEMORY_FLOOR: u64 = 5 * 1024 * 1024 * 1024;
 
 /// Intel integrated parts predating the Xe architecture.
 ///
 /// `HD Graphics` with any number, and `UHD Graphics` below 700, are Gen 9.5 or
 /// older. From `UHD Graphics 7xx` and `Iris Xe` onwards the Vulkan and SYCL
-/// back ends work. Erring towards CPU costs nothing — an integrated GPU reads
-/// the same memory the CPU does, so the generation estimate is identical either
-/// way — while erring the other way promises a placement that does not run.
+/// back ends work. Erring towards CPU costs nothing, because an integrated GPU
+/// reads the same memory the CPU does and the generation estimate is identical
+/// either way. Erring the other way promises a placement that does not run.
 fn is_pre_xe_intel(lower: &str) -> bool {
     let Some(rest) = lower.split_once("hd graphics").map(|(_, rest)| rest.trim()) else {
         return false;
@@ -114,10 +114,10 @@ const DISCRETE_OVERRIDES: &[&str] = &["arc a", "arc b", "radeon rx", "radeon pro
 
 /// Fold a driver-reported name into something worth matching against.
 ///
-/// Drivers pepper names with trademark marks — "Intel(R) Arc(TM) A770" — and
-/// they land in the middle of exactly the phrases worth recognising, turning
-/// "arc a770" into "arc(tm) a770". Stripping them once here is more robust than
-/// keeping a marker list that enumerates every punctuation variant.
+/// Drivers pepper names with trademark marks, as in "Intel(R) Arc(TM) A770",
+/// and they land in the middle of exactly the phrases worth recognising,
+/// turning "arc a770" into "arc(tm) a770". Stripping them once here is more
+/// robust than keeping a marker list that enumerates every punctuation variant.
 fn normalise(name: &str) -> String {
     let mut folded = name.to_ascii_lowercase();
     for mark in ["(r)", "(tm)", "(c)", "®", "™", "©"] {
@@ -140,7 +140,7 @@ pub fn classify(name: &str, vendor: Vendor, dedicated_bytes: Option<u64>) -> Ada
 /// The memory floor above cannot stand alone once integrated parts are allowed
 /// to be large. A Ryzen AI MAX+ can be configured in firmware to hand 96 GB of
 /// its 128 GB to the integrated GPU, which then reports 96 GB of "video
-/// memory" under a name — `AMD Radeon Graphics` — indistinguishable from the
+/// memory" under a name, `AMD Radeon Graphics`, indistinguishable from the
 /// generic string a discrete Instinct card uses. Both report far more than the
 /// floor, and only one of them is a card.
 ///
@@ -151,7 +151,7 @@ pub fn classify(name: &str, vendor: Vendor, dedicated_bytes: Option<u64>) -> Ada
 ///
 /// The comparison needs no tolerance in the direction that matters. The
 /// carveout is measured as installed capacity less the operating system's
-/// total, so it also contains the ordinary firmware reserve — it is at least
+/// total, so it also contains the ordinary firmware reserve. It is at least
 /// the graphics allocation and never less, and `<=` is therefore safe.
 pub fn classify_with_carveout(
     name: &str,
@@ -178,7 +178,7 @@ pub fn classify_with_carveout(
     };
 
     // Memory settles it before any name does. Nothing integrated owns this
-    // much — unless the operating system is missing exactly that much, in
+    // much, unless the operating system is missing exactly that much, in
     // which case it does not own it either; it was lent it.
     if !explained_by_carveout && dedicated_bytes.is_some_and(|b| b >= DISCRETE_MEMORY_FLOOR) {
         return AdapterClass::Discrete;
@@ -373,7 +373,7 @@ mod tests {
         // A Ryzen AI MAX+ 395 with 128 GB installed and 96 GB configured as
         // its graphics carveout. The adapter claims 96 GB under a generic
         // name, which is more than the discrete floor and would otherwise be
-        // read as a card — leaving the machine described as a 96 GB GPU beside
+        // read as a card, leaving the machine described as a 96 GB GPU beside
         // 31 GB of system RAM, when it has one pool of 128.
         assert_eq!(
             classify_with_carveout(

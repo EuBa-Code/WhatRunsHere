@@ -1,8 +1,8 @@
 //! Architectural description of a transformer.
 //!
 //! Every other model in this crate is built on top of this one. The reason it is
-//! this detailed is that the two questions people actually ask — "will it fit?"
-//! and "how fast will it be?" — are decided by tensor shapes, not by a parameter
+//! this detailed is that the two questions people actually ask ("will it fit?"
+//! and "how fast will it be?") are decided by tensor shapes, not by a parameter
 //! count. Two 30B models can differ by an order of magnitude in KV cache size,
 //! and a 671B model can have a *smaller* cache than a 70B one. A single
 //! `parameter_count` field cannot express that; this module can.
@@ -35,7 +35,7 @@ pub enum AttentionKind {
     /// Keys and values are projected down to a shared low-rank latent that is
     /// what actually gets cached, alongside a small decoupled `RoPE` component.
     /// The cache is therefore `kv_lora_rank + qk_rope_head_dim` elements per
-    /// layer per token — independent of head count.
+    /// layer per token, independent of head count.
     Latent {
         /// Rank of the query down-projection, when the model uses one.
         q_lora_rank: Option<u32>,
@@ -267,7 +267,7 @@ pub struct Architecture {
     ///
     /// Gemma 2 does, and it is not a detail. Flash-attention kernels cannot
     /// apply the cap, so llama.cpp falls back to materialising the full score
-    /// matrix for these models — a term quadratic in context that turns a
+    /// matrix for these models, a term quadratic in context that turns a
     /// comfortable fit into an out-of-memory, and costs a large amount of
     /// speed besides.
     ///
@@ -283,7 +283,7 @@ pub struct Architecture {
     ///
     /// gpt-oss is the case that forces this. Its experts are MXFP4 in the
     /// original weights, and every published build leaves them there: only the
-    /// attention, router and vocabulary tensors — nine percent of the model —
+    /// attention, router and vocabulary tensors (nine percent of the model)
     /// change between builds. Its `F16`, `Q8_0` and `Q6_K` files are 13.79, 12.11
     /// and 12.04 GB, differences a whole-model quantization cannot produce.
     /// Treating
@@ -337,7 +337,7 @@ impl ParamBreakdown {
 /// Weights read from memory to produce one token during decode.
 ///
 /// Deliberately different from [`ParamBreakdown`]. The embedding table is stored
-/// but barely read — decode looks up a single row. The output projection is read
+/// but barely read: decode looks up a single row. The output projection is read
 /// in full every token whether or not it has its own storage. For a small model
 /// with a large vocabulary that difference is most of the answer.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]

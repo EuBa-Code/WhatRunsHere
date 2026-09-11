@@ -8,8 +8,8 @@
 //!
 //! So quality here is anchored to published evaluations, weighted per use case,
 //! and reported with the fraction of that weight actually backed by data. When
-//! nothing is known the module says so — [`QualityBasis::Inferred`] — instead of
-//! dressing a size prior up as a measurement.
+//! nothing is known the module says so, as [`QualityBasis::Inferred`], instead
+//! of dressing a size prior up as a measurement.
 //!
 //! On top of that sits the second question, which almost nothing answers: what
 //! does dropping to Q3 actually cost? Degradation is not uniform. The same
@@ -47,39 +47,39 @@ pub enum Metric {
 /// Published scores for one model, all optional.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Serialize, Deserialize)]
 pub struct Benchmarks {
-    /// MMLU-Pro accuracy, 0–100.
+    /// MMLU-Pro accuracy, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub mmlu_pro: Option<f64>,
-    /// GPQA Diamond accuracy, 0–100.
+    /// GPQA Diamond accuracy, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub gpqa_diamond: Option<f64>,
-    /// `LiveCodeBench` pass rate, 0–100.
+    /// `LiveCodeBench` pass rate, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub livecodebench: Option<f64>,
-    /// MATH accuracy, 0–100.
+    /// MATH accuracy, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub math: Option<f64>,
-    /// `IFEval` strict accuracy, 0–100.
+    /// `IFEval` strict accuracy, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ifeval: Option<f64>,
-    /// `LMArena` Elo rating, typically 1000–1450.
+    /// `LMArena` Elo rating, typically 1000 to 1450.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub arena_elo: Option<f64>,
-    /// Long-context retrieval accuracy, 0–100.
+    /// Long-context retrieval accuracy, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub long_context: Option<f64>,
-    /// Multilingual accuracy, 0–100.
+    /// Multilingual accuracy, 0 to 100.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub multilingual: Option<f64>,
 }
 
 /// Elo below which a model scores zero on the normalised scale.
 const ELO_FLOOR: f64 = 1000.0;
-/// Elo span mapped onto the full 0–100 scale.
+/// Elo span mapped onto the full 0 to 100 scale.
 const ELO_SPAN: f64 = 500.0;
 
 impl Benchmarks {
-    /// One metric, normalised to 0–100.
+    /// One metric, normalised onto the 0 to 100 scale.
     ///
     /// Elo is rescaled onto the same range so it can be averaged with accuracy
     /// scores without dominating them.
@@ -245,9 +245,9 @@ impl QualityBasis {
 /// A quality verdict for one model in one configuration.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub struct QualityAssessment {
-    /// Quality at full precision, 0–100.
+    /// Quality at full precision, 0 to 100.
     pub full_precision: f64,
-    /// Quality after weight and cache quantization, 0–100.
+    /// Quality after weight and cache quantization, 0 to 100.
     pub quantized: f64,
     /// Points lost to quantization.
     pub degradation: f64,
@@ -267,7 +267,7 @@ const SENSITIVITY_EXPONENT: f64 = 0.35;
 ///
 /// Small models have less redundancy to give up, so the same format costs them
 /// more. The exponent is fitted to published perplexity and benchmark deltas
-/// across the 1B–70B range, and the result is clamped so that neither a
+/// across the range from 1B to 70B, and the result is clamped so that neither a
 /// sub-billion model nor a frontier one leaves the plausible range.
 pub fn quantization_sensitivity(total_params: u64) -> f64 {
     let billions = (total_params as f64 / 1e9).max(0.05);
@@ -338,7 +338,7 @@ pub fn assess(
 pub struct DegradationPoint {
     /// The quantization scheme.
     pub quant: WeightQuant,
-    /// Quality retained, 0–100.
+    /// Quality retained, 0 to 100.
     pub quality: f64,
     /// Points lost against full precision.
     pub lost: f64,
@@ -351,7 +351,7 @@ pub struct DegradationPoint {
 /// Walk the quantization ladder for one model, showing the trade at each rung.
 ///
 /// This is the answer to "should I drop to Q3 to make it fit": not a yes or no,
-/// but the bytes saved against the quality given up — for *this* model, since
+/// but the bytes saved against the quality given up, for *this* model, since
 /// the same format costs a 3B far more than it costs a 70B.
 ///
 /// Note that the quality column is not monotone, and should not be forced to

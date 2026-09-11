@@ -67,7 +67,7 @@ impl Style {
 /// Format a byte count in binary units.
 ///
 /// Binary rather than decimal because every tool this one sits beside uses
-/// binary — llama.cpp reports MiB, nvidia-smi reports MiB, and a machine sold
+/// binary: llama.cpp reports MiB, nvidia-smi reports MiB, and a machine sold
 /// as having 32 GB has 32 GiB. Printing its 34.4 decimal gigabytes would be
 /// correct and would read as a bug. Published file sizes are converted on the
 /// way in, so a model llama.cpp loads as 4.58 GiB is shown here as 4.58 GiB.

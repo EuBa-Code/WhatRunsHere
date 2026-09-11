@@ -113,7 +113,7 @@ pub struct HostMemory {
     /// Memory firmware handed to an integrated GPU before the kernel started,
     /// and which the operating system therefore does not report at all.
     ///
-    /// Present only where it was measured — the difference between the DIMM
+    /// Present only where it was measured, as the difference between the DIMM
     /// capacity firmware enumerates and the total the operating system
     /// manages. It is recorded rather than merely folded into the totals
     /// because it is also the evidence that the adapter claiming that much
@@ -121,7 +121,7 @@ pub struct HostMemory {
     /// [`crate::hardware`]'s classification counterpart in `whatllm-hw`.
     ///
     /// [`Self::total_bytes`] and [`Self::available_bytes`] already include it.
-    /// A model can use this memory — that is what it was carved out for — so
+    /// A model can use this memory (that is what it was carved out for), so
     /// leaving it out of both would describe a machine that cannot run what it
     /// plainly can.
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -215,8 +215,8 @@ impl Accelerator {
 
 /// A driver-reported name, as it should be shown to a person.
 ///
-/// Drivers write trademark marks into the middle of product names — Windows
-/// reports `Intel(R) Core(TM) 7 150U` and `AMD Radeon(TM) 780M Graphics` — and
+/// Drivers write trademark marks into the middle of product names. Windows
+/// reports `Intel(R) Core(TM) 7 150U` and `AMD Radeon(TM) 780M Graphics`, and
 /// they are noise in every context but a legal one. Nobody writes their own
 /// processor's name that way, so printing it back is the surest sign a tool is
 /// echoing a string it never looked at.
@@ -293,7 +293,7 @@ impl SystemProfile {
 
     /// Combined usable memory across every accelerator.
     ///
-    /// Only meaningful when the devices can actually be pooled — see
+    /// Only meaningful when the devices can actually be pooled. See
     /// [`Self::can_pool_devices`].
     pub fn aggregate_accelerator_bytes(&self) -> u64 {
         self.accelerators

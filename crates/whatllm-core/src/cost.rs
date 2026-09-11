@@ -185,8 +185,8 @@ pub enum CostVerdict {
         /// Percentage saved against running locally.
         by_percent: f64,
     },
-    /// Within a few percent: the decision belongs on other grounds — privacy,
-    /// latency, availability — rather than on price.
+    /// Within a few percent: the decision belongs on other grounds (privacy,
+    /// latency, availability) rather than on price.
     TooCloseToCall,
 }
 

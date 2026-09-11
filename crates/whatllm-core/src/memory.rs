@@ -3,16 +3,16 @@
 //! Weights are the part everyone estimates, and on a long context they are
 //! frequently not the largest part. A full accounting has five terms:
 //!
-//! 1. **Weights** — measured from a real file when the catalog knows one,
+//! 1. **Weights**: measured from a real file when the catalog knows one,
 //!    computed per tensor class otherwise.
-//! 2. **Attention cache** — grows with context, and by wildly different slopes
+//! 2. **Attention cache**: grows with context, and by wildly different slopes
 //!    depending on the architecture. See [`crate::arch`].
-//! 3. **Activations** — the graph working set. Dominated, when flash attention
+//! 3. **Activations**: the graph working set. Dominated, when flash attention
 //!    is off, by the materialised score matrix, which is quadratic in context
 //!    and is the single most common cause of an out-of-memory surprise.
-//! 4. **Runtime overhead** — the CUDA context and the framework's own fixed
+//! 4. **Runtime overhead**: the CUDA context and the framework's own fixed
 //!    allocations, several hundred megabytes before a single weight is read.
-//! 5. **Headroom** — allocator slack. A pool filled to the last byte does not
+//! 5. **Headroom**: allocator slack. A pool filled to the last byte does not
 //!    load, whatever the arithmetic says.
 
 use crate::arch::Architecture;
@@ -286,7 +286,7 @@ pub fn marginal_kv_bytes(arch: &Architecture, context: u32, kv_quant: KvQuant) -
 }
 
 /// The width of the feed-forward intermediate that is live during a forward
-/// pass — the routed experts' width for a sparse model, the dense width
+/// pass: the routed experts' width for a sparse model, the dense width
 /// otherwise.
 fn live_intermediate(arch: &Architecture) -> u64 {
     match &arch.moe {

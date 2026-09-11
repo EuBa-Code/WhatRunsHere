@@ -2,7 +2,7 @@
 //!
 //! The usual approach to accelerator bandwidth is a table: recognise the part
 //! by name, read its datasheet figure, apply a fudge factor. That works for the
-//! parts somebody remembered to add and fails quietly for everything else —
+//! parts somebody remembered to add and fails quietly for everything else:
 //! every laptop chip, every integrated GPU, every part released after the table
 //! was written, and every machine whose real throughput differs from its
 //! specification because of thermal limits, memory configuration, or a

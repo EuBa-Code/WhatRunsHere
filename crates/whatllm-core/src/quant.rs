@@ -4,7 +4,7 @@
 //! number. That is wrong in a way that matters: llama.cpp's K-quants are mixed
 //! precision, keeping the output projection at `Q6_K` while the body goes to
 //! `Q4_K`. For a 7B model with a 32k vocabulary the error is a rounding
-//! difference. For a 1B model with a 256k vocabulary — Gemma 3 — the output
+//! difference. For a 1B model with a 256k vocabulary (Gemma 3), the output
 //! projection is a quarter of the file, and a flat bits-per-weight estimate is
 //! off by enough to change the answer.
 //!
@@ -63,7 +63,7 @@ pub struct WeightQuant {
     /// Bits per weight for the output projection, which llama.cpp keeps at
     /// higher precision than the body for every K-quant.
     pub lm_head_bpw: f64,
-    /// Quality lost relative to bf16, in normalised points on a 0–100 scale.
+    /// Quality lost relative to bf16, in normalised points on a 0 to 100 scale.
     ///
     /// Calibrated from published perplexity and KL-divergence measurements.
     /// Zero means indistinguishable from the unquantized model.
@@ -124,7 +124,7 @@ impl WeightQuant {
     ///
     /// Normally the body figure. For a model trained quantized, the format its
     /// experts were trained in, because no published build converts them away
-    /// from it — see [`Architecture::native_expert_quant`].
+    /// from it. See [`Architecture::native_expert_quant`].
     fn expert_bpw(&self, arch: &Architecture) -> f64 {
         arch.native_expert_quant
             .as_deref()

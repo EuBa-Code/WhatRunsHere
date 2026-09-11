@@ -1,8 +1,8 @@
 //! The model catalog.
 //!
 //! Curated rather than scraped. Scraping `HuggingFace` produces tens of thousands
-//! of entries — re-uploads, abandoned merges, single-file experiments with a
-//! parameter count of two — and no ranking recovers a useful list from that. A
+//! of entries (re-uploads, abandoned merges, single-file experiments with a
+//! parameter count of two) and no ranking recovers a useful list from that. A
 //! catalog whose entries are all real is worth more than one that is merely
 //! large.
 //!

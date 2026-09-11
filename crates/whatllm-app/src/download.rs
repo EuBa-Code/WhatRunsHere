@@ -17,7 +17,7 @@
 //!
 //! **The length is checked against the catalog, not against the server.** The
 //! catalog records the exact byte count of every published build, measured
-//! when it was built — see `size_validation`. A truncated transfer that ends
+//! when it was built (see `size_validation`). A truncated transfer that ends
 //! cleanly is otherwise indistinguishable from a complete one, and a 19 GB
 //! file that is wrong in its last megabyte fails at load time with a message
 //! about tensors.

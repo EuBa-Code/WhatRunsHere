@@ -1,7 +1,7 @@
 //! Enumerating non-NVIDIA graphics adapters, per operating system.
 //!
-//! Each platform returns the same shape — a name, a vendor hint, and whatever
-//! the system claims about dedicated memory — and leaves the judgement of what
+//! Each platform returns the same shape (a name, a vendor hint, and whatever
+//! the system claims about dedicated memory) and leaves the judgement of what
 //! that means to [`crate::classify`]. The claim in particular is not to be
 //! trusted: Windows reports 2 GB of "video memory" for integrated graphics that
 //! own none.
@@ -11,7 +11,7 @@
 /// Serializable, and carried through to `whatllm doctor --json`, so that a
 /// report of "my card was detected wrongly" arrives with the evidence rather
 /// than only the verdict. Pasted into a test, one of these is a regression
-/// fixture for the classification that got it wrong — which is the shape a bug
+/// fixture for the classification that got it wrong, which is the shape a bug
 /// report should have.
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct RawAdapter {
@@ -33,7 +33,7 @@ pub struct RawAdapter {
     /// and `HardwareInformation.MemorySize` is sometimes only four bytes. Four
     /// bytes cannot express more than four gibibytes, which is less than every
     /// card worth asking about, and what comes back instead is a ceiling value
-    /// that looks exactly like a real small capacity — `0x7FFF_F000` sits
+    /// that looks exactly like a real small capacity: `0x7FFF_F000` sits
     /// between a genuine 2 GB card and a genuine 2 GiB one, so no threshold
     /// separates them.
     ///
@@ -83,7 +83,7 @@ fn le_bytes_to_u64(bytes: &[u8]) -> Option<u64> {
 /// Windows enumerates display adapters under the display class key.
 ///
 /// Preferred over WMI's `Win32_VideoController`, whose `AdapterRAM` is a signed
-/// 32-bit field and therefore wraps for any card with 4 GB or more — the exact
+/// 32-bit field and therefore wraps for any card with 4 GB or more: the exact
 /// cards worth asking about.
 #[cfg(windows)]
 pub fn adapters() -> Vec<RawAdapter> {
@@ -157,7 +157,7 @@ pub fn adapters() -> Vec<RawAdapter> {
 /// figure rejects every model the machine was bought to run.
 ///
 /// SMBIOS knows the real capacity because it enumerates the DIMM slots, and
-/// Windows caches the entire SMBIOS table in the registry — so this is a
+/// Windows caches the entire SMBIOS table in the registry, so this is a
 /// registry read, not a WMI query or a spawned `powershell`.
 ///
 /// Returns `None` where the table cannot be read or describes no populated
@@ -185,7 +185,7 @@ pub fn installed_memory_bytes() -> Option<u64> {
 /// Split from the registry read so the walk can be exercised against a table
 /// written by hand. That is the only way to reach the wide-capacity path on a
 /// machine whose own DIMMs are small enough to fit the narrow field, and the
-/// wide path is the one that matters — it is the machines with a great deal of
+/// wide path is the one that matters: it is the machines with a great deal of
 /// memory that have a great deal of it carved out.
 #[cfg(windows)]
 fn sum_populated_dimms(table: &[u8]) -> Option<u64> {
@@ -245,7 +245,7 @@ fn sum_populated_dimms(table: &[u8]) -> Option<u64> {
 ///
 /// `None` for an empty slot and for a slot whose size the firmware does not
 /// know, which are different from a slot holding nothing and must not be
-/// counted as zero-capacity DIMMs — a table of nothing but unknowns would
+/// counted as zero-capacity DIMMs. A table of nothing but unknowns would
 /// otherwise sum to zero and look authoritative.
 #[cfg(windows)]
 fn dimm_capacity_bytes(device: &[u8]) -> Option<u64> {
@@ -348,8 +348,8 @@ pub fn adapters() -> Vec<RawAdapter> {
 /// How much of the shared pool macOS will let Metal wire, in bytes.
 ///
 /// Apple Silicon's memory is one pool, but a compute job does not get all of
-/// it. The kernel holds a wired limit well below the installed total — around
-/// three quarters of it on the smaller machines — and an allocation past that
+/// it. The kernel holds a wired limit well below the installed total (around
+/// three quarters of it on the smaller machines) and an allocation past that
 /// point fails rather than paging. A tool that reads the pool as the machine's
 /// full memory promises loads that do not happen, and it promises them on the
 /// machines people most often buy for this.
@@ -373,7 +373,7 @@ fn metal_working_set_limit_bytes() -> Option<u64> {
 }
 
 /// Apple Silicon has exactly one accelerator and it shares the machine's
-/// memory, so there is nothing to enumerate — only to name.
+/// memory, so there is nothing to enumerate, only to name.
 #[cfg(target_os = "macos")]
 pub fn adapters() -> Vec<RawAdapter> {
     use std::process::Command;

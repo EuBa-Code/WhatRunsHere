@@ -4,8 +4,8 @@
 //! that the bytes-per-token figure the decode model computes actually predicts
 //! the tokens per second people observe.
 //!
-//! The dataset does not record memory bandwidth — only the hardware name and
-//! the speed somebody got — so rather than assume a bandwidth and check the
+//! The dataset does not record memory bandwidth, only the hardware name and
+//! the speed somebody got, so rather than assume a bandwidth and check the
 //! speed, this fits the model to the observations.
 //!
 //! The decode model says the time to produce one token is
@@ -21,8 +21,8 @@
 //! needed.
 //!
 //! That makes the fit quality the real test. If bytes-per-token were computed
-//! wrongly — mishandled mixture-of-experts sparsity, a forgotten output
-//! projection, the wrong bits per weight — the points would not fall on a line,
+//! wrongly (mishandled mixture-of-experts sparsity, a forgotten output
+//! projection, the wrong bits per weight) the points would not fall on a line,
 //! because the error would vary with whatever was mishandled. A high
 //! coefficient of determination across dozens of different models on one
 //! machine is hard to get by accident.
@@ -230,8 +230,8 @@ fn evaluate(dataset: &Dataset, machine: &Machine) -> Vec<Point> {
         // A model that did not fit was partially offloaded to system RAM, which
         // is a different placement at a different speed; those measurements say
         // nothing about this machine's bandwidth. Deciding that on weights
-        // alone is too generous — a 9B on an 8 GB card fits by that measure and
-        // spills in reality — so ask the full memory model, and leave a margin
+        // alone is too generous (a 9B on an 8 GB card fits by that measure and
+        // spills in reality) so ask the full memory model, and leave a margin
         // on top because a configuration at the very edge spills too.
         let footprint = memory::plan(
             arch,
@@ -323,7 +323,7 @@ fn the_decode_model_predicts_real_measurements() {
         // A poor fit is a finding, not a nuisance. Print what it was fitted
         // through so the reason can be seen rather than tuned away.
         if fit.r_squared < 0.85 {
-            println!("      poor fit — every dense point it was built from:");
+            println!("      poor fit. Every dense point it was built from:");
             let mut listed: Vec<&&Point> = dense.iter().collect();
             listed.sort_by(|a, b| {
                 a.bytes_per_token
