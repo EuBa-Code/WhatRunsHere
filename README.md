@@ -1,6 +1,6 @@
 # WhatLLM
 
-**Which language models will actually run well on your machine — measured, not
+**Which language models will actually run well on your machine. Measured, not
 looked up.**
 
 Any tool that answers this needs two numbers about your hardware: how much
@@ -11,8 +11,8 @@ cards.
 A table is wrong in a specific and common way. An RTX 5070 Laptop GPU has a
 128-bit bus and 8 GB; the desktop card that shares the number has 192-bit and
 12 GB. Keyed on the model number, a table hands back the desktop figure for the
-laptop — llmfit measured that overestimate at up to 1.8× across the 30, 40 and
-50 mobile lines — and the error lands in every tokens-per-second figure built on
+laptop (llmfit measured that overestimate at up to 1.8× across the 30, 40 and
+50 mobile lines), and the error lands in every tokens-per-second figure built on
 top of it.
 
 WhatLLM does not keep that table. It derives bandwidth from the bus width and
@@ -33,15 +33,15 @@ actually use it.
 
 **It measures rather than assumes.** Rather than looking an accelerator up in a
 table of known cards, WhatLLM derives NVIDIA bandwidth from the bus width and
-memory clock the device itself reports — which reproduces the datasheet figure
-for parts that do not exist yet — and probes host memory directly. Hardware
+memory clock the device itself reports, which reproduces the datasheet figure
+for parts that do not exist yet, and probes host memory directly. Hardware
 nobody has catalogued works as well as hardware everybody has, and the trap that
 sinks name tables does not apply: a mobile part shares its model number with a
 desktop card of a different bus width, and reading the width from the device
 cannot get that wrong.
 
 **It models memory in full.** Weights, attention cache, activations, runtime
-overhead and allocator slack — not just the file size. The cache term is
+overhead and allocator slack, not just the file size. The cache term is
 architecture-exact: grouped-query, multi-query, DeepSeek's latent attention,
 Gemma's sliding windows and hybrid linear-attention stacks all have genuinely
 different slopes, and treating them alike is how a 671B model gets reported as
@@ -61,8 +61,8 @@ the cache to `q8_0` and you gain 40k of context; drop one rung on the weight
 ladder and the whole model stays on the GPU at three times the speed for two
 points of quality.
 
-Where a real measurement exists — a real file size, a real probe, a real
-benchmark run — it always wins over a formula, and every number carries a label
+Where a real measurement exists (a real file size, a real probe, a real
+benchmark run) it always wins over a formula, and every number carries a label
 saying which of the two produced it.
 
 ## Status
@@ -102,7 +102,7 @@ in the binary rather than fetched from a font CDN, which would have been a
 request nobody asked for.
 
 Every figure it shows carries a rule beneath it saying where the figure came
-from — solid for something measured on this machine, dashed for a
+from: solid for something measured on this machine, dashed for a
 manufacturer's specification, dotted for an assumption nothing has replaced. It
 is the same `Confidence` the CLI prints, drawn instead of named.
 
@@ -130,11 +130,11 @@ first time it ran:
   `tie_word_embeddings` says the *weights* are shared; it does not say what the
   GGUF converter wrote. Qwen3 0.6B, 1.7B and Qwen3.5-2B are tied and ship it
   twice; Qwen3 4B, equally tied, ships it once. On a 0.6B that is a fifth of the
-  file, and nothing in the metadata distinguishes them — so the builder now
+  file, and nothing in the metadata distinguishes them, so the builder now
   reads it off the published sizes instead.
 - **Not every feed-forward block is gated.** The builder assumed three matrices
   everywhere. For the models that use two, that overstates the feed-forward by
-  half — a third of the whole file. Also now read off the files.
+  half, which is a third of the whole file. Also now read off the files.
 - **gpt-oss keeps its experts in MXFP4 whatever the build is called.** Its F16,
   Q8_0 and Q6_K files are 13.79, 12.11 and 12.04 GB: differences a whole-model
   quantization cannot produce, because 91% of the model never changes. Treating
@@ -149,7 +149,7 @@ Three earlier corrections, from validating against published GGUF builds by
 hand, are what got the model to a percent in the first place:
 
 - A tied model's shared tensor is quantized at the **output** precision, not the
-  embedding's — assuming otherwise underestimates a tied 4B by up to 8%.
+  embedding's. Assuming otherwise underestimates a tied 4B by up to 8%.
 - The bits-per-weight figures in quantization tables are whole-file averages for
   small vocabularies, not body figures; using them overshoots `Q3_K_L` by 2.5%
   and `Q2_K` by 11%.
@@ -160,7 +160,7 @@ hand, are what got the model to a percent in the first place:
 
 The decode model says time per token is `bytes / bandwidth + overhead`, which is
 a straight line. Fitting it across the dozens of different models each machine
-ran recovers both unknowns without assuming either — and the fit quality is the
+ran recovers both unknowns without assuming either, and the fit quality is the
 test, because a wrong bytes-per-token figure would not fall on a line.
 
 | Machine | Models | Fitted bandwidth | R² | Overhead | Of datasheet |
@@ -181,7 +181,7 @@ Three things came out of it that the model did not previously know:
   parameters overstates every mixture-of-experts model.
 - **Gemma 2 cannot use flash attention.** It caps its attention logits and the
   flash kernels have nowhere to apply the cap, so llama.cpp materialises the
-  full score matrix — quadratic in context. This was found, not looked up: on
+  full score matrix, which is quadratic in context. This was found, not looked up: on
   an RTX 2080 sixteen models landed within a few percent of one line and Gemma 2
   9B ran at a third of the speed its size predicts. Modelling it took that
   machine's fit from R² 0.53 to 0.99.
@@ -242,7 +242,7 @@ telemetry. The architecture has no place to put a check, which is deliberate.
 
 That is a commitment rather than a stage. A project that never promised to stay
 free and later charges has broken nothing; one that promised and then charged
-has broken the only thing it had — so the promise is made here, where it can be
+has broken the only thing it had. So the promise is made here, where it can be
 held to.
 
 ## Prior art
@@ -272,7 +272,7 @@ about the problem, and are credited in the code that uses them:
   an implausible figure.
 - **A rebuild can quietly shrink the catalog.** `build_catalog.py` reads every
   model from HuggingFace, and when that network is unwell the failed entries
-  would simply be absent from the file it writes — invisible, because a smaller
+  would simply be absent from the file it writes, invisible because a smaller
   catalog looks exactly like a correct one. llmfit's scraper carries a comment
   naming the day this happened to them across 1,764 models. A failed entry is
   now carried forward from the previous build, and past a threshold the rebuild
@@ -285,7 +285,7 @@ about the problem, and are credited in the code that uses them:
   starts, and the OS never sees it: a 128 GB Ryzen AI MAX+ with 96 GB carved out
   reports around 31 GB. Sizing against that rejects every model the machine was
   bought to run. WhatLLM reads the DIMM capacity out of the SMBIOS table Windows
-  caches in the registry — no WMI query, no spawned `powershell` — and counts
+  caches in the registry (no WMI query, no spawned `powershell`) and counts
   the difference back in.
 - **A large integrated part looks exactly like a card.** That same 96 GB is
   reported by the adapter as 96 GB of "video memory" under the name
@@ -303,7 +303,7 @@ about the problem, and are credited in the code that uses them:
 - **A stranger's metadata can block your own commits.** A publisher who once
   pasted an access token where a repository name belonged leaves it in the
   upstream metadata for good, and GitHub's secret scanning then rejects the push
-  carrying it — so the nightly catalog rebuild stops committing rather than
+  carrying it, so the nightly catalog rebuild stops committing rather than
   merely being wrong. It blocked llmfit on 2026-08-03. `build_catalog.py` now
   drops such an entry and names it redacted.
 - **A generic name can hide a serious card.** A 32 GB Instinct MI50 reports
@@ -317,7 +317,7 @@ about the problem, and are credited in the code that uses them:
   named as what they are, and the answer given is the CPU.
 - **A 32-bit memory field cannot be repaired.** Windows reports video memory
   through fields four bytes wide, and the ceiling value sits *between* a real
-  2 GB card and a real 2 GiB one — so no threshold separates the three. A
+  2 GB card and a real 2 GiB one, so no threshold separates the three. A
   narrow reading is discarded rather than believed, and the card is left out
   with a note. A compile-time assertion keeps anyone from inventing the
   threshold later.

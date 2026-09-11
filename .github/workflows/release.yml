@@ -132,7 +132,7 @@ jobs:
           generate_release_notes: true
           # A draft, deliberately. The installers are unsigned, so the notes
           # have to say what Windows and macOS will do about that before
-          # anybody downloads one — and that is a sentence a person should
+          # anybody downloads one, and that is a sentence a person should
           # write, not a workflow.
           body: |
             ## Installers

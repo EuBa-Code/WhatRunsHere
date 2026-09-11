@@ -95,7 +95,7 @@ def test_a_credential_shaped_string_never_reaches_the_catalog():
     """Upstream metadata is written by strangers, and a token pasted where a
     name belongs stays in it. GitHub's secret scanning rejects the push that
     would carry one, so an entry like this does not merely make the catalog
-    wrong — it stops the daily rebuild from committing at all."""
+    wrong: it stops the daily rebuild from committing at all."""
     clean = entry("qwen/qwen3-8b")
     leaked = entry("someone/hf_" + "a" * 34)
     kept, dropped = drop_secret_bearing([clean, leaked])

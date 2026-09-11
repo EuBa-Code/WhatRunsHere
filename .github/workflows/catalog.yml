@@ -2,7 +2,7 @@ name: Refresh catalog
 
 # Daily. Model releases and new quantized builds do not wait a week, and a
 # catalog that lags by seven days is missing exactly the models people are
-# asking about. The run is cheap — a couple of hundred HuggingFace requests —
+# asking about. The run is cheap (a couple of hundred HuggingFace requests)
 # and it commits nothing on a day when nothing changed.
 on:
   schedule:
@@ -39,9 +39,9 @@ jobs:
 
       # The gate that matters. `size_validation` recomputes every model's size
       # from its architecture and compares against the real file the rebuild
-      # just recorded, so an architecture derived wrongly — a new family whose
+      # just recorded, so an architecture derived wrongly (a new family whose
       # config is shaped differently, a scraper change with an unforeseen
-      # effect — fails here rather than shipping. `throughput_validation` holds
+      # effect) fails here rather than shipping. `throughput_validation` holds
       # the speed model to measurements from real machines at the same time.
       - name: Validate against reality
         run: cargo test --all-features

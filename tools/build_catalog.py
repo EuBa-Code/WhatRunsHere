@@ -564,7 +564,7 @@ def rescue_failures(models: list, previous: dict, failed: list) -> list:
 #: Repository names, file names and metadata are written by strangers, and a
 #: publisher who once pasted a token where a name belonged has put it in the
 #: upstream metadata for good. Two things then go wrong at once: the entry is
-#: garbage, and GitHub's secret scanning rejects the push that carries it — so
+#: garbage, and GitHub's secret scanning rejects the push that carries it, so
 #: a catalog rebuild that swallowed one would break the daily commit rather
 #: than merely be wrong. llmfit had exactly that push blocked on 2026-08-03.
 SECRET_SHAPES = re.compile(
@@ -580,7 +580,7 @@ def drop_secret_bearing(models: list) -> tuple[list, list]:
     """Split out entries whose serialised form contains a token shape.
 
     Returns ``(kept, dropped)``, where the dropped ids have the match itself
-    replaced — so a caller can name what it dropped in a log that anyone may
+    replaced, so a caller can name what it dropped in a log that anyone may
     read without publishing the secret a second time.
     """
     kept, dropped = [], []
