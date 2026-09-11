@@ -62,8 +62,8 @@ export function LaunchCard({
 
       {weights.action === "no_build" && (
         <p className="mt-3 text-[13px] leading-relaxed text-[var(--color-ink-dim)]">
-          No {weights.quant} build is published for this model, so there is
-          nothing to fetch at the format that was sized. Any of the builds
+          No single-file {weights.quant} build is recorded for this model, so
+          there is nothing to fetch at the format that was sized. Any build
           listed below can be fetched instead.
         </p>
       )}

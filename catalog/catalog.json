@@ -1,7 +1,131 @@
 {
  "version": 1,
- "generated": "2026-09-10",
+ "generated": "2026-09-11",
  "models": [
+  {
+   "id": "01-ai/Yi-1.5-34B-Chat",
+   "display_name": "Yi-1.5 34B",
+   "family": "Yi",
+   "architecture": {
+    "hidden_size": 7168,
+    "heads": 56,
+    "intermediate_size": 20480,
+    "vocab_size": 64000,
+    "layers": {
+     "n_layers": 60,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 4096
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q8_0.gguf",
+     "bytes": 36542282560
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q6_K.gguf",
+     "bytes": 28213926720
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q5_K_M.gguf",
+     "bytes": 24321846080
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q5_K_S.gguf",
+     "bytes": 23707691840
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q4_K_M.gguf",
+     "bytes": 20658711360
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q4_K_S.gguf",
+     "bytes": 19598650176
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-IQ4_XS.gguf",
+     "bytes": 18475051840
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q3_K_L.gguf",
+     "bytes": 18139446080
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q3_K_M.gguf",
+     "bytes": 16654924608
+    },
+    {
+     "quant": "IQ3_S",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-IQ3_S.gguf",
+     "bytes": 15018785600
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q3_K_S.gguf",
+     "bytes": 14960294720
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-IQ3_XXS.gguf",
+     "bytes": 13333875520
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-Q2_K.gguf",
+     "bytes": 12825234240
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-IQ2_XS.gguf",
+     "bytes": 10306542400
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Yi-1.5-34B-Chat-GGUF",
+     "file": "Yi-1.5-34B-Chat-IQ2_XXS.gguf",
+     "bytes": 9306463040
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2024-05-10"
+  },
   {
    "id": "01-ai/Yi-1.5-9B-Chat",
    "display_name": "Yi-1.5-9B",
@@ -125,6 +249,124 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "ByteDance-Seed/Seed-OSS-36B-Instruct",
+   "display_name": "Seed-OSS 36B",
+   "family": "Seed-OSS",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 80,
+    "intermediate_size": 27648,
+    "vocab_size": 155136,
+    "layers": {
+     "n_layers": 64,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 524288
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q8_0.gguf",
+     "bytes": 38421093024
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q6_K.gguf",
+     "bytes": 29666097824
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q5_K_M.gguf",
+     "bytes": 25594366624
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q5_K_S.gguf",
+     "bytes": 24970463904
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q4_K_M.gguf",
+     "bytes": 21762149024
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q4_K_S.gguf",
+     "bytes": 20695222944
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-IQ4_XS.gguf",
+     "bytes": 19498617504
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q3_K_L.gguf",
+     "bytes": 19142695584
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q3_K_M.gguf",
+     "bytes": 17620949664
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q3_K_S.gguf",
+     "bytes": 15855409824
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-IQ3_XXS.gguf",
+     "bytes": 14116760224
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-Q2_K.gguf",
+     "bytes": 13604186784
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-IQ2_XS.gguf",
+     "bytes": 10945084064
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/ByteDance-Seed_Seed-OSS-36B-Instruct-GGUF",
+     "file": "ByteDance-Seed_Seed-OSS-36B-Instruct-IQ2_XXS.gguf",
+     "bytes": 9910925984
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-08-20"
   },
   {
    "id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
@@ -345,6 +587,330 @@
    "released": null
   },
   {
+   "id": "NousResearch/Hermes-4-70B",
+   "display_name": "Hermes 4 70B",
+   "family": "Hermes",
+   "architecture": {
+    "hidden_size": 8192,
+    "heads": 64,
+    "intermediate_size": 28672,
+    "vocab_size": 128256,
+    "layers": {
+     "n_layers": 80,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q5_K_S.gguf",
+     "bytes": 48657451552
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q4_K_M.gguf",
+     "bytes": 42520398368
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q4_K_S.gguf",
+     "bytes": 40347224608
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-IQ4_XS.gguf",
+     "bytes": 37902666272
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q3_K_L.gguf",
+     "bytes": 37140597280
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q3_K_M.gguf",
+     "bytes": 34267499040
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q3_K_S.gguf",
+     "bytes": 30912055840
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-IQ3_XXS.gguf",
+     "bytes": 27469498912
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-Q2_K.gguf",
+     "bytes": 26375113248
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-IQ2_XS.gguf",
+     "bytes": 21142112800
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/NousResearch_Hermes-4-70B-GGUF",
+     "file": "NousResearch_Hermes-4-70B-IQ2_XXS.gguf",
+     "bytes": 19097389600
+    }
+   ],
+   "license": "llama3",
+   "released": "2025-08-18"
+  },
+  {
+   "id": "Qwen/QwQ-32B",
+   "display_name": "QwQ 32B",
+   "family": "QwQ",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 40,
+    "intermediate_size": 27648,
+    "vocab_size": 152064,
+    "layers": {
+     "n_layers": 64,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 40960
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q8_0.gguf",
+     "bytes": 34820885312
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q6_K.gguf",
+     "bytes": 26886155072
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q5_K_M.gguf",
+     "bytes": 23262157632
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q5_K_S.gguf",
+     "bytes": 22638254912
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q4_K_M.gguf",
+     "bytes": 19851336512
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q4_K_S.gguf",
+     "bytes": 18784410432
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-IQ4_XS.gguf",
+     "bytes": 17693154112
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q3_K_L.gguf",
+     "bytes": 17247079232
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q3_K_M.gguf",
+     "bytes": 15935048512
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q3_K_S.gguf",
+     "bytes": 14392331072
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-IQ3_XXS.gguf",
+     "bytes": 12839271232
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-Q2_K.gguf",
+     "bytes": 12313099072
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-IQ2_XS.gguf",
+     "bytes": 9957550912
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Qwen_QwQ-32B-GGUF",
+     "file": "Qwen_QwQ-32B-IQ2_XXS.gguf",
+     "bytes": 9028250432
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-03-05"
+  },
+  {
+   "id": "Qwen/Qwen2.5-1.5B-Instruct",
+   "display_name": "Qwen2.5 1.5B",
+   "family": "Qwen2.5",
+   "architecture": {
+    "hidden_size": 1536,
+    "heads": 12,
+    "intermediate_size": 8960,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 28,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "F16",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-f16.gguf",
+     "bytes": 3093669376
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q8_0.gguf",
+     "bytes": 1646573312
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q6_K.gguf",
+     "bytes": 1272740096
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q5_K_M.gguf",
+     "bytes": 1125050624
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q5_K_S.gguf",
+     "bytes": 1098729728
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+     "bytes": 986048768
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q4_K_S.gguf",
+     "bytes": 940312832
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-IQ4_XS.gguf",
+     "bytes": 895731968
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q3_K_L.gguf",
+     "bytes": 880163072
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q3_K_M.gguf",
+     "bytes": 824178784
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q3_K_S.gguf",
+     "bytes": 760944736
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen2.5-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-1.5B-Instruct-Q2_K.gguf",
+     "bytes": 676304992
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2024-09-17"
+  },
+  {
    "id": "Qwen/Qwen2.5-14B-Instruct",
    "display_name": "Qwen2.5-14B",
    "family": "Qwen2.5",
@@ -451,6 +1017,312 @@
    "released": null
   },
   {
+   "id": "Qwen/Qwen2.5-32B-Instruct",
+   "display_name": "Qwen2.5 32B",
+   "family": "Qwen2.5",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 40,
+    "intermediate_size": 27648,
+    "vocab_size": 152064,
+    "layers": {
+     "n_layers": 64,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q8_0.gguf",
+     "bytes": 34820885376
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q6_K.gguf",
+     "bytes": 26886155136
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q5_K_M.gguf",
+     "bytes": 23262157696
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q5_K_S.gguf",
+     "bytes": 22638254976
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q4_K_M.gguf",
+     "bytes": 19851336576
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q4_K_S.gguf",
+     "bytes": 18784410496
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-IQ4_XS.gguf",
+     "bytes": 17693154176
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q3_K_L.gguf",
+     "bytes": 17247079296
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q3_K_M.gguf",
+     "bytes": 15935048576
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q3_K_S.gguf",
+     "bytes": 14392331136
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-Q2_K.gguf",
+     "bytes": 12313099136
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-IQ2_XS.gguf",
+     "bytes": 9957550976
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Qwen2.5-32B-Instruct-GGUF",
+     "file": "Qwen2.5-32B-Instruct-IQ2_XXS.gguf",
+     "bytes": 9028250496
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2024-09-17"
+  },
+  {
+   "id": "Qwen/Qwen2.5-3B-Instruct",
+   "display_name": "Qwen2.5 3B",
+   "family": "Qwen2.5",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 16,
+    "intermediate_size": 11008,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 36,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "F16",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-f16.gguf",
+     "bytes": 6178317216
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q8_0.gguf",
+     "bytes": 3285476512
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q6_K.gguf",
+     "bytes": 2538159264
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q5_K_M.gguf",
+     "bytes": 2224815264
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q5_K_S.gguf",
+     "bytes": 2169666720
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q4_K_M.gguf",
+     "bytes": 1929903264
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q4_K_S.gguf",
+     "bytes": 1834384544
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-IQ4_XS.gguf",
+     "bytes": 1739095200
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q3_K_L.gguf",
+     "bytes": 1707392160
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q3_K_M.gguf",
+     "bytes": 1590475936
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q3_K_S.gguf",
+     "bytes": 1454357664
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+     "file": "Qwen2.5-3B-Instruct-Q2_K.gguf",
+     "bytes": 1274756256
+    }
+   ],
+   "license": "qwen-research",
+   "released": "2024-09-17"
+  },
+  {
+   "id": "Qwen/Qwen2.5-72B-Instruct",
+   "display_name": "Qwen2.5 72B",
+   "family": "Qwen2.5",
+   "architecture": {
+    "hidden_size": 8192,
+    "heads": 64,
+    "intermediate_size": 29568,
+    "vocab_size": 152064,
+    "layers": {
+     "n_layers": 80,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-Q4_K_M.gguf",
+     "bytes": 47415715488
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-IQ4_XS.gguf",
+     "bytes": 39709075104
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-Q3_K_L.gguf",
+     "bytes": 39505225376
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-Q3_K_M.gguf",
+     "bytes": 37698725536
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-Q3_K_S.gguf",
+     "bytes": 34487789216
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-IQ3_XXS.gguf",
+     "bytes": 31845082784
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-Q2_K.gguf",
+     "bytes": 29811762848
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-IQ2_XS.gguf",
+     "bytes": 27057645216
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Qwen2.5-72B-Instruct-GGUF",
+     "file": "Qwen2.5-72B-Instruct-IQ2_XXS.gguf",
+     "bytes": 25490024096
+    }
+   ],
+   "license": "qwen",
+   "released": "2024-09-16"
+  },
+  {
    "id": "Qwen/Qwen2.5-7B-Instruct",
    "display_name": "Qwen2.5-7B",
    "family": "Qwen2.5",
@@ -555,6 +1427,112 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "Qwen/Qwen2.5-Coder-1.5B-Instruct",
+   "display_name": "Qwen2.5-Coder 1.5B",
+   "family": "Qwen2.5-Coder",
+   "architecture": {
+    "hidden_size": 1536,
+    "heads": 12,
+    "intermediate_size": 8960,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 28,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "F16",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-f16.gguf",
+     "bytes": 3093669376
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q8_0.gguf",
+     "bytes": 1646573344
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q6_K.gguf",
+     "bytes": 1272740128
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q5_K_M.gguf",
+     "bytes": 1125050656
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q5_K_S.gguf",
+     "bytes": 1098729760
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q4_K_M.gguf",
+     "bytes": 986048800
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q4_K_S.gguf",
+     "bytes": 940312864
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-IQ4_XS.gguf",
+     "bytes": 895732000
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q3_K_L.gguf",
+     "bytes": 880163104
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q3_K_M.gguf",
+     "bytes": 824178976
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q3_K_S.gguf",
+     "bytes": 760944928
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen2.5-Coder-1.5B-Instruct-GGUF",
+     "file": "Qwen2.5-Coder-1.5B-Instruct-Q2_K.gguf",
+     "bytes": 676305184
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2024-09-18"
   },
   {
    "id": "Qwen/Qwen2.5-Coder-14B-Instruct",
@@ -1349,6 +2327,88 @@
    "released": "2025-04-29"
   },
   {
+   "id": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+   "display_name": "Qwen3 235B-A22B Instruct 2507",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 64,
+    "intermediate_size": 12288,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 94,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144,
+    "moe": {
+     "experts": 128,
+     "experts_per_token": 8,
+     "expert_intermediate": 1536,
+     "shared_experts": 0,
+     "shared_intermediate": 0,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [],
+   "license": "apache-2.0",
+   "released": "2025-07-21"
+  },
+  {
+   "id": "Qwen/Qwen3-235B-A22B-Thinking-2507",
+   "display_name": "Qwen3 235B-A22B Thinking 2507",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 64,
+    "intermediate_size": 12288,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 94,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144,
+    "moe": {
+     "experts": 128,
+     "experts_per_token": 8,
+     "expert_intermediate": 1536,
+     "shared_experts": 0,
+     "shared_intermediate": 0,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [],
+   "license": "apache-2.0",
+   "released": "2025-07-25"
+  },
+  {
    "id": "Qwen/Qwen3-30B-A3B",
    "display_name": "Qwen3 30B-A3B",
    "family": "Qwen3",
@@ -1604,6 +2664,132 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "Qwen/Qwen3-30B-A3B-Thinking-2507",
+   "display_name": "Qwen3 30B-A3B Thinking 2507",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 6144,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 48,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144,
+    "moe": {
+     "experts": 128,
+     "experts_per_token": 8,
+     "expert_intermediate": 768,
+     "shared_experts": 0,
+     "shared_intermediate": 0,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q8_0.gguf",
+     "bytes": 32483931872
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q6_K.gguf",
+     "bytes": 25104721920
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q5_K_M.gguf",
+     "bytes": 21744455680
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q5_K_S.gguf",
+     "bytes": 21099384832
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q4_K_M.gguf",
+     "bytes": 18632183808
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q4_K_S.gguf",
+     "bytes": 17984491520
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-IQ4_XS.gguf",
+     "bytes": 16458002432
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q3_K_L.gguf",
+     "bytes": 14583003136
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q3_K_M.gguf",
+     "bytes": 14076803072
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q3_K_S.gguf",
+     "bytes": 13428127744
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-IQ3_XXS.gguf",
+     "bytes": 12216983552
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-Q2_K.gguf",
+     "bytes": 10908647424
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-IQ2_XS.gguf",
+     "bytes": 8662165504
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Qwen_Qwen3-30B-A3B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-30B-A3B-Thinking-2507-IQ2_XXS.gguf",
+     "bytes": 7569025024
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-07-29"
   },
   {
    "id": "Qwen/Qwen3-32B",
@@ -1959,6 +3145,118 @@
    "released": null
   },
   {
+   "id": "Qwen/Qwen3-4B-Thinking-2507",
+   "display_name": "Qwen3 4B Thinking 2507",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 2560,
+    "heads": 32,
+    "intermediate_size": 9728,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 36,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-bf16.gguf",
+     "bytes": 8051284928
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q8_0.gguf",
+     "bytes": 4280405216
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q6_K.gguf",
+     "bytes": 3306261216
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q5_K_M.gguf",
+     "bytes": 2889513696
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q5_K_S.gguf",
+     "bytes": 2823711456
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q4_K_M.gguf",
+     "bytes": 2497280736
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q4_K_S.gguf",
+     "bytes": 2383309536
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-IQ4_XS.gguf",
+     "bytes": 2270751456
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q3_K_L.gguf",
+     "bytes": 2239785696
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q3_K_M.gguf",
+     "bytes": 2075618016
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q3_K_S.gguf",
+     "bytes": 1886997216
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-IQ3_XXS.gguf",
+     "bytes": 1670188256
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Qwen_Qwen3-4B-Thinking-2507-GGUF",
+     "file": "Qwen_Qwen3-4B-Thinking-2507-Q2_K.gguf",
+     "bytes": 1669499616
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-08-05"
+  },
+  {
    "id": "Qwen/Qwen3-8B",
    "display_name": "Qwen3 8B",
    "family": "Qwen3",
@@ -2076,6 +3374,120 @@
    "released": "2025-04-29"
   },
   {
+   "id": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+   "display_name": "Qwen3-Coder 30B-A3B",
+   "family": "Qwen3",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 6144,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 48,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144,
+    "moe": {
+     "experts": 128,
+     "experts_per_token": 8,
+     "expert_intermediate": 768,
+     "shared_experts": 0,
+     "shared_intermediate": 0,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q8_0.gguf",
+     "bytes": 32483935392
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q6_K.gguf",
+     "bytes": 25092535456
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q5_K_M.gguf",
+     "bytes": 21725584544
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q5_K_S.gguf",
+     "bytes": 21080513696
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf",
+     "bytes": 18556689568
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q4_K_S.gguf",
+     "bytes": 17456012448
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-IQ4_XS.gguf",
+     "bytes": 16378076320
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q3_K_M.gguf",
+     "bytes": 14711850144
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q3_K_S.gguf",
+     "bytes": 13292471456
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-UD-IQ3_XXS.gguf",
+     "bytes": 12848766112
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-Q2_K.gguf",
+     "bytes": 11258612896
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+     "file": "Qwen3-Coder-30B-A3B-Instruct-UD-IQ2_XXS.gguf",
+     "bytes": 10333691040
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-07-31"
+  },
+  {
    "id": "allenai/OLMo-2-1124-13B-Instruct",
    "display_name": "OLMo-2-1124-13B",
    "family": "OLMo",
@@ -2180,6 +3592,1078 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "allenai/OLMo-2-1124-7B-Instruct",
+   "display_name": "OLMo 2 7B",
+   "family": "OLMo",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 11008,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 32,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 4096
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "F16",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-f16.gguf",
+     "bytes": 14601854240
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q8_0.gguf",
+     "bytes": 7759896128
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q6_K.gguf",
+     "bytes": 5992390208
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q5_K_M.gguf",
+     "bytes": 5209169472
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q5_K_S.gguf",
+     "bytes": 5077704256
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q4_K_M.gguf",
+     "bytes": 4472020544
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q4_K_S.gguf",
+     "bytes": 4247756352
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-IQ4_XS.gguf",
+     "bytes": 4001603136
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q3_K_L.gguf",
+     "bytes": 3950943808
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q3_K_M.gguf",
+     "bytes": 3651837504
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q3_K_S.gguf",
+     "bytes": 3302137408
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/OLMo-2-1124-7B-Instruct-GGUF",
+     "file": "OLMo-2-1124-7B-Instruct-Q2_K.gguf",
+     "bytes": 2858262080
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2024-12-18"
+  },
+  {
+   "id": "allenai/Olmo-3-32B-Think",
+   "display_name": "OLMo 3 32B Think",
+   "family": "OLMo",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 40,
+    "intermediate_size": 27648,
+    "vocab_size": 100278,
+    "layers": {
+     "n_layers": 64,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 65536
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q8_0.gguf",
+     "bytes": 34254796192
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q6_K.gguf",
+     "bytes": 26448495264
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q5_K_M.gguf",
+     "bytes": 22859712288
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q5_K_S.gguf",
+     "bytes": 22235809568
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q4_K_M.gguf",
+     "bytes": 19482034208
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q4_K_S.gguf",
+     "bytes": 18415108128
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-IQ4_XS.gguf",
+     "bytes": 17332137568
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q3_K_L.gguf",
+     "bytes": 16912991424
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q3_K_M.gguf",
+     "bytes": 15600960704
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q3_K_S.gguf",
+     "bytes": 14058243264
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-IQ3_XXS.gguf",
+     "bytes": 12540397888
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-Q2_K.gguf",
+     "bytes": 12005939968
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/allenai_Olmo-3-32B-Think-GGUF",
+     "file": "allenai_Olmo-3-32B-Think-IQ2_XS.gguf",
+     "bytes": 9685606272
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Olmo-3-32B-Think-GGUF",
+     "file": "Olmo-3-32B-Think-UD-IQ2_XXS.gguf",
+     "bytes": 8914618816
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-11-19"
+  },
+  {
+   "id": "allenai/Olmo-3-7B-Instruct",
+   "display_name": "OLMo 3 7B",
+   "family": "OLMo",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 11008,
+    "vocab_size": 100278,
+    "layers": {
+     "n_layers": 32,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       },
+       "window": 4096
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 32,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 65536
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-bf16.gguf",
+     "bytes": 14600642208
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q8_0.gguf",
+     "bytes": 7759252416
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q6_K.gguf",
+     "bytes": 5991893312
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q5_K_M.gguf",
+     "bytes": 5208712832
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q5_K_S.gguf",
+     "bytes": 5077247616
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q4_K_M.gguf",
+     "bytes": 4471601792
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q4_K_S.gguf",
+     "bytes": 4247337600
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-IQ4_XS.gguf",
+     "bytes": 4001193856
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q3_K_L.gguf",
+     "bytes": 3950565312
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q3_K_M.gguf",
+     "bytes": 3651459008
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q3_K_S.gguf",
+     "bytes": 3301758912
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-IQ3_XXS.gguf",
+     "bytes": 2901701888
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/allenai_Olmo-3-7B-Instruct-GGUF",
+     "file": "allenai_Olmo-3-7B-Instruct-Q2_K.gguf",
+     "bytes": 2857914368
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Olmo-3-7B-Instruct-GGUF",
+     "file": "Olmo-3-7B-Instruct-UD-IQ2_XXS.gguf",
+     "bytes": 2254091776
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-11-19"
   },
   {
    "id": "arcee-ai/AFM-4.5B",
@@ -2417,6 +4901,218 @@
    "released": null
   },
   {
+   "id": "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+   "display_name": "DeepSeek-R1-0528 Qwen3 8B",
+   "family": "DeepSeek-R1 Distill",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 12288,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 36,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-bf16.gguf",
+     "bytes": 16388042816
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q8_0.gguf",
+     "bytes": 8709517696
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q6_K.gguf",
+     "bytes": 6725898624
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q5_K_M.gguf",
+     "bytes": 5851111808
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q5_K_S.gguf",
+     "bytes": 5720760704
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q4_K_M.gguf",
+     "bytes": 5027783040
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q4_K_S.gguf",
+     "bytes": 4802011520
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-IQ4_XS.gguf",
+     "bytes": 4561838464
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q3_K_L.gguf",
+     "bytes": 4431393152
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q3_K_M.gguf",
+     "bytes": 4124160384
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q3_K_S.gguf",
+     "bytes": 3769610624
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-IQ3_XXS.gguf",
+     "bytes": 3369632128
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-GGUF",
+     "file": "deepseek-ai_DeepSeek-R1-0528-Qwen3-8B-Q2_K.gguf",
+     "bytes": 3281731968
+    }
+   ],
+   "license": "mit",
+   "released": "2025-05-29"
+  },
+  {
+   "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+   "display_name": "DeepSeek-R1 Distill Llama 70B",
+   "family": "DeepSeek-R1 Distill",
+   "architecture": {
+    "hidden_size": 8192,
+    "heads": 64,
+    "intermediate_size": 28672,
+    "vocab_size": 128256,
+    "layers": {
+     "n_layers": 80,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q5_K_S.gguf",
+     "bytes": 48657449120
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q4_K_M.gguf",
+     "bytes": 42520395936
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q4_K_S.gguf",
+     "bytes": 40347222176
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-IQ4_XS.gguf",
+     "bytes": 37902663840
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q3_K_L.gguf",
+     "bytes": 37140594848
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q3_K_M.gguf",
+     "bytes": 34267496608
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q3_K_S.gguf",
+     "bytes": 30912053408
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-IQ3_XXS.gguf",
+     "bytes": 27469496480
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-Q2_K.gguf",
+     "bytes": 26375110816
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-IQ2_XS.gguf",
+     "bytes": 21142110368
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/DeepSeek-R1-Distill-Llama-70B-GGUF",
+     "file": "DeepSeek-R1-Distill-Llama-70B-IQ2_XXS.gguf",
+     "bytes": 19097387168
+    }
+   ],
+   "license": "mit",
+   "released": "2025-01-20"
+  },
+  {
    "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
    "display_name": "DeepSeek-R1-Distill-Llama-8B",
    "family": "DeepSeek-R1 Distill",
@@ -2521,6 +5217,106 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+   "display_name": "DeepSeek-R1 Distill Qwen 1.5B",
+   "family": "DeepSeek-R1 Distill",
+   "architecture": {
+    "hidden_size": 1536,
+    "heads": 12,
+    "intermediate_size": 8960,
+    "vocab_size": 151936,
+    "layers": {
+     "n_layers": 28,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q8_0.gguf",
+     "bytes": 1894532192
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q6_K.gguf",
+     "bytes": 1464178784
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q5_K_M.gguf",
+     "bytes": 1285494368
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q5_K_S.gguf",
+     "bytes": 1259173472
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M.gguf",
+     "bytes": 1117320800
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_S.gguf",
+     "bytes": 1071584864
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-IQ4_XS.gguf",
+     "bytes": 1019711072
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q3_K_L.gguf",
+     "bytes": 980440160
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q3_K_M.gguf",
+     "bytes": 924456032
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q3_K_S.gguf",
+     "bytes": 861221984
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+     "file": "DeepSeek-R1-Distill-Qwen-1.5B-Q2_K.gguf",
+     "bytes": 752880224
+    }
+   ],
+   "license": "mit",
+   "released": "2025-01-20"
   },
   {
    "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
@@ -4380,6 +7176,230 @@
    "released": null
   },
   {
+   "id": "ibm-granite/granite-3.3-2b-instruct",
+   "display_name": "Granite 3.3 2B",
+   "family": "Granite",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 8192,
+    "vocab_size": 49159,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-bf16.gguf",
+     "bytes": 5069158176
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q8_0.gguf",
+     "bytes": 2694120384
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q6_K.gguf",
+     "bytes": 2080568896
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q5_K_M.gguf",
+     "bytes": 1804826176
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q5_K_S.gguf",
+     "bytes": 1757476416
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q4_K_M.gguf",
+     "bytes": 1545303616
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q4_K_S.gguf",
+     "bytes": 1464399424
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-IQ4_XS.gguf",
+     "bytes": 1383921216
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q3_K_L.gguf",
+     "bytes": 1357379136
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q3_K_M.gguf",
+     "bytes": 1251735104
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q3_K_S.gguf",
+     "bytes": 1130296896
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-IQ3_XXS.gguf",
+     "bytes": 1005186752
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ibm-granite_granite-3.3-2b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-2b-instruct-Q2_K.gguf",
+     "bytes": 978253376
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-04-09"
+  },
+  {
+   "id": "ibm-granite/granite-3.3-8b-instruct",
+   "display_name": "Granite 3.3 8B",
+   "family": "Granite",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 12800,
+    "vocab_size": 49159,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-bf16.gguf",
+     "bytes": 16344139552
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q8_0.gguf",
+     "bytes": 8684265280
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q6_K.gguf",
+     "bytes": 6705464352
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q5_K_M.gguf",
+     "bytes": 5797463072
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q5_K_S.gguf",
+     "bytes": 5647057952
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q4_K_M.gguf",
+     "bytes": 4942873632
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q4_K_S.gguf",
+     "bytes": 4685775904
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-IQ4_XS.gguf",
+     "bytes": 4428088352
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q3_K_L.gguf",
+     "bytes": 4349445152
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q3_K_M.gguf",
+     "bytes": 3996599328
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q3_K_S.gguf",
+     "bytes": 3592504352
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-IQ3_XXS.gguf",
+     "bytes": 3201381696
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ibm-granite_granite-3.3-8b-instruct-GGUF",
+     "file": "ibm-granite_granite-3.3-8b-instruct-Q2_K.gguf",
+     "bytes": 3103605792
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-04-09"
+  },
+  {
    "id": "internlm/internlm2_5-20b-chat",
    "display_name": "internlm2 5-20b",
    "family": "InternLM",
@@ -4687,6 +7707,127 @@
    "released": null
   },
   {
+   "id": "microsoft/Phi-3.5-MoE-instruct",
+   "display_name": "Phi-3.5 MoE",
+   "family": "Phi",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 6400,
+    "vocab_size": 32064,
+    "layers": {
+     "n_layers": 32,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 131072
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072,
+    "moe": {
+     "experts": 16,
+     "experts_per_token": 2,
+     "expert_intermediate": 6400,
+     "shared_experts": 0,
+     "shared_intermediate": 0,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q8_0.gguf",
+     "bytes": 44499765088
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q6_K.gguf",
+     "bytes": 34359334752
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q5_K_M.gguf",
+     "bytes": 29716098912
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q5_K_S.gguf",
+     "bytes": 28815896416
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q4_K_M.gguf",
+     "bytes": 25345994592
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q4_K_S.gguf",
+     "bytes": 23810355040
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-IQ4_XS.gguf",
+     "bytes": 22315175776
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q3_K_L.gguf",
+     "bytes": 21688420192
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q3_K_M.gguf",
+     "bytes": 20032718688
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q3_K_S.gguf",
+     "bytes": 18055104352
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-Q2_K.gguf",
+     "bytes": 15265136480
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-IQ2_XS.gguf",
+     "bytes": 12275504992
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Phi-3.5-MoE-instruct-GGUF",
+     "file": "Phi-3.5-MoE-instruct-IQ2_XXS.gguf",
+     "bytes": 11031893856
+    }
+   ],
+   "license": "mit",
+   "released": "2024-08-17"
+  },
+  {
    "id": "microsoft/Phi-3.5-mini-instruct",
    "display_name": "Phi-3.5-mini",
    "family": "Phi",
@@ -4893,6 +8034,343 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "microsoft/Phi-4-mini-reasoning",
+   "display_name": "Phi-4 mini reasoning",
+   "family": "Phi",
+   "architecture": {
+    "hidden_size": 3072,
+    "heads": 24,
+    "intermediate_size": 8192,
+    "vocab_size": 200064,
+    "layers": {
+     "n_layers": 32,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       },
+       "window": 262144
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-bf16.gguf",
+     "bytes": 7680694528
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q8_0.gguf",
+     "bytes": 4084611616
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q6_K.gguf",
+     "bytes": 3155623456
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q5_K_M.gguf",
+     "bytes": 2848128544
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q5_K_S.gguf",
+     "bytes": 2727804448
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q4_K_M.gguf",
+     "bytes": 2491874848
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q4_K_S.gguf",
+     "bytes": 2337734176
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q3_K_L.gguf",
+     "bytes": 2249653792
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-IQ4_XS.gguf",
+     "bytes": 2224487968
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q3_K_M.gguf",
+     "bytes": 2117533216
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q3_K_S.gguf",
+     "bytes": 1897332256
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-Q2_K.gguf",
+     "bytes": 1682636320
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/microsoft_Phi-4-mini-reasoning-GGUF",
+     "file": "microsoft_Phi-4-mini-reasoning-IQ3_XXS.gguf",
+     "bytes": 1678866976
+    }
+   ],
+   "license": "mit",
+   "released": "2025-04-29"
+  },
+  {
+   "id": "microsoft/Phi-4-reasoning",
+   "display_name": "Phi-4 reasoning",
+   "family": "Phi",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 40,
+    "intermediate_size": 17920,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 10,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-bf16.gguf",
+     "bytes": 29323400896
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q8_0.gguf",
+     "bytes": 15580501984
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q6_K.gguf",
+     "bytes": 12030253024
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q5_K_M.gguf",
+     "bytes": 10604189664
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q5_K_S.gguf",
+     "bytes": 10151581664
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q4_K_M.gguf",
+     "bytes": 9053116384
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q4_K_S.gguf",
+     "bytes": 8440764384
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-IQ4_XS.gguf",
+     "bytes": 7941380064
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q3_K_L.gguf",
+     "bytes": 7930157024
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q3_K_M.gguf",
+     "bytes": 7363270624
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q3_K_S.gguf",
+     "bytes": 6504749024
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-IQ3_XXS.gguf",
+     "bytes": 5846685664
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-GGUF",
+     "file": "microsoft_Phi-4-reasoning-Q2_K.gguf",
+     "bytes": 5547349984
+    }
+   ],
+   "license": "mit",
+   "released": "2025-04-09"
+  },
+  {
+   "id": "microsoft/Phi-4-reasoning-plus",
+   "display_name": "Phi-4 reasoning plus",
+   "family": "Phi",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 40,
+    "intermediate_size": 17920,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 10,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-bf16.gguf",
+     "bytes": 29323400928
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q8_0.gguf",
+     "bytes": 15580502016
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q6_K.gguf",
+     "bytes": 12030253056
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q5_K_M.gguf",
+     "bytes": 10604189696
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q5_K_S.gguf",
+     "bytes": 10151581696
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q4_K_M.gguf",
+     "bytes": 9053116416
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q4_K_S.gguf",
+     "bytes": 8440764416
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-IQ4_XS.gguf",
+     "bytes": 7941380096
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q3_K_L.gguf",
+     "bytes": 7930157056
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q3_K_M.gguf",
+     "bytes": 7363270656
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q3_K_S.gguf",
+     "bytes": 6504749056
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-IQ3_XXS.gguf",
+     "bytes": 5846685696
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/microsoft_Phi-4-reasoning-plus-GGUF",
+     "file": "microsoft_Phi-4-reasoning-plus-Q2_K.gguf",
+     "bytes": 5547350016
+    }
+   ],
+   "license": "mit",
+   "released": "2025-04-17"
   },
   {
    "id": "microsoft/phi-4",
@@ -5122,6 +8600,726 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+   "display_name": "Devstral Small 2 24B",
+   "family": "Mistral",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 32,
+    "intermediate_size": 32768,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 393216
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-bf16.gguf",
+     "bytes": 47154047552
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q8_0.gguf",
+     "bytes": 25055308672
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q6_K.gguf",
+     "bytes": 19346467712
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q5_K_M.gguf",
+     "bytes": 16764513152
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q5_K_S.gguf",
+     "bytes": 16304941952
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q4_K_M.gguf",
+     "bytes": 14334438272
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q4_K_S.gguf",
+     "bytes": 13549808512
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-IQ4_XS.gguf",
+     "bytes": 12759444352
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q3_K_L.gguf",
+     "bytes": 12401290112
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q3_K_M.gguf",
+     "bytes": 11474611072
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q3_K_S.gguf",
+     "bytes": 10400803712
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-IQ3_XXS.gguf",
+     "bytes": 9281121152
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-Q2_K.gguf",
+     "bytes": 8890854272
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-IQ2_XS.gguf",
+     "bytes": 7207562112
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/mistralai_Devstral-Small-2-24B-Instruct-2512-GGUF",
+     "file": "mistralai_Devstral-Small-2-24B-Instruct-2512-IQ2_XXS.gguf",
+     "bytes": 6545648512
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-11-28"
+  },
+  {
+   "id": "mistralai/Devstral-Small-2507",
+   "display_name": "Devstral Small 2507",
+   "family": "Mistral",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 32,
+    "intermediate_size": 32768,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-bf16.gguf",
+     "bytes": 47153525408
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q8_0.gguf",
+     "bytes": 25054786496
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q6_K.gguf",
+     "bytes": 19345945536
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q5_K_M.gguf",
+     "bytes": 16763990976
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q5_K_S.gguf",
+     "bytes": 16304419776
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q4_K_M.gguf",
+     "bytes": 14333916096
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q4_K_S.gguf",
+     "bytes": 13549286336
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-IQ4_XS.gguf",
+     "bytes": 12758922176
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q3_K_L.gguf",
+     "bytes": 12400767936
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q3_K_M.gguf",
+     "bytes": 11474088896
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q3_K_S.gguf",
+     "bytes": 10400281536
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-IQ3_XXS.gguf",
+     "bytes": 9280598976
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-Q2_K.gguf",
+     "bytes": 8890332096
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/mistralai_Devstral-Small-2507-GGUF",
+     "file": "mistralai_Devstral-Small-2507-IQ2_XS.gguf",
+     "bytes": 7207039936
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-07-04"
+  },
+  {
+   "id": "mistralai/Magistral-Small-2509",
+   "display_name": "Magistral Small 2509",
+   "family": "Mistral",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 32,
+    "intermediate_size": 32768,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-bf16.gguf",
+     "bytes": 47153521344
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q8_0.gguf",
+     "bytes": 25054782432
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q6_K.gguf",
+     "bytes": 19345941472
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q5_K_M.gguf",
+     "bytes": 16763986912
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q5_K_S.gguf",
+     "bytes": 16304415712
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q4_K_M.gguf",
+     "bytes": 14333912032
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q4_K_S.gguf",
+     "bytes": 13549282272
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-IQ4_XS.gguf",
+     "bytes": 12758918112
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q3_K_L.gguf",
+     "bytes": 12400763872
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q3_K_M.gguf",
+     "bytes": 11474084832
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q3_K_S.gguf",
+     "bytes": 10400277472
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-IQ3_XXS.gguf",
+     "bytes": 9280594912
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-Q2_K.gguf",
+     "bytes": 8890328032
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-IQ2_XS.gguf",
+     "bytes": 7207035872
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/mistralai_Magistral-Small-2509-GGUF",
+     "file": "mistralai_Magistral-Small-2509-IQ2_XXS.gguf",
+     "bytes": 6545122272
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-09-12"
+  },
+  {
+   "id": "mistralai/Ministral-3-14B-Instruct-2512",
+   "display_name": "Ministral 3 14B",
+   "family": "Mistral",
+   "architecture": {
+    "hidden_size": 5120,
+    "heads": 32,
+    "intermediate_size": 16384,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-bf16.gguf",
+     "bytes": 27020866656
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q8_0.gguf",
+     "bytes": 14359311776
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q6_K.gguf",
+     "bytes": 11088410016
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q5_K_M.gguf",
+     "bytes": 9620567456
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q5_K_S.gguf",
+     "bytes": 9383818656
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q4_K_M.gguf",
+     "bytes": 8239068576
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q4_K_S.gguf",
+     "bytes": 7834547616
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-IQ4_XS.gguf",
+     "bytes": 7411185056
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q3_K_L.gguf",
+     "bytes": 7210317216
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q3_K_M.gguf",
+     "bytes": 6682097056
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q3_K_S.gguf",
+     "bytes": 6074906016
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-IQ3_XXS.gguf",
+     "bytes": 5427082656
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/mistralai_Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-14B-Instruct-2512-Q2_K.gguf",
+     "bytes": 5246530976
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Ministral-3-14B-Instruct-2512-GGUF",
+     "file": "Ministral-3-14B-Instruct-2512-UD-IQ2_XXS.gguf",
+     "bytes": 4057379520
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-31"
+  },
+  {
+   "id": "mistralai/Ministral-3-3B-Instruct-2512",
+   "display_name": "Ministral 3 3B",
+   "family": "Mistral",
+   "architecture": {
+    "hidden_size": 3072,
+    "heads": 32,
+    "intermediate_size": 9216,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 26,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-bf16.gguf",
+     "bytes": 6866220736
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q8_0.gguf",
+     "bytes": 3651680224
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q6_K.gguf",
+     "bytes": 2821257184
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q5_K_M.gguf",
+     "bytes": 2473654240
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q5_K_S.gguf",
+     "bytes": 2419341280
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q4_K_M.gguf",
+     "bytes": 2146498528
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q4_K_S.gguf",
+     "bytes": 2053257184
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-IQ4_XS.gguf",
+     "bytes": 1959278560
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q3_K_L.gguf",
+     "bytes": 1934358496
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q3_K_M.gguf",
+     "bytes": 1795553248
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q3_K_S.gguf",
+     "bytes": 1639151584
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-Q2_K.gguf",
+     "bytes": 1458960352
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/mistralai_Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-3B-Instruct-2512-IQ3_XXS.gguf",
+     "bytes": 1448294368
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Ministral-3-3B-Instruct-2512-GGUF",
+     "file": "Ministral-3-3B-Instruct-2512-UD-IQ2_XXS.gguf",
+     "bytes": 1108948256
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-31"
+  },
+  {
+   "id": "mistralai/Ministral-3-8B-Instruct-2512",
+   "display_name": "Ministral 3 8B",
+   "family": "Mistral",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 14336,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 34,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 262144
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-bf16.gguf",
+     "bytes": 16987559872
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q8_0.gguf",
+     "bytes": 9028868352
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q6_K.gguf",
+     "bytes": 6972872960
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q5_K_M.gguf",
+     "bytes": 6058744064
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q5_K_S.gguf",
+     "bytes": 5916694784
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q4_K_M.gguf",
+     "bytes": 5198387456
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q4_K_S.gguf",
+     "bytes": 4954102016
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-IQ4_XS.gguf",
+     "bytes": 4696414464
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q3_K_L.gguf",
+     "bytes": 4565014784
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q3_K_M.gguf",
+     "bytes": 4242053376
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q3_K_S.gguf",
+     "bytes": 3866466560
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-IQ3_XXS.gguf",
+     "bytes": 3455359232
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/mistralai_Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "mistralai_Ministral-3-8B-Instruct-2512-Q2_K.gguf",
+     "bytes": 3352926464
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/Ministral-3-8B-Instruct-2512-GGUF",
+     "file": "Ministral-3-8B-Instruct-2512-UD-IQ2_XXS.gguf",
+     "bytes": 2637010464
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-31"
   },
   {
    "id": "mistralai/Ministral-8B-Instruct-2410",
@@ -5973,6 +10171,106 @@
    "released": null
   },
   {
+   "id": "nvidia/Llama-3.1-Nemotron-70B-Instruct-HF",
+   "display_name": "Llama 3.1 Nemotron 70B",
+   "family": "Llama 3",
+   "architecture": {
+    "hidden_size": 8192,
+    "heads": 64,
+    "intermediate_size": 28672,
+    "vocab_size": 128256,
+    "layers": {
+     "n_layers": 80,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q5_K_S.gguf",
+     "bytes": 48657451936
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q4_K_M.gguf",
+     "bytes": 42520398752
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q4_K_S.gguf",
+     "bytes": 40347224992
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-IQ4_XS.gguf",
+     "bytes": 37902666656
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q3_K_L.gguf",
+     "bytes": 37140597664
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q3_K_M.gguf",
+     "bytes": 34267499424
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q3_K_S.gguf",
+     "bytes": 30912056224
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-IQ3_XXS.gguf",
+     "bytes": 27469499296
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-Q2_K.gguf",
+     "bytes": 26375113632
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-IQ2_XS.gguf",
+     "bytes": 21142113184
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Llama-3.1-Nemotron-70B-Instruct-HF-GGUF",
+     "file": "Llama-3.1-Nemotron-70B-Instruct-HF-IQ2_XXS.gguf",
+     "bytes": 19097389984
+    }
+   ],
+   "license": "llama3.1",
+   "released": "2024-10-12"
+  },
+  {
    "id": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
    "display_name": "Llama-3.1-Nemotron-Nano-8B-v1",
    "family": "Llama 3",
@@ -6799,6 +11097,106 @@
    "released": null
   },
   {
+   "id": "swiss-ai/Apertus-70B-Instruct-2509",
+   "display_name": "Apertus 70B",
+   "family": "Apertus",
+   "architecture": {
+    "hidden_size": 8192,
+    "heads": 64,
+    "intermediate_size": 43008,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 80,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "standard",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 65536
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q5_K_S.gguf",
+     "bytes": 48692373280
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q4_K_M.gguf",
+     "bytes": 43721598752
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q4_K_S.gguf",
+     "bytes": 40446371616
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q3_K_L.gguf",
+     "bytes": 39591782176
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-IQ4_XS.gguf",
+     "bytes": 37933983520
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q3_K_M.gguf",
+     "bytes": 35535890208
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q3_K_S.gguf",
+     "bytes": 30768015136
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-IQ3_XXS.gguf",
+     "bytes": 27411523360
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-Q2_K.gguf",
+     "bytes": 27272062752
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-IQ2_XS.gguf",
+     "bytes": 21211555616
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/swiss-ai_Apertus-70B-Instruct-2509-GGUF",
+     "file": "swiss-ai_Apertus-70B-Instruct-2509-IQ2_XXS.gguf",
+     "bytes": 19203532576
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-09-01"
+  },
+  {
    "id": "swiss-ai/Apertus-8B-Instruct-2509",
    "display_name": "Apertus-8B-Instruct",
    "family": "Apertus",
@@ -6909,6 +11307,312 @@
    ],
    "license": null,
    "released": null
+  },
+  {
+   "id": "tiiuae/Falcon3-10B-Instruct",
+   "display_name": "Falcon3 10B",
+   "family": "Falcon",
+   "architecture": {
+    "hidden_size": 3072,
+    "heads": 12,
+    "intermediate_size": 23040,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 256
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "F16",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-f16.gguf",
+     "bytes": 20616557984
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q8_0.gguf",
+     "bytes": 10955241152
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q6_K.gguf",
+     "bytes": 8459400896
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q5_K_M.gguf",
+     "bytes": 7340553920
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q5_K_S.gguf",
+     "bytes": 7144191680
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q4_K_M.gguf",
+     "bytes": 6287521472
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q4_K_S.gguf",
+     "bytes": 5952157376
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-IQ4_XS.gguf",
+     "bytes": 5596886720
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q3_K_L.gguf",
+     "bytes": 5450806976
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q3_K_M.gguf",
+     "bytes": 5052479168
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q3_K_S.gguf",
+     "bytes": 4591138496
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Falcon3-10B-Instruct-GGUF",
+     "file": "Falcon3-10B-Instruct-Q2_K.gguf",
+     "bytes": 3924047552
+    }
+   ],
+   "license": "falcon-llm-license",
+   "released": "2024-12-14"
+  },
+  {
+   "id": "tiiuae/Falcon3-1B-Instruct",
+   "display_name": "Falcon3 1B",
+   "family": "Falcon",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 8,
+    "intermediate_size": 8192,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 18,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 256
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 8192
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q8_0.gguf",
+     "bytes": 1778710688
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q6_K.gguf",
+     "bytes": 1374419104
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q5_K_M.gguf",
+     "bytes": 1210923168
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q5_K_S.gguf",
+     "bytes": 1188362400
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q4_K_M.gguf",
+     "bytes": 1057044640
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q4_K_S.gguf",
+     "bytes": 1018493088
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-IQ4_XS.gguf",
+     "bytes": 969472160
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q3_K_L.gguf",
+     "bytes": 934246560
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q3_K_M.gguf",
+     "bytes": 884963488
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q3_K_S.gguf",
+     "bytes": 827193504
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Falcon3-1B-Instruct-GGUF",
+     "file": "Falcon3-1B-Instruct-Q2_K.gguf",
+     "bytes": 727087264
+    }
+   ],
+   "license": "falcon-llm-license",
+   "released": "2024-12-14"
+  },
+  {
+   "id": "tiiuae/Falcon3-3B-Instruct",
+   "display_name": "Falcon3 3B",
+   "family": "Falcon",
+   "architecture": {
+    "hidden_size": 3072,
+    "heads": 12,
+    "intermediate_size": 9216,
+    "vocab_size": 131072,
+    "layers": {
+     "n_layers": 22,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 256
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q8_0.gguf",
+     "bytes": 3434533120
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q6_K.gguf",
+     "bytes": 2652868864
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q5_K_M.gguf",
+     "bytes": 2319470848
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q5_K_S.gguf",
+     "bytes": 2277691648
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q4_K_M.gguf",
+     "bytes": 2005684480
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q4_K_S.gguf",
+     "bytes": 1933234432
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-IQ4_XS.gguf",
+     "bytes": 1836306688
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q3_K_L.gguf",
+     "bytes": 1781354752
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q3_K_M.gguf",
+     "bytes": 1673220352
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q3_K_S.gguf",
+     "bytes": 1549406464
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Falcon3-3B-Instruct-GGUF",
+     "file": "Falcon3-3B-Instruct-Q2_K.gguf",
+     "bytes": 1353879808
+    }
+   ],
+   "license": "falcon-llm-license",
+   "released": "2024-12-14"
   },
   {
    "id": "tiiuae/Falcon3-7B-Instruct",
@@ -7297,6 +12001,100 @@
    ],
    "license": "llama3.3",
    "released": "2024-12-06"
+  },
+  {
+   "id": "unsloth/Meta-Llama-3.1-70B-Instruct",
+   "display_name": "Llama 3.1 70B Instruct",
+   "family": "Llama 3",
+   "architecture": {
+    "hidden_size": 8192,
+    "heads": 64,
+    "intermediate_size": 28672,
+    "vocab_size": 128256,
+    "layers": {
+     "n_layers": 80,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q5_K_S.gguf",
+     "bytes": 48657451584
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q4_K_M.gguf",
+     "bytes": 42520398400
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q4_K_S.gguf",
+     "bytes": 40347224640
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-IQ4_XS.gguf",
+     "bytes": 37902666304
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q3_K_L.gguf",
+     "bytes": 37140597312
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q3_K_M.gguf",
+     "bytes": 34267499072
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q3_K_S.gguf",
+     "bytes": 30912055872
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-Q2_K.gguf",
+     "bytes": 26375113280
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-IQ2_XS.gguf",
+     "bytes": 21142112832
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+     "file": "Meta-Llama-3.1-70B-Instruct-IQ2_XXS.gguf",
+     "bytes": 19097389632
+    }
+   ],
+   "license": "llama3.1",
+   "released": "2024-07-23"
   },
   {
    "id": "unsloth/Meta-Llama-3.1-8B-Instruct",
@@ -8183,6 +12981,342 @@
    ],
    "license": "gemma",
    "released": "2025-03-12"
+  },
+  {
+   "id": "zai-org/GLM-4-32B-0414",
+   "display_name": "GLM-4 32B",
+   "family": "GLM",
+   "architecture": {
+    "hidden_size": 6144,
+    "heads": 48,
+    "intermediate_size": 23040,
+    "vocab_size": 151552,
+    "layers": {
+     "n_layers": 61,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q8_0.gguf",
+     "bytes": 34615226240
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q6_K.gguf",
+     "bytes": 26728492928
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q5_K_M.gguf",
+     "bytes": 23097462656
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q5_K_S.gguf",
+     "bytes": 22527176576
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q4_K_M.gguf",
+     "bytes": 19680022400
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q4_K_S.gguf",
+     "bytes": 18697645952
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-IQ4_XS.gguf",
+     "bytes": 17599442816
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q3_K_L.gguf",
+     "bytes": 17216290688
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q3_K_M.gguf",
+     "bytes": 15890562944
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q3_K_S.gguf",
+     "bytes": 14371680128
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-IQ3_XXS.gguf",
+     "bytes": 12784107392
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-Q2_K.gguf",
+     "bytes": 12292255616
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/THUDM_GLM-4-32B-0414-GGUF",
+     "file": "THUDM_GLM-4-32B-0414-IQ2_XS.gguf",
+     "bytes": 9900875648
+    }
+   ],
+   "license": "mit",
+   "released": "2025-04-07"
+  },
+  {
+   "id": "zai-org/GLM-4-9B-0414",
+   "display_name": "GLM-4 9B",
+   "family": "GLM",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 13696,
+    "vocab_size": 151552,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-bf16.gguf",
+     "bytes": 18811581568
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q8_0.gguf",
+     "bytes": 9999611264
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q6_K.gguf",
+     "bytes": 8266642816
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q5_K_M.gguf",
+     "bytes": 7050917248
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q5_K_S.gguf",
+     "bytes": 6697514368
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q4_K_M.gguf",
+     "bytes": 6166574464
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q4_K_S.gguf",
+     "bytes": 5758481792
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-IQ4_XS.gguf",
+     "bytes": 5262275968
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q3_K_L.gguf",
+     "bytes": 5196608896
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q3_K_M.gguf",
+     "bytes": 4974507392
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q3_K_S.gguf",
+     "bytes": 4592039296
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-IQ3_XXS.gguf",
+     "bytes": 4226807168
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/THUDM_GLM-4-9B-0414-GGUF",
+     "file": "THUDM_GLM-4-9B-0414-Q2_K.gguf",
+     "bytes": 4006344064
+    }
+   ],
+   "license": "mit",
+   "released": "2025-04-07"
+  },
+  {
+   "id": "zai-org/GLM-Z1-32B-0414",
+   "display_name": "GLM-Z1 32B",
+   "family": "GLM",
+   "architecture": {
+    "hidden_size": 6144,
+    "heads": 48,
+    "intermediate_size": 23040,
+    "vocab_size": 151552,
+    "layers": {
+     "n_layers": 61,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 2,
+        "head_dim": 128
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 32768
+   },
+   "benchmarks": {},
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q8_0.gguf",
+     "bytes": 34615226496
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q6_K.gguf",
+     "bytes": 26728493184
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q5_K_M.gguf",
+     "bytes": 23097462912
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q5_K_S.gguf",
+     "bytes": 22527176832
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q4_K_M.gguf",
+     "bytes": 19680022656
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q4_K_S.gguf",
+     "bytes": 18697646208
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-IQ4_XS.gguf",
+     "bytes": 17599443072
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q3_K_L.gguf",
+     "bytes": 17216290944
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q3_K_M.gguf",
+     "bytes": 15890563200
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q3_K_S.gguf",
+     "bytes": 14371680384
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-IQ3_XXS.gguf",
+     "bytes": 12784107648
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-Q2_K.gguf",
+     "bytes": 12292255872
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/THUDM_GLM-Z1-32B-0414-GGUF",
+     "file": "THUDM_GLM-Z1-32B-0414-IQ2_XS.gguf",
+     "bytes": 9900875904
+    }
+   ],
+   "license": "mit",
+   "released": "2025-04-08"
   }
  ]
 }

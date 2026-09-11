@@ -353,8 +353,8 @@ export function PlanView({
         </ul>
         {plan.builds.length === 0 && (
           <p className="mt-2 text-[13px] text-[var(--color-ink-faint)]">
-            No GGUF build is published for this model, so every size above is
-            computed from its tensor shapes rather than measured.
+            No single-file GGUF build is recorded for this model, so every size
+            above is computed from its tensor shapes rather than measured.
           </p>
         )}
       </Card>

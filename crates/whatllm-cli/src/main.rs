@@ -1203,8 +1203,8 @@ fn print_launch(launch: &Launch, style: Style) {
             println!(
                 "  {}",
                 style.dim(&format!(
-                    "No {quant} build is published for this model, so there is nothing to \
-                     fetch at the format that was sized"
+                    "No single-file {quant} build is recorded for this model, so there is \
+                     nothing to fetch at the format that was sized"
                 ))
             );
         }

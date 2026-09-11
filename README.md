@@ -76,17 +76,17 @@ the desktop application runs on it.
 | `whatllm-hw`: hardware detection | Working (Windows, Linux, macOS) |
 | `whatllm-probe`: on-device calibration | Working (host memory bandwidth) |
 | `whatllm-state`: catalog and calibration on disk | Working |
-| `whatllm-cli`: `doctor`, `probe`, `fit`, `plan`, `cost` | Working |
+| `whatllm-cli`: `doctor`, `probe`, `fit`, `plan`, `installed`, `cost` | Working |
 | Desktop application: Tauri 2, React 19, Tailwind v4 | Working (Machine, Models, Plan, Cost) |
 | Handing the model to its runtime: a download, a Modelfile, or the command that works | Working (llama.cpp, LM Studio, Ollama, vLLM, MLX) |
-| Model catalog | 56 models, 701 measured builds |
+| Model catalog | 97 models, 1196 measured builds |
 | Continuous validation | size and throughput models checked on every rebuild |
 | Nightly catalog refresh | GitHub Actions, refuses to shrink the catalog |
 | GPU compute probe (for time-to-first-token) | Not started |
 | Catalog updates over the network | Not started |
-| Provider detection: what is already downloaded | Not started |
+| What is already on this machine: WhatLLM's folder, LM Studio, Ollama, llama.cpp's cache, the HuggingFace cache | Working (disk only, identified by exact size) |
 
-176 Rust tests and 10 Python tests, no network access in any of them, and `cargo clippy --all-targets`
+188 Rust tests and 10 Python tests, no network access in any of them, and `cargo clippy --all-targets`
 clean under `pedantic`.
 
 **Nothing here reaches the network unless you press a button that says it
@@ -111,12 +111,12 @@ is the same `Confidence` the CLI prints, drawn instead of named.
 
 Both halves of the model are checked against reality rather than argued for.
 
-### Memory: 1.5% against 701 real files, checked on every rebuild
+### Memory: 1.4% against 1169 real files, checked on every rebuild
 
 The catalog records the exact byte count of every published build it knows
 about, which makes the check free and offline: compute each model's size from
 its architecture and compare against what the file actually weighs. Across
-**701 builds of 56 models** the mean absolute error is **1.5%**.
+**1169 builds of 97 models** the mean absolute error is **1.4%**.
 
 That number is not a measurement somebody took once. `size_validation` runs it
 on every rebuild of the catalog and on every pull request, so an architecture
