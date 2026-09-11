@@ -16,6 +16,7 @@ use render::Style;
 use std::path::PathBuf;
 use whatllm_core::cost::{self, ApiPricing, EnergyProfile, HardwareInvestment, Workload};
 use whatllm_core::fit::{self, FitContext, FitNote, FitRequest, ModelFit, Preference, RunMode};
+use whatllm_core::launch::{self, Host, Launch, LaunchNote, LaunchRequest, Target, Weights};
 use whatllm_core::memory::{self, LoadConfig, RuntimeProfile};
 use whatllm_core::model::{Catalog, ModelEntry};
 use whatllm_core::perf::{self, Calibration};
@@ -69,23 +70,45 @@ impl From<PreferenceArg> for Preference {
 }
 
 /// The runtime the model will be hosted by.
+///
+/// Each name answers two questions. How much memory the runtime needs is its
+/// profile, and LM Studio and Ollama share llama.cpp's because they are
+/// llama.cpp underneath. What to do to get the model running is its host, and
+/// there the three differ: where the file goes, and what starts it.
 #[derive(Copy, Clone, Debug, PartialEq, Eq, ValueEnum)]
 enum RuntimeArg {
-    /// llama.cpp, Ollama or LM Studio with flash attention.
+    /// llama.cpp with flash attention.
     LlamaCpp,
     /// The same without flash attention, which costs a great deal at long
     /// context.
     LlamaCppNoFlash,
+    /// LM Studio, which is llama.cpp reading its own folder.
+    LmStudio,
+    /// Ollama, which is llama.cpp reading its own store.
+    Ollama,
     /// vLLM.
     Vllm,
     /// MLX on Apple Silicon.
     Mlx,
 }
 
+impl RuntimeArg {
+    /// The program that will host the model.
+    const fn host(self) -> Host {
+        match self {
+            Self::LlamaCpp | Self::LlamaCppNoFlash => Host::LlamaCpp,
+            Self::LmStudio => Host::LmStudio,
+            Self::Ollama => Host::Ollama,
+            Self::Vllm => Host::Vllm,
+            Self::Mlx => Host::Mlx,
+        }
+    }
+}
+
 impl From<RuntimeArg> for RuntimeProfile {
     fn from(value: RuntimeArg) -> Self {
         match value {
-            RuntimeArg::LlamaCpp => Self::LLAMA_CPP,
+            RuntimeArg::LlamaCpp | RuntimeArg::LmStudio | RuntimeArg::Ollama => Self::LLAMA_CPP,
             RuntimeArg::LlamaCppNoFlash => Self::LLAMA_CPP_NO_FLASH,
             RuntimeArg::Vllm => Self::VLLM,
             RuntimeArg::Mlx => Self::MLX,
@@ -254,6 +277,55 @@ impl Session {
             0 => anyhow::bail!("no model matches `{query}`. Try `whatllm fit` to see the catalog."),
             _ => Ok(hits[0]),
         }
+    }
+
+    /// How to get one model running here, on the runtime that was asked for.
+    ///
+    /// The file's destination is the one the window would write to, read
+    /// from the same place, so the command printed here names a path the
+    /// window's download actually produces.
+    fn launch(&self, model: &ModelEntry, fit: &ModelFit, sizing: &SizingArgs) -> Launch {
+        let host = sizing.runtime.host();
+        let build = model.build(fit.quant.id);
+        let target = build
+            .filter(|_| host.runs_gguf())
+            .and_then(|build| state::weights::target(host, build).ok());
+        let directory = target
+            .as_ref()
+            .map(|t| t.directory.display().to_string())
+            .unwrap_or_default();
+        let path = match (&target, build) {
+            (Some(t), Some(b)) => t.directory.join(&b.file).display().to_string(),
+            _ => String::new(),
+        };
+        let host_tree = target
+            .as_ref()
+            .and_then(|t| t.host_tree.as_ref())
+            .map(|p| p.display().to_string());
+        let host_tree_missing = target
+            .as_ref()
+            .and_then(|t| t.host_tree_missing.as_ref())
+            .map(|p| p.display().to_string());
+
+        launch::launch(&LaunchRequest {
+            host,
+            platform: whatllm_hw::platform(),
+            apple_silicon: whatllm_hw::apple_silicon(&self.detection.system),
+            model,
+            build,
+            quant: fit.quant.id,
+            kv_quant: fit.kv_quant,
+            run_mode: fit.run_mode,
+            flash_attention: RuntimeProfile::from(sizing.runtime).flash_attention,
+            context: sizing.context,
+            parallel: sizing.parallel.max(1),
+            target: Target {
+                directory: &directory,
+                path: &path,
+                host_tree: host_tree.as_deref(),
+                host_tree_missing: host_tree_missing.as_deref(),
+            },
+        })
     }
 
     fn solve(&self, model: &ModelEntry, request: &FitRequest) -> Option<ModelFit> {
@@ -913,12 +985,158 @@ fn plan(session: &Session, query: &str, sizing: &SizingArgs) -> Result<()> {
         }
     }
 
-    if let Some(build) = model.build(fit.quant.id) {
-        println!("{}", render::heading(style, "Get it"));
-        println!("  {}", style.dim(&build.download_command()));
-    }
+    // Then what: the file, and the command that starts it as it was sized.
+    // The runtime decides both, and for two of them there is no file at all.
+    print_launch(&session.launch(model, &fit, sizing), style);
     println!();
     Ok(())
+}
+
+/// Say how to get the model running, in order: the weights, a file the host
+/// wants beside them, the commands, and what to know before typing them.
+fn print_launch(launch: &Launch, style: Style) {
+    let host = launch.host.label();
+    println!("{}", render::heading(style, "Run it"));
+    match &launch.weights {
+        Weights::Download {
+            path,
+            bytes,
+            command,
+            ..
+        } => {
+            println!(
+                "  {}",
+                style.dim(&format!("{} to {path}", render::bytes(*bytes)))
+            );
+            println!("  {command}");
+        }
+        Weights::DownloadIntoTree {
+            path,
+            bytes,
+            command,
+            ..
+        } => {
+            println!(
+                "  {}",
+                style.dim(&format!(
+                    "{} into {host}'s own folder, at {path}",
+                    render::bytes(*bytes)
+                ))
+            );
+            println!("  {command}");
+        }
+        Weights::HostFetches { format, repo } => {
+            println!(
+                "  {}",
+                style.dim(&format!(
+                    "Nothing to download here: {host} fetches {repo} as {format} itself"
+                ))
+            );
+        }
+        Weights::Search {
+            format,
+            url,
+            command_shape,
+        } => {
+            println!(
+                "  {}",
+                style.dim(&format!(
+                    "Nothing to download here: {host} runs {format}, and the catalog does \
+                     not record which conversion exists. Search for one:"
+                ))
+            );
+            println!("  {url}");
+            println!(
+                "  {}",
+                style.dim(&format!(
+                    "then, with the repository filled in: {command_shape}"
+                ))
+            );
+        }
+        Weights::NoBuild { quant } => {
+            println!(
+                "  {}",
+                style.dim(&format!(
+                    "No {quant} build is published for this model, so there is nothing to \
+                     fetch at the format that was sized"
+                ))
+            );
+        }
+    }
+
+    if let Some(file) = &launch.file {
+        println!(
+            "  {}",
+            style.dim(&format!("Write {} beside it, saying:", file.name))
+        );
+        for line in file.content.lines() {
+            println!("      {line}");
+        }
+    }
+    for command in &launch.commands {
+        println!("  {command}");
+    }
+    for note in &launch.notes {
+        println!(
+            "  {} {}",
+            style.warn("→"),
+            describe_launch_note(note, host, style)
+        );
+    }
+}
+
+/// Put a launch caveat into words.
+fn describe_launch_note(note: &LaunchNote, host: &str, style: Style) -> String {
+    match note {
+        LaunchNote::NotThisFormat { host_format } => format!(
+            "GGUF is not {host}'s format ({host_format}). The sizing above describes the \
+             same model in a different container."
+        ),
+        LaunchNote::FullPrecisionWeights { bytes } => format!(
+            "The original weights are 16-bit: about {}, not the build sized above.",
+            style.bold(&render::bytes(*bytes))
+        ),
+        LaunchNote::HostNeeds { platform } => {
+            format!("{host} needs {platform}, which this machine is not.")
+        }
+        LaunchNote::HostNotInstalled { looked_in } => format!(
+            "{host} does not seem to be installed: {looked_in} is not there. The file goes to \
+             the usual directory instead."
+        ),
+        LaunchNote::AppearsInHost { name } => {
+            format!("Once it has landed it appears in {host} under {name}.")
+        }
+        LaunchNote::SecondCopy { bytes } => format!(
+            "{host} copies the file into its own store, so the disk ends up holding two: {} \
+             more.",
+            render::bytes(*bytes)
+        ),
+        LaunchNote::HostEnvironment { variables } => {
+            let settings: Vec<String> = variables
+                .iter()
+                .map(|v| style.bold(&format!("{}={}", v.name, v.value)))
+                .collect();
+            format!(
+                "Before starting {host}, set {}. The sizing assumed them.",
+                settings.join(" ")
+            )
+        }
+        LaunchNote::CacheFormatUnavailable { sized, offers } => format!(
+            "The cache was sized as {sized}, which {host} does not offer. It has {}; a wider \
+             one needs more memory than sized, a narrower one less.",
+            offers.join(", ")
+        ),
+        LaunchNote::VCacheUncompressed { extra_bytes } => format!(
+            "Without flash attention the value half of the cache stays at 16 bits: about {} \
+             more than sized.",
+            render::bytes(*extra_bytes)
+        ),
+        LaunchNote::SetContextInHost { tokens } => format!(
+            "{host} sets the context length in its own window. Set it to {}, which is what \
+             was sized; its default is not.",
+            render::tokens(*tokens)
+        ),
+    }
 }
 
 /// Put a fit recommendation into words.
