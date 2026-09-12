@@ -609,6 +609,870 @@
    "released": null
   },
   {
+   "id": "LiquidAI/LFM2-2.6B",
+   "display_name": "LFM2 2.6B",
+   "family": "LFM",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 10752,
+    "vocab_size": 65536,
+    "layers": {
+     "n_layers": 30,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 128000
+   },
+   "benchmarks": {
+    "gpqa_diamond": 26.6,
+    "ifeval": 79.6
+   },
+   "builds": [
+    {
+     "quant": "F16",
+     "repo": "LiquidAI/LFM2-2.6B-GGUF",
+     "file": "LFM2-2.6B-F16.gguf",
+     "bytes": 5141459168
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "LiquidAI/LFM2-2.6B-GGUF",
+     "file": "LFM2-2.6B-Q8_0.gguf",
+     "bytes": 2733011168
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "LiquidAI/LFM2-2.6B-GGUF",
+     "file": "LFM2-2.6B-Q6_K.gguf",
+     "bytes": 2110828768
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "LiquidAI/LFM2-2.6B-GGUF",
+     "file": "LFM2-2.6B-Q5_K_M.gguf",
+     "bytes": 1828958432
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "LiquidAI/LFM2-2.6B-GGUF",
+     "file": "LFM2-2.6B-Q4_K_M.gguf",
+     "bytes": 1563668704
+    }
+   ],
+   "license": "lfm1.0",
+   "released": "2025-07-10"
+  },
+  {
+   "id": "LiquidAI/LFM2-8B-A1B",
+   "display_name": "LFM2 8B-A1B",
+   "family": "LFM",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 7168,
+    "vocab_size": 65536,
+    "layers": {
+     "n_layers": 24,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 128000,
+    "moe": {
+     "experts": 32,
+     "experts_per_token": 4,
+     "expert_intermediate": 1792,
+     "shared_experts": 0,
+     "shared_intermediate": 0,
+     "dense_layers": 2
+    }
+   },
+   "benchmarks": {
+    "mmlu_pro": 37.4,
+    "gpqa_diamond": 29.3,
+    "math": 74.2,
+    "ifeval": 77.6
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-bf16.gguf",
+     "bytes": 16685562560
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q8_0.gguf",
+     "bytes": 8868428736
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q6_K.gguf",
+     "bytes": 6850526144
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q5_K_M.gguf",
+     "bytes": 5921913792
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q5_K_S.gguf",
+     "bytes": 5761760192
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q4_K_M.gguf",
+     "bytes": 5051071424
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q4_K_S.gguf",
+     "bytes": 4891179968
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-IQ4_XS.gguf",
+     "bytes": 4484791232
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q3_K_L.gguf",
+     "bytes": 3960241088
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q3_K_M.gguf",
+     "bytes": 3817569216
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q3_K_S.gguf",
+     "bytes": 3654761408
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-IQ3_XXS.gguf",
+     "bytes": 3307322304
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/LiquidAI_LFM2-8B-A1B-GGUF",
+     "file": "LiquidAI_LFM2-8B-A1B-Q2_K.gguf",
+     "bytes": 2947627968
+    }
+   ],
+   "license": null,
+   "released": null
+  },
+  {
+   "id": "LiquidAI/LFM2.5-1.2B-Instruct",
+   "display_name": "LFM2.5 1.2B",
+   "family": "LFM",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 8192,
+    "vocab_size": 65536,
+    "layers": {
+     "n_layers": 16,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 128000
+   },
+   "benchmarks": {
+    "mmlu_pro": 44.4,
+    "gpqa_diamond": 38.9,
+    "ifeval": 86.2
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-BF16.gguf",
+     "bytes": 2343326944
+    },
+    {
+     "quant": "F16",
+     "repo": "LiquidAI/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-F16.gguf",
+     "bytes": 2343326528
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q8_0.gguf",
+     "bytes": 1246254304
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q6_K.gguf",
+     "bytes": 962843872
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q5_K_M.gguf",
+     "bytes": 843355360
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q5_K_S.gguf",
+     "bytes": 825251040
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q4_K_M.gguf",
+     "bytes": 730895584
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q4_K_S.gguf",
+     "bytes": 700470496
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q3_K_M.gguf",
+     "bytes": 600347872
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q3_K_S.gguf",
+     "bytes": 558159072
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+     "file": "LFM2.5-1.2B-Instruct-Q2_K.gguf",
+     "bytes": 483398880
+    }
+   ],
+   "license": "lfm1.0",
+   "released": "2026-01-15"
+  },
+  {
+   "id": "LiquidAI/LFM2.5-1.2B-Thinking",
+   "display_name": "LFM2.5 1.2B Thinking",
+   "family": "LFM",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 8192,
+    "vocab_size": 65536,
+    "layers": {
+     "n_layers": 16,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 4096,
+        "params": 16783360
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 128000
+   },
+   "benchmarks": {
+    "mmlu_pro": 49.6,
+    "gpqa_diamond": 37.9,
+    "math": 88.0,
+    "ifeval": 88.4
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-BF16.gguf",
+     "bytes": 2343326944
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q8_0.gguf",
+     "bytes": 1246254304
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q6_K.gguf",
+     "bytes": 962843872
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q5_K_M.gguf",
+     "bytes": 843355360
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q5_K_S.gguf",
+     "bytes": 825251040
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q4_K_M.gguf",
+     "bytes": 730895584
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q4_K_S.gguf",
+     "bytes": 700470496
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q3_K_M.gguf",
+     "bytes": 600347872
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q3_K_S.gguf",
+     "bytes": 558159072
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "unsloth/LFM2.5-1.2B-Thinking-GGUF",
+     "file": "LFM2.5-1.2B-Thinking-Q2_K.gguf",
+     "bytes": 483398880
+    }
+   ],
+   "license": null,
+   "released": null
+  },
+  {
    "id": "NousResearch/Hermes-4-70B",
    "display_name": "Hermes 4 70B",
    "family": "Hermes",
@@ -8179,6 +9043,699 @@
    ],
    "license": "apache-2.0",
    "released": "2025-04-09"
+  },
+  {
+   "id": "ibm-granite/granite-4.0-h-micro",
+   "display_name": "Granite 4.0 H Micro",
+   "family": "Granite",
+   "architecture": {
+    "hidden_size": 2048,
+    "heads": 32,
+    "intermediate_size": 8192,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 537344,
+        "params": 25847232
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {
+    "mmlu_pro": 43.5,
+    "gpqa_diamond": 32.1,
+    "ifeval": 86.9
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-bf16.gguf",
+     "bytes": 6388575872
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q8_0.gguf",
+     "bytes": 3397676672
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q6_K.gguf",
+     "bytes": 2625027712
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q5_K_M.gguf",
+     "bytes": 2273455744
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q5_K_S.gguf",
+     "bytes": 2228612736
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q4_K_M.gguf",
+     "bytes": 1942564480
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q4_K_S.gguf",
+     "bytes": 1866526336
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-IQ4_XS.gguf",
+     "bytes": 1762242176
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q3_K_L.gguf",
+     "bytes": 1637523072
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q3_K_M.gguf",
+     "bytes": 1555472000
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q3_K_S.gguf",
+     "bytes": 1459101312
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-IQ3_XXS.gguf",
+     "bytes": 1291370112
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-h-micro-Q2_K.gguf",
+     "bytes": 1226247808
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/granite-4.0-h-micro-GGUF",
+     "file": "granite-4.0-h-micro-UD-IQ2_XXS.gguf",
+     "bytes": 942522304
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-02"
+  },
+  {
+   "id": "ibm-granite/granite-4.0-h-small",
+   "display_name": "Granite 4.0 H Small",
+   "family": "Granite",
+   "architecture": {
+    "hidden_size": 4096,
+    "heads": 32,
+    "intermediate_size": 768,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 1073920,
+        "params": 102286976
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072,
+    "moe": {
+     "experts": 72,
+     "experts_per_token": 10,
+     "expert_intermediate": 768,
+     "shared_experts": 1,
+     "shared_intermediate": 1536,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {
+    "mmlu_pro": 55.5,
+    "gpqa_diamond": 40.6,
+    "ifeval": 89.9
+   },
+   "builds": [
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q8_0.gguf",
+     "bytes": 34264885888
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q6_K.gguf",
+     "bytes": 26654960256
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q5_K_M.gguf",
+     "bytes": 23139101312
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q5_K_S.gguf",
+     "bytes": 22444944000
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q4_K_M.gguf",
+     "bytes": 19747023488
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q4_K_S.gguf",
+     "bytes": 19095202432
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-IQ4_XS.gguf",
+     "bytes": 17559890560
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q3_K_L.gguf",
+     "bytes": 15572068992
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q3_K_M.gguf",
+     "bytes": 15022090880
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q3_K_S.gguf",
+     "bytes": 14417193600
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-IQ3_XXS.gguf",
+     "bytes": 13120268928
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-Q2_K.gguf",
+     "bytes": 11736263296
+    },
+    {
+     "quant": "IQ2_XS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-IQ2_XS.gguf",
+     "bytes": 9290017408
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+     "file": "ibm-granite_granite-4.0-h-small-IQ2_XXS.gguf",
+     "bytes": 8147200640
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-02"
+  },
+  {
+   "id": "ibm-granite/granite-4.0-h-tiny",
+   "display_name": "Granite 4.0 H Tiny",
+   "family": "Granite",
+   "architecture": {
+    "hidden_size": 1536,
+    "heads": 12,
+    "intermediate_size": 512,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 4,
+        "head_dim": 128
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      },
+      {
+       "attention": {
+        "kind": "recurrent",
+        "state_elems": 403200,
+        "params": 14642576
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": false,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072,
+    "moe": {
+     "experts": 64,
+     "experts_per_token": 6,
+     "expert_intermediate": 512,
+     "shared_experts": 1,
+     "shared_intermediate": 1024,
+     "dense_layers": 0
+    }
+   },
+   "benchmarks": {
+    "mmlu_pro": 44.9,
+    "gpqa_diamond": 32.6,
+    "ifeval": 84.8
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-bf16.gguf",
+     "bytes": 13891205952
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q8_0.gguf",
+     "bytes": 7390331712
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q6_K.gguf",
+     "bytes": 5757412416
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q5_K_M.gguf",
+     "bytes": 5016314688
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q5_K_S.gguf",
+     "bytes": 4859556672
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q4_K_M.gguf",
+     "bytes": 4297134912
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q4_K_S.gguf",
+     "bytes": 4150895424
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-IQ4_XS.gguf",
+     "bytes": 3819085632
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q3_K_L.gguf",
+     "bytes": 3408826944
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q3_K_M.gguf",
+     "bytes": 3285234240
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q3_K_S.gguf",
+     "bytes": 3150926400
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-IQ3_XXS.gguf",
+     "bytes": 2868669504
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+     "file": "ibm-granite_granite-4.0-h-tiny-Q2_K.gguf",
+     "bytes": 2585322816
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/granite-4.0-h-tiny-GGUF",
+     "file": "granite-4.0-h-tiny-UD-IQ2_XXS.gguf",
+     "bytes": 2393382304
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-02"
+  },
+  {
+   "id": "ibm-granite/granite-4.0-micro",
+   "display_name": "Granite 4.0 Micro",
+   "family": "Granite",
+   "architecture": {
+    "hidden_size": 2560,
+    "heads": 40,
+    "intermediate_size": 8192,
+    "vocab_size": 100352,
+    "layers": {
+     "n_layers": 40,
+     "cycle": [
+      {
+       "attention": {
+        "kind": "grouped",
+        "kv_heads": 8,
+        "head_dim": 64
+       }
+      }
+     ]
+    },
+    "ffn": "gated",
+    "tied_embeddings": true,
+    "norms_per_layer": 2,
+    "softcapped_attention": false,
+    "native_expert_quant": null,
+    "max_context": 131072
+   },
+   "benchmarks": {
+    "mmlu_pro": 44.5,
+    "gpqa_diamond": 30.1,
+    "ifeval": 85.5
+   },
+   "builds": [
+    {
+     "quant": "BF16",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-bf16.gguf",
+     "bytes": 6809656448
+    },
+    {
+     "quant": "Q8_0",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q8_0.gguf",
+     "bytes": 3619691936
+    },
+    {
+     "quant": "Q6_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q6_K.gguf",
+     "bytes": 2795617696
+    },
+    {
+     "quant": "Q5_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q5_K_M.gguf",
+     "bytes": 2437012896
+    },
+    {
+     "quant": "Q5_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q5_K_S.gguf",
+     "bytes": 2377825696
+    },
+    {
+     "quant": "Q4_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q4_K_M.gguf",
+     "bytes": 2099502496
+    },
+    {
+     "quant": "Q4_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q4_K_S.gguf",
+     "bytes": 1998372256
+    },
+    {
+     "quant": "IQ4_XS",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-IQ4_XS.gguf",
+     "bytes": 1894497696
+    },
+    {
+     "quant": "Q3_K_L",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q3_K_L.gguf",
+     "bytes": 1864187296
+    },
+    {
+     "quant": "Q3_K_M",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q3_K_M.gguf",
+     "bytes": 1725578656
+    },
+    {
+     "quant": "Q3_K_S",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q3_K_S.gguf",
+     "bytes": 1566817696
+    },
+    {
+     "quant": "IQ3_XXS",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-IQ3_XXS.gguf",
+     "bytes": 1387290016
+    },
+    {
+     "quant": "Q2_K",
+     "repo": "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+     "file": "ibm-granite_granite-4.0-micro-Q2_K.gguf",
+     "bytes": 1371438496
+    },
+    {
+     "quant": "IQ2_XXS",
+     "repo": "unsloth/granite-4.0-micro-GGUF",
+     "file": "granite-4.0-micro-UD-IQ2_XXS.gguf",
+     "bytes": 1035525888
+    }
+   ],
+   "license": "apache-2.0",
+   "released": "2025-10-02"
   },
   {
    "id": "internlm/internlm2_5-20b-chat",

@@ -349,7 +349,7 @@
  },
  {
   "id": "LiquidAI/LFM2-8B-A1B",
-  "display_name": "LFM2-8B-A1B",
+  "display_name": "LFM2 8B-A1B",
   "family": "LFM",
   "gguf_repos": [
    "bartowski/LiquidAI_LFM2-8B-A1B-GGUF"
@@ -364,7 +364,7 @@
  },
  {
   "id": "LiquidAI/LFM2.5-1.2B-Thinking",
-  "display_name": "LFM2.5-1.2B-Thinking",
+  "display_name": "LFM2.5 1.2B Thinking",
   "family": "LFM",
   "gguf_repos": [
    "unsloth/LFM2.5-1.2B-Thinking-GGUF"
@@ -1670,5 +1670,105 @@
    "unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF"
   ],
   "benchmarks": {}
+ },
+ {
+  "id": "LiquidAI/LFM2-2.6B",
+  "display_name": "LFM2 2.6B",
+  "family": "LFM",
+  "license": "lfm1.0",
+  "released": "2025-07-10",
+  "gguf_repos": [
+   "LiquidAI/LFM2-2.6B-GGUF"
+  ],
+  "benchmarks": {
+   "gpqa_diamond": 26.6,
+   "ifeval": 79.6
+  },
+  "benchmark_source": "https://huggingface.co/LiquidAI/LFM2-2.6B"
+ },
+ {
+  "id": "LiquidAI/LFM2.5-1.2B-Instruct",
+  "display_name": "LFM2.5 1.2B",
+  "family": "LFM",
+  "license": "lfm1.0",
+  "released": "2026-01-15",
+  "gguf_repos": [
+   "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+   "LiquidAI/LFM2.5-1.2B-Instruct-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 44.4,
+   "gpqa_diamond": 38.9,
+   "ifeval": 86.2
+  },
+  "benchmark_source": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct"
+ },
+ {
+  "id": "ibm-granite/granite-4.0-h-micro",
+  "display_name": "Granite 4.0 H Micro",
+  "family": "Granite",
+  "license": "apache-2.0",
+  "released": "2025-10-02",
+  "gguf_repos": [
+   "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+   "unsloth/granite-4.0-h-micro-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 43.5,
+   "gpqa_diamond": 32.1,
+   "ifeval": 86.9
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-4.0-h-small (the family table, one column per size)"
+ },
+ {
+  "id": "ibm-granite/granite-4.0-h-tiny",
+  "display_name": "Granite 4.0 H Tiny",
+  "family": "Granite",
+  "license": "apache-2.0",
+  "released": "2025-10-02",
+  "gguf_repos": [
+   "bartowski/ibm-granite_granite-4.0-h-tiny-GGUF",
+   "unsloth/granite-4.0-h-tiny-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 44.9,
+   "gpqa_diamond": 32.6,
+   "ifeval": 84.8
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-4.0-h-small (the family table, one column per size)"
+ },
+ {
+  "id": "ibm-granite/granite-4.0-h-small",
+  "display_name": "Granite 4.0 H Small",
+  "family": "Granite",
+  "license": "apache-2.0",
+  "released": "2025-10-02",
+  "gguf_repos": [
+   "bartowski/ibm-granite_granite-4.0-h-small-GGUF",
+   "unsloth/granite-4.0-h-small-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 55.5,
+   "gpqa_diamond": 40.6,
+   "ifeval": 89.9
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-4.0-h-small (the family table, one column per size)"
+ },
+ {
+  "id": "ibm-granite/granite-4.0-micro",
+  "display_name": "Granite 4.0 Micro",
+  "family": "Granite",
+  "license": "apache-2.0",
+  "released": "2025-10-02",
+  "gguf_repos": [
+   "bartowski/ibm-granite_granite-4.0-micro-GGUF",
+   "unsloth/granite-4.0-micro-GGUF"
+  ],
+  "benchmarks": {
+   "mmlu_pro": 44.5,
+   "gpqa_diamond": 30.1,
+   "ifeval": 85.5
+  },
+  "benchmark_source": "https://huggingface.co/ibm-granite/granite-4.0-h-small (the family table, one column per size)"
  }
 ]
