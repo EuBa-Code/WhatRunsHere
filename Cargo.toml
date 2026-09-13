@@ -1,13 +1,13 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/whatllm-core",
-    "crates/whatllm-hw",
-    "crates/whatllm-probe",
-    "crates/whatllm-state",
-    "crates/whatllm-providers",
-    "crates/whatllm-cli",
-    "crates/whatllm-app",
+    "crates/whatrunshere-core",
+    "crates/whatrunshere-hw",
+    "crates/whatrunshere-probe",
+    "crates/whatrunshere-state",
+    "crates/whatrunshere-providers",
+    "crates/whatrunshere-cli",
+    "crates/whatrunshere-app",
 ]
 
 [workspace.package]
@@ -15,15 +15,15 @@ version = "0.1.0"
 edition = "2021"
 rust-version = "1.85"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/eugeniobarberini/whatllm"
-authors = ["WhatLLM contributors"]
+repository = "https://github.com/EuBa-Code/WhatRunsHere"
+authors = ["Eugenio Barberini"]
 
 [workspace.dependencies]
-whatllm-core = { path = "crates/whatllm-core", version = "0.1.0" }
-whatllm-hw = { path = "crates/whatllm-hw", version = "0.1.0" }
-whatllm-probe = { path = "crates/whatllm-probe", version = "0.1.0" }
-whatllm-state = { path = "crates/whatllm-state", version = "0.1.0" }
-whatllm-providers = { path = "crates/whatllm-providers", version = "0.1.0" }
+whatrunshere-core = { path = "crates/whatrunshere-core", version = "0.1.0" }
+whatrunshere-hw = { path = "crates/whatrunshere-hw", version = "0.1.0" }
+whatrunshere-probe = { path = "crates/whatrunshere-probe", version = "0.1.0" }
+whatrunshere-state = { path = "crates/whatrunshere-state", version = "0.1.0" }
+whatrunshere-providers = { path = "crates/whatrunshere-providers", version = "0.1.0" }
 serde = { version = "1", features = ["derive"] }
 thiserror = "1"
 
@@ -31,7 +31,7 @@ thiserror = "1"
 # machine: the unoptimised streaming loop reports around 0.3 GB/s on hardware
 # that sustains 40. The probe is therefore optimised in every profile, so that
 # `cargo run` and `cargo test` measure the same thing a release build does.
-[profile.dev.package.whatllm-probe]
+[profile.dev.package.whatrunshere-probe]
 opt-level = 3
 
 [profile.release]

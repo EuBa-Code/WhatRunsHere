@@ -39,13 +39,13 @@ jobs:
       # page is quoting an answer the engine no longer gives, which is the
       # one kind of wrong this project cannot afford in its shop window.
       - name: Regenerate the demo figures
-        run: cargo run --release -p whatllm-cli --example demo_data
+        run: cargo run --release -p whatrunshere-cli --example demo_data
 
       - name: Fail if the page is out of date
         run: |
           if ! git diff --quiet -- site/index.html; then
             echo "::error file=site/index.html::The figures in the download page no longer match the engine."
-            echo "Run: cargo run --release -p whatllm-cli --example demo_data"
+            echo "Run: cargo run --release -p whatrunshere-cli --example demo_data"
             git --no-pager diff --stat -- site/index.html
             exit 1
           fi

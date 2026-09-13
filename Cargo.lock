@@ -4708,7 +4708,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "whatllm-app"
+name = "whatrunshere-app"
 version = "0.1.0"
 dependencies = [
  "base64 0.23.1",
@@ -4722,30 +4722,30 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-dialog",
  "tokio",
- "whatllm-core",
- "whatllm-hw",
- "whatllm-probe",
- "whatllm-providers",
- "whatllm-state",
+ "whatrunshere-core",
+ "whatrunshere-hw",
+ "whatrunshere-probe",
+ "whatrunshere-providers",
+ "whatrunshere-state",
 ]
 
 [[package]]
-name = "whatllm-cli"
+name = "whatrunshere-cli"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
  "serde",
  "serde_json",
- "whatllm-core",
- "whatllm-hw",
- "whatllm-probe",
- "whatllm-providers",
- "whatllm-state",
+ "whatrunshere-core",
+ "whatrunshere-hw",
+ "whatrunshere-probe",
+ "whatrunshere-providers",
+ "whatrunshere-state",
 ]
 
 [[package]]
-name = "whatllm-core"
+name = "whatrunshere-core"
 version = "0.1.0"
 dependencies = [
  "serde",
@@ -4754,7 +4754,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "whatllm-hw"
+name = "whatrunshere-hw"
 version = "0.1.0"
 dependencies = [
  "nvml-wrapper",
@@ -4762,38 +4762,38 @@ dependencies = [
  "serde",
  "serde_json",
  "sysinfo",
- "whatllm-core",
+ "whatrunshere-core",
  "winreg 0.56.0",
 ]
 
 [[package]]
-name = "whatllm-probe"
+name = "whatrunshere-probe"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
 
 [[package]]
-name = "whatllm-providers"
+name = "whatrunshere-providers"
 version = "0.1.0"
 dependencies = [
  "dirs 7.0.0",
  "serde",
  "serde_json",
- "whatllm-core",
- "whatllm-state",
+ "whatrunshere-core",
+ "whatrunshere-state",
 ]
 
 [[package]]
-name = "whatllm-state"
+name = "whatrunshere-state"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "dirs 7.0.0",
  "serde",
  "serde_json",
- "whatllm-core",
- "whatllm-hw",
+ "whatrunshere-core",
+ "whatrunshere-hw",
 ]
 
 [[package]]

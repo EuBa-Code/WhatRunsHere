@@ -1,0 +1,54 @@
+[package]
+name = "whatrunshere-app"
+description = "The WhatRunsHere desktop application."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+default-run = "whatrunshere-app"
+
+[lib]
+name = "whatrunshere_app"
+path = "src/lib.rs"
+
+[[bin]]
+name = "whatrunshere-app"
+path = "src/main.rs"
+
+[lints.rust]
+missing_docs = "warn"
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+cast_precision_loss = "allow"
+cast_possible_truncation = "allow"
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+
+[dependencies]
+base64 = "0.23.1"
+dirs = "7.0.0"
+futures-util = { version = "0.3.34", default-features = false, features = ["std"] }
+reqwest = { version = "0.13.5", default-features = false, features = ["stream", "http2", "rustls"] }
+serde = { workspace = true, features = ["derive"] }
+serde_json = "1"
+sysinfo = { version = "0.36.1", default-features = false, features = ["disk"] }
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2.7.3"
+tokio = { version = "1.53.1", default-features = false, features = ["fs", "io-util", "rt"] }
+whatrunshere-core = { workspace = true }
+whatrunshere-hw = { workspace = true }
+whatrunshere-probe = { workspace = true }
+whatrunshere-providers = { workspace = true }
+whatrunshere-state = { workspace = true }
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

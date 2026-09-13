@@ -2,7 +2,7 @@ name: Release
 
 # Installers for the three platforms, attached to the tag that asked for them.
 #
-# The page at whatllm reads this release through the GitHub API and builds its
+# The page at whatrunshere reads this release through the GitHub API and builds its
 # download buttons from whatever is attached here, so the asset names matter:
 # it matches `.msi`/`.exe` for Windows, `.dmg` for macOS, `.AppImage`/`.deb`
 # for Linux. Tauri's own naming already produces those.
@@ -85,7 +85,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          projectPath: crates/whatllm-app
+          projectPath: crates/whatrunshere-app
           args: --target ${{ matrix.target }}
           # Uploaded as artifacts and released in one go by the job below, so
           # a failure on one platform does not leave a half-populated release
@@ -143,5 +143,5 @@ jobs:
             operating system telling you the truth: nobody has paid a
             certificate authority to vouch for this binary yet.
 
-            Everything WhatLLM computes runs offline. The only thing it fetches
+            Everything WhatRunsHere computes runs offline. The only thing it fetches
             is a model's weights, when you ask it to.
