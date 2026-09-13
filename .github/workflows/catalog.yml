@@ -72,11 +72,14 @@ jobs:
           set -euo pipefail
           # The generated date changes every run; on its own it is not a change
           # worth a commit, and committing it daily would bury the real ones.
-          substantive=$(git diff -U0 -- catalog/catalog.json \
+          # `grep` exits 1 when it selects nothing, which under `pipefail` is
+          # the whole pipeline failing, which under `set -e` is the step
+          # failing: on the ordinary night when nothing changed. The group
+          # swallows that one status and lets `wc` count zero.
+          substantive=$({ git diff -U0 -- catalog/catalog.json \
             | grep -E '^[+-]' \
             | grep -Ev '^(\+\+\+|---)' \
-            | grep -v '"generated"' \
-            | wc -l)
+            | grep -v '"generated"' || true; } | wc -l)
           if [ "$substantive" -eq 0 ]; then
             echo "Nothing changed but the timestamp; leaving the catalog alone."
             git checkout -- catalog/catalog.json
