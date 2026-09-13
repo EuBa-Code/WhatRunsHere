@@ -29,6 +29,26 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
 
+      # The validation below runs the whole suite, window included, because a
+      # commit made with the workflow's own token does not trigger CI, so this
+      # run is the only check a nightly catalog gets. The window draws through
+      # the system webview and reads the built front end at compile time, so
+      # both are needed here for the same reason they are needed in ci.yml.
+      - name: Linux webview dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev             librsvg2-dev patchelf libgtk-3-dev
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Build the front end
+        run: npm ci && npm run build
+        working-directory: ui
+
       # Fails, and writes nothing, if the rebuild would lose models or builds.
       # A bad afternoon on HuggingFace must not be able to shrink the catalog.
       - name: Rebuild from HuggingFace
