@@ -150,7 +150,7 @@ function OnThisMachine({
   const total = installed.files.reduce((sum, file) => sum + file.bytes, 0);
   // WhatRunsHere's own directory not existing yet says nothing about the person.
   const absent = installed.looked_in.filter(
-    (place) => !place.found && place.provider !== "what_llm",
+    (place) => !place.found && place.provider !== "what_runs_here",
   );
 
   // Nothing found is said in one line, with where it was looked for, so an

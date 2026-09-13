@@ -571,6 +571,17 @@ fn what_is_on_this_machine_carries_the_fields_the_window_reads() {
     assert!(!looked.is_empty(), "nowhere was looked for a model");
     has_keys(&looked[0], &["provider", "path", "found"], "Location");
 
+    // The tags are what `format.ts` switches on. A variant renamed on this
+    // side alone shows up in the window as a blank label, not as an error.
+    let tags: Vec<&str> = looked
+        .iter()
+        .filter_map(|place| place["provider"].as_str())
+        .collect();
+    assert!(
+        tags.contains(&"what_runs_here"),
+        "the provider tags the window knows are missing: {tags:?}"
+    );
+
     // Whatever the machine the tests run on holds, each file has the same
     // shape, the identity carries its tag, and a catalog match has a fit or
     // an honest absence of one.

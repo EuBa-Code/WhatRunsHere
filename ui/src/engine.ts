@@ -379,7 +379,7 @@ export interface Volume {
 
 /** Who keeps a model file on this machine. */
 export type Provider =
-  | "what_llm"
+  | "what_runs_here"
   | "lm_studio"
   | "ollama"
   | "llama_cpp"

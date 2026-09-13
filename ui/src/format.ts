@@ -197,7 +197,7 @@ export function fitNote(note: Record<string, unknown> & { note: string }): strin
 /** The name a person knows a provider by. */
 export function providerLabel(provider: Provider): string {
   switch (provider) {
-    case "what_llm":
+    case "what_runs_here":
       return "WhatRunsHere";
     case "lm_studio":
       return "LM Studio";
