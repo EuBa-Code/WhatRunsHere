@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build WhatLLM's model catalog from HuggingFace.
+"""Build WhatRunsHere's model catalog from HuggingFace.
 
 Deliberately not a scraper. Scraping the HuggingFace index yields tens of
 thousands of entries, most of them broken re-uploads and merge experiments, and
@@ -11,7 +11,7 @@ of model ids instead, and for each one pulls two things that cannot be guessed:
   * the real size of every published GGUF build, from the file listing.
 
 The second is the point. A computed size is accurate to about a percent; a real
-file size is exact, and WhatLLM prefers it wherever it exists.
+file size is exact, and WhatRunsHere prefers it wherever it exists.
 
 Usage::
 
@@ -36,7 +36,7 @@ CATALOG_DIR = ROOT / "catalog"
 SOURCES = CATALOG_DIR / "sources.json"
 OUTPUT = CATALOG_DIR / "catalog.json"
 
-USER_AGENT = {"User-Agent": "whatllm-catalog/0.1 (+https://github.com/eugeniobarberini/whatllm)"}
+USER_AGENT = {"User-Agent": "whatrunshere-catalog/0.1 (+https://github.com/EuBa-Code/WhatRunsHere)"}
 CATALOG_VERSION = 1
 
 # A rebuild reads the whole catalog from a network that is sometimes unwell.
@@ -51,7 +51,7 @@ CATALOG_VERSION = 1
 RESCUE_LIMIT = 5
 BUILD_LOSS_LIMIT = 0.15
 
-# Quantization names WhatLLM models. Builds outside this set are skipped rather
+# Quantization names WhatRunsHere models. Builds outside this set are skipped rather
 # than guessed at.
 KNOWN_QUANTS = {
     "F16", "BF16", "Q8_0", "Q6_K", "Q5_K_M", "Q5_K_S", "Q4_K_M", "Q4_K_S",
@@ -488,7 +488,7 @@ def architecture(outer: dict) -> dict:
             )
 
     # Some designs vary a dimension per layer -- Gemma 3n's MatFormer gives each
-    # layer its own feed-forward width. WhatLLM's architecture model carries one
+    # layer its own feed-forward width. WhatRunsHere's architecture model carries one
     # value, so describing such a model here would mean averaging and calling
     # the result exact. Refusing is the honest option: a catalog that omits a
     # model is better than one that mis-sizes it.

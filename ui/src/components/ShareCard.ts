@@ -127,7 +127,7 @@ function bar(
   ctx.restore();
 }
 
-/** The WhatLLM mark, drawn rather than loaded so the card needs no assets. */
+/** The WhatRunsHere mark, drawn rather than loaded so the card needs no assets. */
 function mark(ctx: CanvasRenderingContext2D, p: Palette, x: number, y: number): void {
   const w = 26;
   const h = 30;
@@ -196,12 +196,12 @@ export async function render(
   ctx.fillStyle = p.ink;
   ctx.font = "700 21px Archivo, sans-serif";
   ctx.textBaseline = "alphabetic";
-  ctx.fillText("WhatLLM", PAD + 36, y + 22);
+  ctx.fillText("WhatRunsHere", PAD + 36, y + 22);
 
   ctx.fillStyle = p.inkFaint;
   ctx.font = "400 15px 'Instrument Sans', sans-serif";
   ctx.textAlign = "right";
-  ctx.fillText("github.com/EuBa-Code/WhatLLM", W - PAD, y + 22);
+  ctx.fillText("github.com/EuBa-Code/WhatRunsHere", W - PAD, y + 22);
   ctx.textAlign = "left";
 
   y += headerH;

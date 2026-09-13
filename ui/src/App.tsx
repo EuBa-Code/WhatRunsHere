@@ -30,7 +30,7 @@ const DEFAULT_SIZING: Sizing = {
 };
 
 /** Where a viewer's own preferences are kept between sessions. */
-const THEME_KEY = "whatllm.theme";
+const THEME_KEY = "whatrunshere.theme";
 
 export default function App() {
   const [view, setView] = useState<View>("Machine");
@@ -233,7 +233,7 @@ function TopBar({
       <div className="flex items-center gap-2.5">
         <Mark />
         <span className="font-display text-[14px] font-semibold tracking-tight">
-          WhatLLM
+          WhatRunsHere
         </span>
       </div>
 

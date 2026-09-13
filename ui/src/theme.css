@@ -3,7 +3,7 @@
 /* ─────────────────────────────────────────────────────────────────────────
    Typefaces, carried in the binary.
 
-   WhatLLM makes no network calls. A font loaded from a CDN would be the one
+   WhatRunsHere makes no network calls. A font loaded from a CDN would be the one
    request the whole engine was built to avoid, so all three are vendored as
    latin-subset woff2, 193 KB for the set.
    ───────────────────────────────────────────────────────────────────────── */

@@ -198,7 +198,7 @@ export function fitNote(note: Record<string, unknown> & { note: string }): strin
 export function providerLabel(provider: Provider): string {
   switch (provider) {
     case "what_llm":
-      return "WhatLLM";
+      return "WhatRunsHere";
     case "lm_studio":
       return "LM Studio";
     case "ollama":

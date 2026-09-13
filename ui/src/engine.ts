@@ -1,14 +1,14 @@
 /**
  * The engine, as the window sees it.
  *
- * Written against `crates/whatllm-app/src/api.rs` and checked by
- * `crates/whatllm-app/tests/contract.rs`, which asserts these field names
+ * Written against `crates/whatrunshere-app/src/api.rs` and checked by
+ * `crates/whatrunshere-app/tests/contract.rs`, which asserts these field names
  * against real serialised output. Rename one in Rust without changing it here
  * and that test fails by name, because a hand-written type declaration is a
  * promise nothing else checks, and a broken one reads `undefined` and shows a
  * blank where a figure should be.
  *
- * Snake case throughout, matching the engine and `whatllm --json`. Nothing
+ * Snake case throughout, matching the engine and `whatrunshere --json`. Nothing
  * here is computed: every number this window shows is one the engine decided.
  */
 import { invoke } from "@tauri-apps/api/core";

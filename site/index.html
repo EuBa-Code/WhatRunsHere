@@ -1,7 +1,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>WhatLLM</title>
-<meta name="description" content="Which language models run well on your machine. WhatLLM measures your hardware instead of looking it up in a table of known cards." />
+<title>WhatRunsHere</title>
+<meta name="description" content="Which language models run well on your machine. WhatRunsHere measures your hardware instead of looking it up in a table of known cards." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -272,7 +272,7 @@
 
   /* ── The instrument ─────────────────────────────────────────────────────
      The demo is the hero. Every figure in it came out of the real solver
-     (see crates/whatllm-cli/examples/demo_data.rs), so the page shows the
+     (see crates/whatrunshere-cli/examples/demo_data.rs), so the page shows the
      product working rather than a picture of it working.
      ───────────────────────────────────────────────────────────────────── */
 
@@ -704,8 +704,8 @@
       <rect x="3" y="7" width="10" height="2.2" rx="1" fill="var(--band-cache)" />
       <rect x="3" y="5.2" width="10" height="1.2" rx="0.6" fill="var(--band-other)" />
     </svg>
-    <span class="wordmark">WhatLLM</span>
-    <a class="ghost" href="https://github.com/eugeniobarberini/whatllm">Source</a>
+    <span class="wordmark">WhatRunsHere</span>
+    <a class="ghost" href="https://github.com/EuBa-Code/WhatRunsHere">Source</a>
   </div>
 </header>
 
@@ -727,7 +727,7 @@
           error lands in every tokens-per-second figure built on it.
         </p>
         <p class="lede">
-          WhatLLM keeps no such table. It reads the bus width and memory clock
+          WhatRunsHere keeps no such table. It reads the bus width and memory clock
           off the device, times your system memory in about a second, and marks
           every figure it shows with where that figure came from.
         </p>
@@ -744,7 +744,7 @@
         </div>
         <div class="rows"></div>
         <p class="panel-foot">
-          Every figure above was computed by WhatLLM's own solver for a machine
+          Every figure above was computed by WhatRunsHere's own solver for a machine
           of that shape, at 8k context, not typed in by hand. The machines are
           described from published specifications, so these are estimates, and
           the application says so on your machine too until you measure it.
@@ -807,10 +807,10 @@
           release has not been cut, so for now it is built from source: a Rust
           toolchain and Node 22, about two minutes.
         </p>
-        <pre><b>git clone</b> https://github.com/eugeniobarberini/whatllm
-<b>cd</b> whatllm
+        <pre><b>git clone</b> https://github.com/EuBa-Code/WhatRunsHere
+<b>cd</b> whatrunshere
 <b>npm</b> --prefix ui ci &amp;&amp; <b>npm</b> --prefix ui run build
-<b>cargo run</b> --release -p whatllm-app</pre>
+<b>cargo run</b> --release -p whatrunshere-app</pre>
       </div>
     </div>
   </section>
@@ -840,7 +840,7 @@
             <h3>It measures your machine, in about a second</h3>
             <p>
               Generation speed is set by how fast weights can be read, not by
-              how fast the processor is. WhatLLM times that directly rather
+              how fast the processor is. WhatRunsHere times that directly rather
               than looking your hardware up in a table, which is also why it
               works on a card nobody has catalogued yet, and why it cannot be
               fooled by a laptop chip that shares its model number with a
@@ -953,10 +953,10 @@
 <footer>
   <div class="wrap">
     <div class="links">
-      <a href="https://github.com/eugeniobarberini/whatllm">Source</a>
-      <a href="https://github.com/eugeniobarberini/whatllm/releases">Releases</a>
-      <a href="https://github.com/eugeniobarberini/whatllm/issues">Report a misdetection</a>
-      <a href="https://github.com/eugeniobarberini/whatllm#it-stays-free">Why it stays free</a>
+      <a href="https://github.com/EuBa-Code/WhatRunsHere">Source</a>
+      <a href="https://github.com/EuBa-Code/WhatRunsHere/releases">Releases</a>
+      <a href="https://github.com/EuBa-Code/WhatRunsHere/issues">Report a misdetection</a>
+      <a href="https://github.com/EuBa-Code/WhatRunsHere#it-stays-free">Why it stays free</a>
       <a href="https://github.com/AlexsJones/llmfit">llmfit, which framed the problem</a>
     </div>
     <p>
@@ -976,7 +976,7 @@
   (function () {
     "use strict";
 
-    var REPO = "eugeniobarberini/whatllm";
+    var REPO = "EuBa-Code/WhatRunsHere";
     var demo = JSON.parse(document.getElementById("demo").textContent);
 
     /* Binary units, because that is what every runtime and driver reports. */

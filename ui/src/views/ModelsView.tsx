@@ -148,7 +148,7 @@ function OnThisMachine({
   onOpen: (id: string, view?: View) => void;
 }) {
   const total = installed.files.reduce((sum, file) => sum + file.bytes, 0);
-  // WhatLLM's own directory not existing yet says nothing about the person.
+  // WhatRunsHere's own directory not existing yet says nothing about the person.
   const absent = installed.looked_in.filter(
     (place) => !place.found && place.provider !== "what_llm",
   );

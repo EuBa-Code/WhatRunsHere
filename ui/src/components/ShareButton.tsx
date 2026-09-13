@@ -51,7 +51,7 @@ export function ShareButton({
       const base64 = await toBase64(png);
       const path = await engine.saveImage(
         base64,
-        `whatllm-${models[0]?.name ?? "result"}`,
+        `whatrunshere-${models[0]?.name ?? "result"}`,
       );
       setState({ at: "saved", path });
     } catch (error) {
