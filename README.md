@@ -1,4 +1,4 @@
-# WhatLLM
+# WhatRunsHere
 
 **Which language models will actually run well on your machine. Measured, not
 looked up.**
@@ -15,7 +15,7 @@ laptop (llmfit measured that overestimate at up to 1.8× across the 30, 40 and
 50 mobile lines), and the error lands in every tokens-per-second figure built on
 top of it.
 
-WhatLLM does not keep that table. It derives bandwidth from the bus width and
+WhatRunsHere does not keep that table. It derives bandwidth from the bus width and
 memory clock the device itself reports, which reproduces the published figure
 for every part NVIDIA has shipped and will keep reproducing it for parts that do
 not exist yet. Then it measures system memory directly, with a benchmark that
@@ -32,7 +32,7 @@ actually use it.
 ## What makes it different
 
 **It measures rather than assumes.** Rather than looking an accelerator up in a
-table of known cards, WhatLLM derives NVIDIA bandwidth from the bus width and
+table of known cards, WhatRunsHere derives NVIDIA bandwidth from the bus width and
 memory clock the device itself reports, which reproduces the datasheet figure
 for parts that do not exist yet, and probes host memory directly. Hardware
 nobody has catalogued works as well as hardware everybody has, and the trap that
@@ -49,7 +49,7 @@ needing more cache than a 70B one when it needs less.
 
 **It knows throughput decays.** Every generated token reads the whole attention
 cache. At long context that cache rivals the weights, and the same hardware runs
-at half the speed it showed on an empty prompt. WhatLLM reports the curve, not
+at half the speed it showed on an empty prompt. WhatRunsHere reports the curve, not
 the best point on it.
 
 **It prices the decision.** Local versus hosted, including electricity and
@@ -72,11 +72,11 @@ the desktop application runs on it.
 
 | Component | State |
 |---|---|
-| `whatllm-core`: memory, throughput, quality, cost, fit solver | Working |
-| `whatllm-hw`: hardware detection | Working (Windows, Linux, macOS) |
-| `whatllm-probe`: on-device calibration | Working (host memory bandwidth) |
-| `whatllm-state`: catalog and calibration on disk | Working |
-| `whatllm-cli`: `doctor`, `probe`, `fit`, `plan`, `installed`, `cost` | Working |
+| `whatrunshere-core`: memory, throughput, quality, cost, fit solver | Working |
+| `whatrunshere-hw`: hardware detection | Working (Windows, Linux, macOS) |
+| `whatrunshere-probe`: on-device calibration | Working (host memory bandwidth) |
+| `whatrunshere-state`: catalog and calibration on disk | Working |
+| `whatrunshere-cli`: `doctor`, `probe`, `fit`, `plan`, `installed`, `cost` | Working |
 | Desktop application: Tauri 2, React 19, Tailwind v4 | Working (Machine, Models, Plan, Cost) |
 | Handing the model to its runtime: a download, a Modelfile, or the command that works | Working (llama.cpp, LM Studio, Ollama, vLLM, MLX) |
 | Model catalog | 110 models, 1348 measured builds |
@@ -84,7 +84,7 @@ the desktop application runs on it.
 | Nightly catalog refresh | GitHub Actions, refuses to shrink the catalog |
 | GPU compute probe (for time-to-first-token) | Not started |
 | Catalog updates over the network | Not started |
-| What is already on this machine: WhatLLM's folder, LM Studio, Ollama, llama.cpp's cache, the HuggingFace cache | Working (disk only, identified by exact size) |
+| What is already on this machine: WhatRunsHere's folder, LM Studio, Ollama, llama.cpp's cache, the HuggingFace cache | Working (disk only, identified by exact size) |
 
 192 Rust tests and 10 Python tests, no network access in any of them, and `cargo clippy --all-targets`
 clean under `pedantic`.
@@ -195,21 +195,21 @@ Three things came out of it that the model did not previously know:
   machine's fit from R² 0.53 to 0.99.
 
 The benchmark corpus is llmfit's community submissions, MIT licensed, used with
-thanks. The validation runs as a test: `cargo test -p whatllm-cli --test
+thanks. The validation runs as a test: `cargo test -p whatrunshere-cli --test
 throughput_validation -- --nocapture`.
 
 ## Using it
 
 ```sh
-whatllm doctor          # what this machine is, and what has been measured
-whatllm probe           # measure memory bandwidth, ~5 seconds
-whatllm fit             # rank the catalog for this machine
-whatllm plan <model>    # memory breakdown, curves, what to change, how to run it
-whatllm installed       # what is already on this disk, and how each would run
-whatllm cost <model>    # local against hosted, with the break-even volume
+whatrunshere doctor          # what this machine is, and what has been measured
+whatrunshere probe           # measure memory bandwidth, ~5 seconds
+whatrunshere fit             # rank the catalog for this machine
+whatrunshere plan <model>    # memory breakdown, curves, what to change, how to run it
+whatrunshere installed       # what is already on this disk, and how each would run
+whatrunshere cost <model>    # local against hosted, with the break-even volume
 ```
 
-`installed` reads the places each local runtime keeps its files (WhatLLM's
+`installed` reads the places each local runtime keeps its files (WhatRunsHere's
 own folder, LM Studio's, Ollama's store, llama.cpp's cache and the HuggingFace
 cache) and identifies each file against the catalog by its exact byte count,
 which across 1348 builds is as good as a fingerprint. A file it recognises is
@@ -240,7 +240,7 @@ build tools, for the linker.
 ```sh
 cargo test
 cargo clippy --all-targets
-cargo run --release -p whatllm-cli -- doctor
+cargo run --release -p whatrunshere-cli -- doctor
 ```
 
 The desktop application additionally needs Node 22, and on Linux the system
@@ -249,7 +249,7 @@ webview (`libwebkit2gtk-4.1-dev` and the packages beside it in `ci.yml`).
 ```sh
 npm --prefix ui ci
 npm --prefix ui run build     # the window will not compile without this
-cargo run -p whatllm-app      # run it
+cargo run -p whatrunshere-app      # run it
 npx --prefix ui tauri build   # an installer for this platform
 ```
 
@@ -258,7 +258,7 @@ fresh checkout cannot build the window until `npm run build` has produced
 `ui/dist`.
 
 To rebuild the model catalog from HuggingFace (contributors only; the catalog
-ships with the binary and is also read from `~/.whatllm/catalog.json` if newer):
+ships with the binary and is also read from `~/.whatrunshere/catalog.json` if newer):
 
 ```sh
 python tools/build_catalog.py
@@ -276,7 +276,7 @@ held to.
 
 ## Prior art
 
-WhatLLM began as a response to [llmfit](https://github.com/AlexsJones/llmfit) by
+WhatRunsHere began as a response to [llmfit](https://github.com/AlexsJones/llmfit) by
 Alex Jones, which framed the problem well and is worth your time. The
 disagreements are technical, not personal: they are set out above and argued in
 the module documentation, which is where the reasoning for each modelling
@@ -286,18 +286,18 @@ Several things here came from reading llmfit's source rather than from thinking
 about the problem, and are credited in the code that uses them:
 
 - **NVIDIA's unified-memory parts.** GB10 and the Jetson line share one pool
-  with the CPU. WhatLLM was treating every NVIDIA device as discrete, which
+  with the CPU. WhatRunsHere was treating every NVIDIA device as discrete, which
   counted a DGX Spark's memory twice. That was a bug, and llmfit had already
   found the cases.
 - **How to probe memory honestly.** Private per-thread buffers put pages on the
   right node on a multi-node machine; a barrier makes the threads measure
   concurrently instead of letting an early one finish against an uncontended
   controller. Adding both moved this machine's figure from 40.3 GB/s to a
-  truthful 37.6. WhatLLM still measures a read rather than a copy, because
+  truthful 37.6. WhatRunsHere still measures a read rather than a copy, because
   decode streams weights in and writes nothing back.
 - **A measurement can be wrong.** A result from a machine under contention comes
   back far too low and one taken in cache far too high, and either is worse than
-  no result because it will be believed. `whatllm probe` now refuses to store
+  no result because it will be believed. `whatrunshere probe` now refuses to store
   an implausible figure.
 - **A rebuild can quietly shrink the catalog.** `build_catalog.py` reads every
   model from HuggingFace, and when that network is unwell the failed entries
@@ -306,14 +306,14 @@ about the problem, and are credited in the code that uses them:
   naming the day this happened to them across 1,764 models. A failed entry is
   now carried forward from the previous build, and past a threshold the rebuild
   writes nothing at all. `tools/test_catalog_safety.py` holds it to that.
-- **An update should add, not replace.** A catalog in `~/.whatllm` is merged
+- **An update should add, not replace.** A catalog in `~/.whatrunshere` is merged
   over the built-in one rather than substituted for it, so adding one model by
   hand cannot remove the ones the binary already knew.
 - **The memory the operating system reports is not the memory installed.**
   Firmware on an AMD APU hands a block to the integrated GPU before the kernel
   starts, and the OS never sees it: a 128 GB Ryzen AI MAX+ with 96 GB carved out
   reports around 31 GB. Sizing against that rejects every model the machine was
-  bought to run. WhatLLM reads the DIMM capacity out of the SMBIOS table Windows
+  bought to run. WhatRunsHere reads the DIMM capacity out of the SMBIOS table Windows
   caches in the registry (no WMI query, no spawned `powershell`) and counts
   the difference back in.
 - **A large integrated part looks exactly like a card.** That same 96 GB is
@@ -325,7 +325,7 @@ about the problem, and are credited in the code that uses them:
   seen from the other side.
 - **macOS will not let Metal wire all of the memory.** Apple Silicon has one
   pool, but a compute job gets roughly three quarters of it on the smaller
-  machines, and an allocation past that fails rather than paging. WhatLLM asks
+  machines, and an allocation past that fails rather than paging. WhatRunsHere asks
   Metal for `recommendedMaxWorkingSetSize` rather than reproducing the default
   as a formula, so the answer stays right across macOS releases and follows an
   owner who has raised `iogpu.wired_limit_mb` by hand.
@@ -337,7 +337,7 @@ about the problem, and are credited in the code that uses them:
   drops such an entry and names it redacted.
 - **A generic name can hide a serious card.** A 32 GB Instinct MI50 reports
   itself as `AMD Radeon Graphics`, the same string an integrated Cezanne uses.
-  WhatLLM was reading the name and sizing it against system memory. Reported
+  WhatRunsHere was reading the name and sizing it against system memory. Reported
   memory now settles it before any name does: nothing integrated owns five
   gigabytes.
 - **Integrated graphics can be too old to be a target at all.** A Coffee Lake
@@ -352,7 +352,7 @@ about the problem, and are credited in the code that uses them:
   threshold later.
 - **A bug report should be a test.** llmfit's `doctor` captures the raw output
   of everything it consulted, so a report pastes straight into the suite as a
-  regression fixture. `whatllm doctor --json` now carries the unclassified
+  regression fixture. `whatrunshere doctor --json` now carries the unclassified
   adapter list alongside the verdict, and `classify_raw` replays it without
   touching a machine.
 
@@ -361,4 +361,5 @@ is validated against. No llmfit code is copied here.
 
 ## Licence
 
-MIT or Apache-2.0, at your option.
+MIT or Apache 2.0, at your option: [LICENSE-MIT](LICENSE-MIT) and
+[LICENSE-APACHE](LICENSE-APACHE). Copyright 2026 Eugenio Barberini.
