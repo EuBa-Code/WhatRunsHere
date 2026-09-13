@@ -630,7 +630,14 @@ mod tests {
         let measured = calibration(&system, Some(60e9));
         assert_eq!(assumed.source, Confidence::Fallback);
         assert!(measured.source <= Confidence::Calibrated);
-        assert!(measured.host.bandwidth_bytes_per_s > assumed.host.bandwidth_bytes_per_s);
+        // Outranks in confidence, not in size. On Apple Silicon the assumption
+        // is 100 GB/s and a modest probe reads below it; the probe still wins,
+        // because one number was measured and the other was not.
+        assert!(measured.source < assumed.source);
+        let from_probe = DeviceThroughput::from_probe(60e9, None).bandwidth_bytes_per_s;
+        assert!((measured.host.bandwidth_bytes_per_s - from_probe).abs() < 1.0);
+        let from_arch = assumed_host_bandwidth(system.cpu.arch);
+        assert!((assumed.host.bandwidth_bytes_per_s - from_arch).abs() < 1.0);
     }
 
     #[test]
