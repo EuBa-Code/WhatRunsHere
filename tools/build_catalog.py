@@ -45,9 +45,8 @@ CATALOG_VERSION = 1
 # permanently. A failed entry is therefore carried forward from the previous
 # build rather than dropped, and past these limits the rebuild writes nothing.
 #
-# The hazard is not hypothetical. llmfit records a scrape that dropped
-# architecture metadata for 1,764 models in a single run; the guard it added
-# afterwards is what this imitates.
+# The hazard is not hypothetical: a scrape in a similar catalog once dropped
+# architecture metadata for 1,764 models in a single run.
 RESCUE_LIMIT = 5
 BUILD_LOSS_LIMIT = 0.15
 
@@ -626,7 +625,7 @@ def _param_terms(arch: dict) -> tuple[int, int, int]:
 
     This counts parameters, which the Rust model also does, exactly and in more
     detail. Two implementations of one thing is how a project ends up applying
-    a fix in one of them: llmfit carries a comment about a duplicate throughput
+    a fix in one of them: a similar project carries a comment about a duplicate throughput
     estimator that silently missed three consecutive mixture-of-experts fixes
     and underestimated sparse models fourfold.
 
@@ -786,7 +785,7 @@ def rescue_failures(models: list, previous: dict, failed: list) -> list:
 #: upstream metadata for good. Two things then go wrong at once: the entry is
 #: garbage, and GitHub's secret scanning rejects the push that carries it, so
 #: a catalog rebuild that swallowed one would break the daily commit rather
-#: than merely be wrong. llmfit had exactly that push blocked on 2026-08-03.
+#: than merely be wrong. It has happened to other catalogs.
 SECRET_SHAPES = re.compile(
     r"hf_[A-Za-z0-9]{28,}"                      # HuggingFace access token
     r"|ghp_[A-Za-z0-9]{30,}"                    # GitHub personal access token

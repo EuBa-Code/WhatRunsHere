@@ -4,9 +4,9 @@
 The failure this prevents is specific. `build_catalog.py` reads every model from
 HuggingFace; when that network is unwell, entries fail and would simply be
 absent from the file it writes. Nobody notices, because a smaller catalog looks
-exactly like a correct one. llmfit records a scrape that dropped architecture
-metadata for 1,764 models in a single run, which is what these limits exist to
-make impossible.
+exactly like a correct one. A similar catalog once lost architecture metadata
+for 1,764 models in a single run, which is what these limits exist to make
+impossible.
 """
 
 import pathlib

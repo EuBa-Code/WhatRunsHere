@@ -44,7 +44,7 @@ impl std::error::Error for NvidiaError {}
 /// double-counts it against system RAM and mis-models where a spilled layer
 /// would go.
 ///
-/// The list comes from llmfit, which learned these cases in the field.
+/// The list holds the cases that have been met in the field.
 ///
 /// A list is the wrong shape for this and will lag new parts: a unified part it
 /// does not know gets treated as discrete, and its memory is then counted

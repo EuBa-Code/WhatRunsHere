@@ -43,14 +43,13 @@ Measured, not looked up.
 - [Building](#building)
 - [Contributing a machine](#contributing-a-machine)
 - [It stays free](#it-stays-free)
-- [Prior art](#prior-art)
 - [Licence](#licence)
 
 ## The problem with tables
 
 Any tool that answers "what runs here" needs two numbers about your hardware: how much memory it has, and how fast that memory is. The second one decides how fast a model generates, and nearly every tool reads it out of a table of known cards.
 
-A table is wrong in a specific and common way. An RTX 5070 Laptop GPU has a 128-bit bus and 8 GB; the desktop card that shares the number has 192-bit and 12 GB. Keyed on the model number, a table hands back the desktop figure for the laptop, and the error lands in every tokens-per-second figure built on top of it.[^1]
+A table is wrong in a specific and common way. An RTX 5070 Laptop GPU has a 128-bit bus and 8 GB; the desktop card that shares the number has 192-bit and 12 GB. Keyed on the model number, a table hands back the desktop figure for the laptop, and the error lands in every tokens-per-second figure built on top of it.
 
 WhatRunsHere keeps no such table. It derives bandwidth from the bus width and memory clock the device itself reports, which reproduces the published figure for every part NVIDIA has shipped and keeps reproducing it for parts that do not exist yet. Then it measures system memory directly, with a benchmark that takes about a second, and marks every figure it shows with where that figure came from.
 
@@ -197,7 +196,7 @@ Three things came out of it that the model did not previously know:
 - **Sparse models reach 79% of the speed their active parameters predict.** Reading eight experts out of a hundred and twenty-eight is a gather, not a stream, and a gather does not reach streaming bandwidth. Counting only active parameters overstates every mixture-of-experts model.
 - **Gemma 2 cannot use flash attention.** It caps its attention logits and the flash kernels have nowhere to apply the cap, so llama.cpp materialises the full score matrix, which is quadratic in context. This was found, not looked up: on an RTX 2080 sixteen models landed within a few percent of one line and Gemma 2 9B ran at a third of the speed its size predicts. Modelling it took that machine's fit from R² 0.53 to 0.99.
 
-The benchmark corpus is llmfit's community submissions, MIT licensed, used with thanks. The validation runs as a test:
+The measurements are in `validation/measurements.json`. The validation runs as a test:
 
 ```sh
 cargo test -p whatrunshere-cli --test throughput_validation -- --nocapture
@@ -320,30 +319,6 @@ Free, under MIT or Apache 2.0, with no feature gating, no licensing code and no 
 
 That is a commitment rather than a stage. A project that never promised to stay free and later charges has broken nothing; one that promised and then charged has broken the only thing it had. So the promise is made here, where it can be held to.
 
-## Prior art
-
-WhatRunsHere began as a response to [llmfit](https://github.com/AlexsJones/llmfit) by Alex Jones, which framed the problem well and is worth your time. The disagreements are technical, not personal: they are set out above and argued in the module documentation, which is where the reasoning for each modelling decision lives. llmfit's community benchmark corpus, MIT licensed, is what the throughput model is validated against. No llmfit code is copied here.
-
-<details>
-<summary><b>What was learned from llmfit's field experience, and is credited in the code</b></summary>
-<br>
-
-- **NVIDIA's unified-memory parts.** GB10 and the Jetson line share one pool with the CPU. WhatRunsHere was treating every NVIDIA device as discrete, which counted a DGX Spark's memory twice. That was a bug, and llmfit had already found the cases.
-- **How to probe memory honestly.** Private per-thread buffers put pages on the right node on a multi-node machine; a barrier makes the threads measure concurrently instead of letting an early one finish against an uncontended controller. Adding both moved this machine's figure from 40.3 GB/s to a truthful 37.6. WhatRunsHere still measures a read rather than a copy, because decode streams weights in and writes nothing back.
-- **A measurement can be wrong.** A result from a machine under contention comes back far too low and one taken in cache far too high, and either is worse than no result because it will be believed. `whatrunshere probe` refuses to store an implausible figure.
-- **A rebuild can quietly shrink the catalog.** `build_catalog.py` reads every model from HuggingFace, and when that network is unwell the failed entries would simply be absent from the file it writes, invisible because a smaller catalog looks exactly like a correct one. llmfit's scraper carries a comment naming the day this happened to them across 1,764 models. A failed entry is now carried forward from the previous build, and past a threshold the rebuild writes nothing at all. `tools/test_catalog_safety.py` holds it to that.
-- **An update should add, not replace.** A catalog in `~/.whatrunshere` is merged over the built-in one rather than substituted for it, so adding one model by hand cannot remove the ones the binary already knew.
-- **The memory the operating system reports is not the memory installed.** Firmware on an AMD APU hands a block to the integrated GPU before the kernel starts, and the OS never sees it: a 128 GB Ryzen AI MAX+ with 96 GB carved out reports around 31 GB. Sizing against that rejects every model the machine was bought to run. WhatRunsHere reads the DIMM capacity out of the SMBIOS table Windows caches in the registry (no WMI query, no spawned `powershell`) and counts the difference back in.
-- **A large integrated part looks exactly like a card.** That same 96 GB is reported by the adapter as 96 GB of "video memory" under the name `AMD Radeon Graphics`, which is also what a discrete Instinct MI50 calls itself. The memory floor that settles the MI50 gets this one backwards and describes the machine as a 96 GB GPU beside 31 GB of RAM, when it is one pool of 128. The measured carveout tells them apart, because it is the same memory seen from the other side.
-- **macOS will not let Metal wire all of the memory.** Apple Silicon has one pool, but a compute job gets roughly three quarters of it on the smaller machines, and an allocation past that fails rather than paging. WhatRunsHere asks Metal for `recommendedMaxWorkingSetSize` rather than reproducing the default as a formula, so the answer stays right across macOS releases and follows an owner who has raised `iogpu.wired_limit_mb` by hand.
-- **A stranger's metadata can block your own commits.** A publisher who once pasted an access token where a repository name belonged leaves it in the upstream metadata for good, and GitHub's secret scanning then rejects the push carrying it, so the nightly catalog rebuild stops committing rather than merely being wrong. It blocked llmfit on 2026-08-03. `build_catalog.py` drops such an entry and names it redacted.
-- **A generic name can hide a serious card.** A 32 GB Instinct MI50 reports itself as `AMD Radeon Graphics`, the same string an integrated Cezanne uses. WhatRunsHere was reading the name and sizing it against system memory. Reported memory now settles it before any name does: nothing integrated owns five gigabytes.
-- **Integrated graphics can be too old to be a target at all.** A Coffee Lake UHD 630 was being reported as a unified-memory GPU with the whole RAM pool behind it while every load ran on the CPU. Intel parts predating Xe are now named as what they are, and the answer given is the CPU.
-- **A 32-bit memory field cannot be repaired.** Windows reports video memory through fields four bytes wide, and the ceiling value sits *between* a real 2 GB card and a real 2 GiB one, so no threshold separates the three. A narrow reading is discarded rather than believed, and the card is left out with a note. A compile-time assertion keeps anyone from inventing the threshold later.
-- **A bug report should be a test.** llmfit's `doctor` captures the raw output of everything it consulted, so a report pastes straight into the suite as a regression fixture. `whatrunshere doctor --json` carries the unclassified adapter list alongside the verdict, and `classify_raw` replays it without touching a machine.
-
-</details>
-
 ## Licence
 
 MIT or Apache 2.0, at your option: [LICENSE-MIT](LICENSE-MIT) and [LICENSE-APACHE](LICENSE-APACHE). Copyright 2026 Eugenio Barberini.
@@ -352,5 +327,3 @@ MIT or Apache 2.0, at your option: [LICENSE-MIT](LICENSE-MIT) and [LICENSE-APACH
 <br>
 <sub>Measured, not looked up.</sub>
 </div>
-
-[^1]: llmfit measured that overestimate at up to 1.8× across the 30, 40 and 50 mobile lines.

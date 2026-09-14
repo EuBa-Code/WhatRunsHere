@@ -31,8 +31,7 @@
 //! dense ones define, which is how the mixture-of-experts penalty is measured
 //! rather than guessed.
 //!
-//! Data: llmfit's community benchmark submissions, MIT licensed.
-//! <https://github.com/AlexsJones/llmfit>
+//! Data: `validation/measurements.json`, which records its own source.
 
 use serde::Deserialize;
 use std::collections::BTreeMap;

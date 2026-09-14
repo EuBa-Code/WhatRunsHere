@@ -28,7 +28,7 @@ pub enum AdapterClass {
     /// Reported apart from [`Self::Integrated`] because the honest answer for
     /// such a part is that the model runs on the CPU. Calling it an accelerator
     /// and handing it the system memory pool describes a placement that does
-    /// not exist: llmfit's issue #964 is a Coffee Lake UHD 630 reported as a
+    /// not exist: a Coffee Lake UHD 630 has been reported in the field as a
     /// 47 GB unified-memory GPU while every load ran at 100% CPU.
     LegacyIntegrated,
     /// Not an accelerator at all: a remote-desktop or hypervisor display.
@@ -39,7 +39,7 @@ pub enum AdapterClass {
 ///
 /// Names are not reliable here. A 32 GB Instinct MI50 can report itself as
 /// `AMD Radeon Graphics`, the same generic string an integrated Cezanne uses,
-/// and llmfit hit exactly that (#638). Integrated parts report an aperture of
+/// and that has happened in the field. Integrated parts report an aperture of
 /// a gigabyte or two; nothing integrated owns five.
 ///
 /// That last sentence stopped being true, which is why this floor is no longer
@@ -350,7 +350,7 @@ mod tests {
 
     #[test]
     fn a_large_dedicated_pool_outranks_a_generic_name() {
-        // llmfit's #638: a 32 GB Instinct MI50 reporting itself as the same
+        // Seen in the field: a 32 GB Instinct MI50 reporting itself as the same
         // generic string an integrated Cezanne uses. Sizing it against system
         // memory would be badly wrong in both directions.
         assert_eq!(
