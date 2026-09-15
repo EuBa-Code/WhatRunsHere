@@ -19,7 +19,7 @@ Measured, not looked up.
 
 <br>
 
-<img src="docs/images/machine.png" width="880" alt="The Machine view: what this computer is, measured, and the best model for it">
+<img src=".github/images/machine.png" width="880" alt="The Machine view: what this computer is, measured, and the best model for it">
 
 <sub>One window. It reads the machine it is on, ranks 110 models against it, and ends with the command that starts the one you pick.</sub>
 
@@ -80,7 +80,7 @@ whatrunshere fit          # rank the catalog for this machine
 ## What it does
 
 <div align="center">
-<img src="docs/images/models.png" width="880" alt="The Models view: the catalog ranked for this machine, with what is already on the disk first">
+<img src=".github/images/models.png" width="880" alt="The Models view: the catalog ranked for this machine, with what is already on the disk first">
 </div>
 
 | View | The question | What you get |
@@ -93,7 +93,7 @@ whatrunshere fit          # rank the catalog for this machine
 The Plan view ends with the command, not with a file. Choose a runtime and the action changes with it: llama.cpp gets a `llama-server` line carrying the context, the layer split and the cache format the solver chose; Ollama gets a Modelfile and the import; LM Studio gets the file downloaded straight into its own folder; vLLM gets `vllm serve` and no download at all, because it fetches the original weights itself; MLX gets a search, because guessing a conversion's name is exactly the kind of approximation this tool refuses.
 
 <div align="center">
-<img src="docs/images/plan.png" width="880" alt="The Plan view: the memory breakdown, the curves, and the launch command">
+<img src=".github/images/plan.png" width="880" alt="The Plan view: the memory breakdown, the curves, and the launch command">
 </div>
 
 ## How an answer is built
